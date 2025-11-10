@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {defineProps} from "vue";
 import IconExternal from "@/components/icons/IconExternal.vue";
 import CopyLink from "@/components/CopyLink.vue";
 
