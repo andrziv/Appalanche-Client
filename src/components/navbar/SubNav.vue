@@ -23,7 +23,7 @@ import IconPersonalSite from "@/components/icons/IconPersonalSite.vue";
 
       <CopyableSiteLink label="Portfolio Site" href="https://yourportfolio.com">
         <template #icon>
-          <IconPersonalSite class="h-3 w-auto hover:bg-gray-100"/>
+          <IconPersonalSite class="h-3 w-auto"/>
         </template>
       </CopyableSiteLink>
     </div>

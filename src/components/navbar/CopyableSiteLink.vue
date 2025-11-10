@@ -18,7 +18,7 @@ const props = defineProps<{
        class="flex items-center space-x-2 px-1 py-2 text-sm hover:bg-gray-200 transition">
       <slot name="icon"/>
       <span class="text-gray-600 text-xs font-semibold">{{ props.label }}</span>
-      <IconExternal class="h-3 w-auto hover:bg-gray-200"/>
+      <IconExternal class="h-3 w-auto"/>
     </a>
   </div>
 </template>
