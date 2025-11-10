@@ -10,7 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center bg-gray-100 overflow-hidden">
+  <div class="flex items-center overflow-hidden">
     <CopyLink :href="props.href"/>
     <a :href='props.href'
        target="_blank"
