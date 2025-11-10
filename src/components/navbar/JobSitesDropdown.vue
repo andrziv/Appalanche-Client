@@ -39,12 +39,12 @@ const jobSites = [
 </script>
 
 <template>
-  <div class="flex items-center rounded-sm overflow-hidden" @mouseenter="openDropdown"
+  <div class="flex items-center overflow-hidden" @mouseenter="openDropdown"
        @mouseleave="closeDropdown">
-    <a class="flex items-center space-x-2 px-3 py-2 hover:bg-gray-200 transition">
-      <IconJobBoard class="h-4 w-auto"/>
-      <span class="text-gray-600 text-xs font-semibold">Job Boards</span>
-      <IconDownChevron class="h-4 w-auto"/>
+    <a class="flex items-center space-x-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
+      <IconJobBoard class="h-4 w-auto theme-icon"/>
+      <span class="text-gray-600 dark:text-zinc-400 text-xs font-semibold">Job Boards</span>
+      <IconDownChevron class="h-4 w-auto theme-icon"/>
     </a>
 
     <Transition
@@ -54,18 +54,18 @@ const jobSites = [
         leave-active-class="transition ease-in duration-150"
         leave-from-class="opacity-100 translate-x-0"
         leave-to-class="opacity-0 -translate-x-2">
-      <div v-if="dropdownOpen" class="absolute top-full w-40 bg-white border border-gray-300 shadow-md z-50">
+      <div v-if="dropdownOpen" class="absolute top-full w-40 bg-white dark:bg-zinc-950 shadow-md z-50">
         <a v-for="site in jobSites"
            :key="site.name"
            :href="site.url"
            target="_blank"
            rel="noopener noreferrer"
-           class="flex items-center justify-between px-3 py-2 hover:bg-gray-200 transition">
+           class="flex items-center justify-between px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
           <div class="flex items-center space-x-2">
             <img :src="site.icon" class="h-4 w-4" alt="icon"/>
-            <span class="text-gray-600">{{ site.name }}</span>
+            <span class="text-gray-600 dark:text-zinc-400">{{ site.name }}</span>
           </div>
-          <IconExternal class="h-3 w-3 text-gray-500"/>
+          <IconExternal class="h-3 w-3 text-gray-500 theme-icon"/>
         </a>
       </div>
     </Transition>
@@ -73,5 +73,13 @@ const jobSites = [
 </template>
 
 <style scoped>
+.theme-icon {
+  color: #000;
+}
 
+@media (prefers-color-scheme: dark) {
+  .theme-icon {
+    filter: invert(0.7);
+  }
+}
 </style>

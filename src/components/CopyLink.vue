@@ -21,12 +21,14 @@ const copyLink = async () => {
 </script>
 
 <template>
-  <a class="flex items-center justify-center py-2 hover:bg-gray-200 transition" @click="copyLink">
-    <IconCopy class="px-1 h-4 w-auto border-r border-gray-300"/>
-  </a>
-  <span v-if="copied" class="absolute -top-6 text-xs text-green-600 font-semibold animate-fade">
-    Copied!
-  </span>
+  <div class="relative inline-flex items-center">
+    <a class="flex items-center justify-center py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition" @click="copyLink">
+      <IconCopy class="px-1 h-4 w-auto border-r border-gray-300 dark:border-zinc-600 theme-icon"/>
+    </a>
+    <span v-if="copied" class="absolute -top-6 text-xs text-green-600 font-semibold animate-fade">
+      Copied!
+    </span>
+  </div>
 </template>
 
 <style scoped>
@@ -43,5 +45,15 @@ const copyLink = async () => {
 
 .animate-fade {
   animation: fade 1.5s ease forwards;
+}
+
+.theme-icon {
+  color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-icon {
+    filter: invert(0.7);
+  }
 }
 </style>
