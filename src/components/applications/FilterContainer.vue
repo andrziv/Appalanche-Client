@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
 <template>
   <div ref="dropdownRef" class="relative inline-block text-left">
     <a @click.stop="toggleDropdown"
-       class="relative flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer
+       class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer
        bg-gray-600 dark:bg-zinc-900 hover:bg-gray-500 dark:hover:bg-zinc-800 transition"
        :class="{ 'after:absolute after:inset-0 after:bg-green-400/20 after:rounded-sm after:pointer-events-none': filterActive }">
       <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">{{ props.label }}</span>
@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
                 leave-from-class="opacity-100 translate-y-0"
                 leave-to-class="opacity-0 -translate-y-1">
       <div v-if="open"
-           class="absolute left-0 mt-1 p-4 flex flex-col space-y-2 w-max min-w-full bg-white dark:bg-zinc-900 rounded-sm shadow-2xl z-50">
+           class="absolute left-0 mt-1 p-4 flex flex-col space-y-2 w-max min-w-full bg-white dark:bg-zinc-900 rounded-sm shadow-2xl">
         <div class="flex flex-col space-y-2">
           <span class="font-semibold">{{ props.title }}</span>
           <span class="text-xs">{{ props.description }}</span>

@@ -39,7 +39,7 @@ const jobSites = [
 </script>
 
 <template>
-  <div class="flex items-center overflow-hidden" @mouseenter="openDropdown"
+  <div class="relative flex items-center" @mouseenter="openDropdown"
        @mouseleave="closeDropdown">
     <a class="flex items-center space-x-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
       <IconJobBoard class="h-4 w-auto theme-icon"/>

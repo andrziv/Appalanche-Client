@@ -12,7 +12,7 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
 </script>
 
 <template>
-  <div class="w-full bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800">
+  <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800">
     <div class="flex justify-between items-center px-8 py-3">
       <input v-model="searchQuery"
              type="text"
@@ -110,7 +110,7 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
 
       <a v-if="!store.areFiltersEmpty" @click="store.clearFilters"
          class="flex items-center space-x-2 px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm cursor-pointer hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
-        <IconXMark class="h-4 w-auto invert-80 z-0"/>
+        <IconXMark class="h-4 w-auto invert-80"/>
         <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">Clear All</span>
       </a>
     </div>
