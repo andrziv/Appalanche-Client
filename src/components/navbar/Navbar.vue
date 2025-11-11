@@ -17,8 +17,7 @@ const regions = ["USA", "Canada", "Mexico"];
 </script>
 
 <template>
-  <div class="navbar fixed z-30 top-0 left-0 w-full">
-    <div class="bg-white dark:bg-zinc-950">
+  <div class="navbar fixed z-30 top-0 left-0 w-full bg-white dark:bg-zinc-950">
       <nav class="max-w-7xl flex items-center justify-between px-6 py-3 mx-auto">
         <div class="flex place-items-center items-center space-x-6">
           <ThemedImage :lightSrc="lightLogo"
@@ -46,7 +45,6 @@ const regions = ["USA", "Canada", "Mexico"];
           </div>
         </div>
       </nav>
-    </div>
     <SubNav/>
   </div>
 </template>
