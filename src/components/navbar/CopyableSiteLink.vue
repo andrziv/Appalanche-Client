@@ -23,13 +23,5 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-.theme-icon {
-  color: #000;
-}
 
-@media (prefers-color-scheme: dark) {
-  .theme-icon {
-    filter: invert(0.7);
-  }
-}
 </style>

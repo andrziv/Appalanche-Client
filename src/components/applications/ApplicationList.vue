@@ -44,7 +44,7 @@ const formatDate = (date: Date) =>
       <td class="status">
         <div class="w-full text-center text-white font-medium rounded-md px-2 py-1"
              :style="{ backgroundColor: jobApp.status.colour }">
-          {{ jobApp.status.label }}
+          {{ jobApp.status.toString() }}
         </div>
       </td>
       <td>
@@ -61,7 +61,7 @@ const formatDate = (date: Date) =>
 </template>
 
 <style scoped>
-@reference "../style.css"
+@reference "../../style.css"
 table {
   @apply min-w-full border-separate border-spacing-y-3;
 }

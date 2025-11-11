@@ -54,7 +54,7 @@ const jobSites = [
         leave-active-class="transition ease-in duration-150"
         leave-from-class="opacity-100 translate-x-0"
         leave-to-class="opacity-0 -translate-x-2">
-      <div v-if="dropdownOpen" class="absolute top-full w-40 bg-white dark:bg-zinc-950 shadow-md z-50">
+      <div v-if="dropdownOpen" class="absolute top-full w-40 bg-white dark:bg-zinc-950 shadow-md">
         <a v-for="site in jobSites"
            :key="site.name"
            :href="site.url"

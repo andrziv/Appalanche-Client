@@ -13,6 +13,16 @@ export class ExperienceLevel {
         this.description = description;
     }
 
+    static values(): ExperienceLevel[] {
+        return [
+            ExperienceLevel.Entry,
+            ExperienceLevel.Junior,
+            ExperienceLevel.Intermediate,
+            ExperienceLevel.Senior,
+            ExperienceLevel.StaffPlus,
+        ];
+    }
+
     toString() {
         return this.label;
     }
