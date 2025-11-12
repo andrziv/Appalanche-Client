@@ -7,6 +7,8 @@ import FilterContainer from "@/components/applications/FilterContainer.vue";
 import InterestFilterMenu from "@/components/applications/InterestFilterMenu.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
+import AddApplicationButton from "@/components/applications/add_position_buttons/AddApplicationButton.vue";
+import ImportCSVButton from "@/components/applications/add_position_buttons/ImportCSVButton.vue";
 
 const store = useFilterStore()
 const {searchQuery, experience, status, appliedRange, responseRange} = storeToRefs(store)
@@ -25,12 +27,8 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         </div>
 
         <div class="flex space-x-3 text-center text-sm text-gray-200 font-semibold">
-          <a class="px-4 py-2 rounded-sm cursor-pointer bg-blue-600 dark:bg-blue-900 text-white hover:bg-blue-700">
-            Add Application
-          </a>
-          <a class="px-4 py-2 rounded-sm cursor-pointer bg-gray-600 dark:bg-zinc-900 hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
-            Import CSV
-          </a>
+          <AddApplicationButton/>
+          <ImportCSVButton/>
         </div>
       </div>
 
