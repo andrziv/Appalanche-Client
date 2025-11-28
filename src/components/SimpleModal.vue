@@ -13,7 +13,7 @@ const close = () => emit('close');
 <template>
   <div v-if="props.show" @click="close"
        class="fixed inset-0 z-40 flex items-center justify-center bg-black/50 dark:bg-black/70">
-    <div @click.stop class="relative bg-white dark:bg-zinc-900 rounded-lg shadow-2xl w-full max-w-lg mx-4">
+    <div @click.stop class="relative bg-white dark:bg-zinc-900 rounded-lg w-full max-w-lg mx-4">
       <header class="flex justify-between items-center border-b border-gray-200 dark:border-neutral-800 px-4 py-2">
         <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
           {{ props.title }}

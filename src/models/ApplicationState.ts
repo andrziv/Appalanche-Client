@@ -1,10 +1,12 @@
 export class ApplicationState {
     static readonly Applied = new ApplicationState('Applied', 1, '#3498db', '#bebebe');
+    static readonly OnlineAssessment = new ApplicationState('Online Assessment', 1, '#fe7a2b', '#bebebe');
     static readonly PhoneInterview = new ApplicationState('Phone Interview', 1, '#f1c40f', '#555555');
     static readonly Interview = new ApplicationState('Interview', 1, '#f1c40f', '#555555');
     static readonly TechnicalInterview = new ApplicationState('Technical Interview', 1, '#f1c40f', '#555555');
     static readonly Offer = new ApplicationState('Offer', 1, '#2ecc71', '#bebebe');
     static readonly Rejected = new ApplicationState('Rejected', 1, '#000000', '#ffffff');
+    static readonly Withdrew = new ApplicationState('Withdrew', 1, '#000000', '#ffffff');
 
     public readonly label: string;
     public readonly colour: string;
@@ -47,6 +49,10 @@ export class ApplicationState {
 
     set roundValue(value: number) {
         this.round = value;
+    }
+
+    get code(): string {
+        return label.toUpperCase().replace(` `, `_`) + round;
     }
 
     toString() {
