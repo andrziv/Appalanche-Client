@@ -15,7 +15,7 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
 </script>
 
 <template>
-  <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800">
+  <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800">
     <div class="max-w-7xl mx-auto py-4 space-y-4">
       <div class="flex justify-between items-center px-8">
         <div class="flex w-1/3 items-center rounded-sm text-sm bg-gray-600 dark:bg-zinc-900 text-white">

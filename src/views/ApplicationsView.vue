@@ -60,9 +60,14 @@ const filteredApplications = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col h-full w-full">
     <FilterBar/>
-    <ApplicationList :applications="filteredApplications"/>
+    <div class="flex flex-col overflow-hidden">
+      <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
+      <div class="-mt-16 flex flex-col w-full max-w-7xl h-full overflow-hidden overflow-y-auto mx-auto bg-red-400 rounded-t-sm">
+        <ApplicationList :applications="filteredApplications"/>
+      </div>
+    </div>
   </div>
 </template>
 

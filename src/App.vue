@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar/Navbar.vue";
 
 <template>
   <Navbar/>
-  <main class="pt-23">
+  <main class="pt-23 h-screen overflow-hidden flex flex-col">
     <router-view/>
   </main>
 </template>
