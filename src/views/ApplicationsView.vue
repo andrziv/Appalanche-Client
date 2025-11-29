@@ -60,11 +60,11 @@ const filteredApplications = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full w-full">
+  <div class="flex flex-col h-full">
     <FilterBar/>
-    <div class="flex flex-col overflow-hidden">
+    <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
-      <div class="-mt-16 flex flex-col w-full max-w-7xl h-full overflow-hidden overflow-y-auto mx-auto bg-red-400 rounded-t-sm">
+      <div class="-mt-16 flex flex-col h-full w-full max-w-7xl overflow-y-auto mx-auto bg-red-800 rounded-t-sm">
         <ApplicationList :applications="filteredApplications"/>
       </div>
     </div>
