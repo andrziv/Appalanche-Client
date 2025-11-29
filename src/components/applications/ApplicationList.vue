@@ -21,7 +21,7 @@ const formatDate = (date: Date) =>
 
 <template>
   <table class="w-full table-auto">
-    <thead class="sticky top-0 z-10 bg-white">
+    <thead class="sticky top-0 z-10 bg-white dark:bg-zinc-900">
     <tr>
       <th>Position</th>
       <th>Job ID</th>
@@ -49,11 +49,11 @@ const formatDate = (date: Date) =>
       </td>
       <td>
         <div class="font-semibold">{{ formatDate(jobApp.dateApplied) }}</div>
-        <div class="text-sm text-gray-300">{{ daysSince(jobApp.dateApplied) }} days ago</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.dateApplied) }} days ago</div>
       </td>
       <td>
         <div class="font-semibold">{{ formatDate(jobApp.lastResponse) }}</div>
-        <div class="text-sm text-gray-300">{{ daysSince(jobApp.lastResponse) }} days ago</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.lastResponse) }} days ago</div>
       </td>
     </tr>
     </tbody>
@@ -63,7 +63,7 @@ const formatDate = (date: Date) =>
 <style scoped>
 @reference "../../style.css"
 table {
-  @apply min-w-full border-separate border-spacing-y-3;
+  @apply min-w-full;
 }
 
 th, td {
@@ -82,6 +82,6 @@ thead th {
 }
 
 tbody tr {
-  @apply shadow-sm hover:shadow-md transition-shadow;
+  @apply border-b-[0.5px] border-neutral-100 dark:border-zinc-800 hover:bg-neutral-100 hover:dark:bg-zinc-800;
 }
 </style>
