@@ -18,12 +18,12 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
   <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800">
     <div class="max-w-7xl mx-auto py-4 space-y-4">
       <div class="flex justify-between items-center px-8">
-        <div class="flex w-1/3 items-center rounded-sm text-sm bg-gray-600 dark:bg-zinc-900 text-white">
+        <div class="flex w-1/3 items-center rounded-sm text-sm bg-slate-500 dark:bg-zinc-900 text-white focus-within:drop-shadow-xl">
           <IconSearch class="h-6 w-auto px-2 invert dark:invert-70"/>
           <input v-model="searchQuery"
                  type="text"
                  placeholder="Search company, position, or ID..."
-                 class="w-full py-2"/>
+                 class="w-full p-2 focus:outline-none"/>
         </div>
 
         <div class="flex space-x-3 text-center text-sm text-gray-200 font-semibold">
