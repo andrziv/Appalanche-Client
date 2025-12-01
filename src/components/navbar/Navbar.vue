@@ -3,8 +3,8 @@ import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
 import SubNav from "@/components/navbar/SubNav.vue";
 import ThemedImage from "@/components/icons/ThemedImage.vue";
-import lightLogo from '@/assets/jobhunt.svg'
-import darkLogo from '@/assets/jobhunt_grayscale.svg'
+import lightLogo from '@/assets/appalanche.svg'
+import darkLogo from '@/assets/appalanche_grayscale.svg'
 
 const route = useRoute();
 
@@ -22,7 +22,7 @@ const regions = ["USA", "Canada", "Mexico"];
         <div class="flex place-items-center items-center space-x-6">
           <ThemedImage :lightSrc="lightLogo"
                        :darkSrc="darkLogo"
-                       alt="JobHunt logo"
+                       alt="Appalanche logo"
                        imgClass="h-7 w-auto dark:invert-100"/>
           <span class="text-xl font-semibold text-gray-800 dark:text-gray-300 leading-none pb-0.5">
             {{ pageTitle }}
