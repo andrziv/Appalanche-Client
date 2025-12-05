@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
-import {useFilterStore} from '@/stores/useFilterStore'
+import {useFilterStore} from '@/stores/filters'
 import {ExperienceLevel} from "@/models/ExperienceLevel";
 import {ApplicationState} from "@/models/ApplicationState";
 import FilterContainer from "@/components/applications/FilterContainer.vue";

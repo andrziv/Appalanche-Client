@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconExternal from "@/components/icons/IconExternal.vue";
-import CopyLink from "@/components/CopyLink.vue";
+import CopyLink from "@/components/widget/CopyLink.vue";
 
 const props = defineProps<{
   href: string;

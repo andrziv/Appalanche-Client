@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SimpleModal from "@/components/SimpleModal.vue"
+import SimpleModal from "@/components/widget/SimpleModal.vue"
 
 const props = defineProps<{
   show: boolean;

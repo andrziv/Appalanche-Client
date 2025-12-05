@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue'
-import {useFilterStore} from '@/stores/useFilterStore'
+import {useFilterStore} from '@/stores/filters'
 import ApplicationList from '@/components/applications/ApplicationList.vue'
 import FilterBar from '@/components/applications/FilterBar.vue'
 import {hardcodedApps} from '@/models/MockData'

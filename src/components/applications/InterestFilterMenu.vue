@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import {useFilterStore} from '@/stores/useFilterStore'
+import {useFilterStore} from '@/stores/filters'
 import IconXMark from "@/components/icons/IconXMark.vue";
 
 const store = useFilterStore()

@@ -61,7 +61,8 @@ const formatDate = (date: Date) =>
 </template>
 
 <style scoped>
-@reference "../../style.css"
+@reference "../../style.css";
+
 table {
   @apply min-w-full;
 }
