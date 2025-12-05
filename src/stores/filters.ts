@@ -1,21 +1,21 @@
-import {defineStore} from 'pinia'
-import {computed, ref} from 'vue'
+import {defineStore} from 'pinia';
+import {computed, ref} from 'vue';
 
 export interface InterestCondition {
-    operator: '>' | '<' | '>=' | '<=' | '=' | 'range'
-    value: number
-    value2?: number
+    operator: '>' | '<' | '>=' | '<=' | '=' | 'range';
+    value: number;
+    value2?: number;
 }
 
 export const useFilterStore = defineStore('filter', () => {
-    const searchQuery = ref('')
-    const experience = ref<string[]>([])
-    const status = ref<string[]>([])
+    const searchQuery = ref('');
+    const experience = ref<string[]>([]);
+    const status = ref<string[]>([]);
 
-    const interestFilters = ref<InterestCondition[]>([])
+    const interestFilters = ref<InterestCondition[]>([]);
 
-    const appliedRange = ref<[string, string]>(['', ''])
-    const responseRange = ref<[string, string]>(['', ''])
+    const appliedRange = ref<[string, string]>(['', '']);
+    const responseRange = ref<[string, string]>(['', '']);
 
     const filters = computed(() => ({
         searchQuery: searchQuery.value,
@@ -59,4 +59,4 @@ export const useFilterStore = defineStore('filter', () => {
         clearFilters,
         areFiltersEmpty
     }
-})
+});

@@ -10,8 +10,8 @@ import IconSearch from "@/components/icons/IconSearch.vue";
 import AddApplicationButton from "@/components/applications/add_position_buttons/AddApplicationButton.vue";
 import ImportCSVButton from "@/components/applications/add_position_buttons/ImportCSVButton.vue";
 
-const store = useFilterStore()
-const {searchQuery, experience, status, appliedRange, responseRange} = storeToRefs(store)
+const store = useFilterStore();
+const {searchQuery, experience, status, appliedRange, responseRange} = storeToRefs(store);
 </script>
 
 <template>

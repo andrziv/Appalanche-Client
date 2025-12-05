@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {JobApplication} from "@/models/JobApplication";
 
-defineProps<{ applications: JobApplication[] }>()
+defineProps<{ applications: JobApplication[] }>();
 
 const daysSince = (date: Date) => {
   const today = new Date();

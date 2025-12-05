@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import {useFilterStore} from '@/stores/filters'
+import {ref} from 'vue';
+import {useFilterStore} from '@/stores/filters';
 import IconXMark from "@/components/icons/IconXMark.vue";
 
-const store = useFilterStore()
+const store = useFilterStore();
 
-const showConditionMenu = ref(false)
-const interestOperator = ref<'>' | '>=' | '=' | 'range' | ''>('')
-const interestValue = ref<number | null>(null)
-const interestValue2 = ref<number | null>(null)
+const showConditionMenu = ref(false);
+const interestOperator = ref<'>' | '>=' | '=' | 'range' | ''>('');
+const interestValue = ref<number | null>(null);
+const interestValue2 = ref<number | null>(null);
 
 function finalizeCondition() {
   if (interestOperator.value === 'range' && interestValue.value != null && interestValue2.value != null) {
@@ -16,29 +16,29 @@ function finalizeCondition() {
       operator: 'range',
       value: interestValue.value,
       value2: interestValue2.value
-    })
+    });
   } else if (interestOperator.value && interestValue.value != null) {
     store.interestFilters.push({
       operator: interestOperator.value,
       value: interestValue.value
-    })
+    });
   }
-  resetCondition()
+  resetCondition();
 }
 
 function removeInterest(index: number) {
-  store.interestFilters.splice(index, 1)
+  store.interestFilters.splice(index, 1);
 }
 
 function startNewCondition(operator: '>' | '>=' | '=' | 'range') {
-  interestOperator.value = operator
+  interestOperator.value = operator;
 }
 
 function resetCondition() {
-  interestOperator.value = ''
-  interestValue.value = null
-  interestValue2.value = null
-  showConditionMenu.value = false
+  interestOperator.value = '';
+  interestValue.value = null;
+  interestValue2.value = null;
+  showConditionMenu.value = false;
 }
 </script>
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
-import {useRouter} from 'vue-router'
-import {useAuthStore} from '@/stores/authentication'
+import {reactive, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useAuthStore} from '@/stores/authentication';
 import LoadingButton from "@/components/widget/LoadingButton.vue";
 import IconExclamation from "@/components/icons/IconExclamation.vue";
 import FormComponent from "@/components/widget/FormComponent.vue";
 
-const router = useRouter()
-const auth = useAuthStore()
+const router = useRouter();
+const auth = useAuthStore();
 
 const form = reactive({
   email: '',

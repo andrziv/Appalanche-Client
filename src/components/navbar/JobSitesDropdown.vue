@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import IconExternal from '../icons/IconExternal.vue'
+import {ref} from 'vue';
+import IconExternal from '../icons/IconExternal.vue';
 import IconDownChevron from '../icons/IconDownChevron.vue';
 import IconJobBoard from '../icons/IconJobBoard.vue';
 import temp from "@/assets/vue.svg";
 
-const dropdownOpen = ref(false)
-let hoverTimeout: ReturnType<typeof setTimeout> | null = null
+const dropdownOpen = ref(false);
+let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const openDropdown = () => {
-  if (hoverTimeout) clearTimeout(hoverTimeout)
-  dropdownOpen.value = true
+  if (hoverTimeout) clearTimeout(hoverTimeout);
+  dropdownOpen.value = true;
 }
 
 const closeDropdown = () => {
   hoverTimeout = setTimeout(() => {
-    dropdownOpen.value = false
-  }, 150)
+    dropdownOpen.value = false;
+  }, 150);
 }
 
 const jobSites = [
@@ -35,7 +35,7 @@ const jobSites = [
     url: 'https://www.levels.fyi',
     icon: temp
   }
-]
+];
 </script>
 
 <template>

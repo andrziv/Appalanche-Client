@@ -3,8 +3,8 @@ import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
 import SubNav from "@/components/navbar/SubNav.vue";
 import ThemedImage from "@/components/icons/ThemedImage.vue";
-import lightLogo from '@/assets/appalanche.svg'
-import darkLogo from '@/assets/appalanche_grayscale.svg'
+import lightLogo from '@/assets/appalanche.svg';
+import darkLogo from '@/assets/appalanche_grayscale.svg';
 
 const route = useRoute();
 
