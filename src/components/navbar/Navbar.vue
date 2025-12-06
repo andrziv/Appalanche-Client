@@ -33,7 +33,7 @@ const regions = ["USA", "Canada", "Mexico"];
 
         <div class="flex space-x-4">
           <select v-model="selectedRegion"
-                  class="px-3 bg-gray-200 dark:bg-zinc-900 rounded-full text-gray-600 dark:text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  class="px-3 bg-gray-200 dark:bg-zinc-900 rounded-full text-gray-600 dark:text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
             <option v-for="region in regions" :key="region">{{ region }}</option>
           </select>
 

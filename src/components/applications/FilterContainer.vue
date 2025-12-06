@@ -42,9 +42,8 @@ onBeforeUnmount(() => {
 <template>
   <div ref="dropdownRef" class="relative inline-block text-left">
     <a @click.stop="toggleDropdown"
-       class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer
-       bg-slate-500 dark:bg-zinc-900 hover:bg-slate-400 dark:hover:bg-zinc-800 transition"
-       :class="{ 'after:absolute after:inset-0 after:bg-green-400/20 after:rounded-sm after:pointer-events-none': filterActive }">
+       class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer transition"
+       :class="filterActive ? 'toggledButtonBackground' : 'buttonBackground'">
       <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">{{ props.label }}</span>
       <IconDownChevron class="h-4 w-auto transition-transform theme-icon" :class="{ 'rotate-180': open }"/>
     </a>
@@ -69,5 +68,13 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+@reference "../../style.css";
 
+.buttonBackground {
+  @apply bg-[#C4615B] dark:bg-zinc-900 hover:bg-[#D8827D] dark:hover:bg-zinc-800;
+}
+
+.toggledButtonBackground {
+  @apply bg-[#CB3B3B] dark:bg-[#9B2C2C] hover:bg-[#EA4242] dark:hover:bg-[#9B3B3B];
+}
 </style>

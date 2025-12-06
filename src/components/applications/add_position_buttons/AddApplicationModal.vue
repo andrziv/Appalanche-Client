@@ -21,7 +21,7 @@ function save() {
     <template #footer>
       <div class="flex justify-end space-x-2">
         <button @click="save()"
-                class="px-3 py-1 rounded-sm bg-blue-600 dark:bg-blue-800 text-white hover:bg-blue-700 dark:hover:bg-blue-700 transition">
+                class="px-3 py-1 rounded-sm bg-red-800 dark:bg-red-900 text-white hover:bg-red-700 transition">
           Save
         </button>
       </div>

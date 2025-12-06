@@ -17,7 +17,7 @@ const hideAddModal = () => {
 <template>
   <div class="relative inline-block text-left">
     <a @click="showAddModal"
-       class="px-4 py-2 rounded-sm cursor-pointer bg-blue-600 dark:bg-blue-900 text-white hover:bg-blue-700">
+       class="px-4 py-2 rounded-sm cursor-pointer bg-red-800 dark:bg-red-900 text-white hover:bg-red-700">
       Add Application
     </a>
 

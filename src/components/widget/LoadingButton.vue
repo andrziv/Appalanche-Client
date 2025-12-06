@@ -9,7 +9,7 @@ const props = defineProps<Props>();
 
 <template>
   <button type="submit" :disabled="props.isSpinning"
-          class="w-full justify-items-center align-center px-4 py-2 rounded-sm cursor-pointer bg-blue-600 dark:bg-blue-900 text-white hover:bg-blue-700">
+          class="w-full justify-items-center align-center px-4 py-2 rounded-sm cursor-pointer bg-red-800 dark:bg-red-900 text-white hover:bg-red-700">
     <span v-if="!props.isSpinning">{{ props.text }}</span>
     <span v-else role="status" class="flex justify-center">
       <svg aria-hidden="true" class="w-6 h-6 me-2 text-neutral-tertiary animate-spin fill-black"

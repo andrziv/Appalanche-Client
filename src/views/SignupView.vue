@@ -60,7 +60,7 @@ const handleSignup = async () => {
         <p class="text-center text-sm text-gray-600 dark:text-gray-400">
           Have an account already?
           <RouterLink to="/signup"
-                      class="font-semibold text-blue-600 dark:text-blue-900 hover:text-blue-700 hover:underline">
+                      class="font-semibold text-red-800 dark:text-red-900 hover:text-red-700 hover:underline">
             Sign in Here
           </RouterLink>
         </p>
