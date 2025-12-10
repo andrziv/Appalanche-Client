@@ -1,11 +1,16 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
 
+interface Account {
+    accountId: string;
+    email: string;
+}
+
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: null as Account | null,
         isLoading: false,
-        error: null as string | null,
+        error: null as Record<string, string> | null,
         authCheckComplete: false
     }),
 
@@ -44,7 +49,7 @@ export const useAuthStore = defineStore('auth', {
                 });
 
                 if (response.status !== 200) {
-                    this.error = 'Invalid credentials';
+                    this.error = {'message': 'Invalid credentials'};
                     return false;
                 }
 

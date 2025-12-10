@@ -32,14 +32,16 @@ export class ApplicationState {
         return new ApplicationState(ApplicationState.TechnicalInterview.label, round, ApplicationState.TechnicalInterview.colour, ApplicationState.TechnicalInterview.textColour);
     }
 
-    static values(): ExperienceLevel[] {
+    static values(): ApplicationState[] {
         return [
             ApplicationState.Applied,
+            ApplicationState.OnlineAssessment,
             ApplicationState.PhoneInterview,
             ApplicationState.Interview,
             ApplicationState.TechnicalInterview,
             ApplicationState.Offer,
-            ApplicationState.Rejected
+            ApplicationState.Rejected,
+            ApplicationState.Withdrew
         ];
     }
 
@@ -52,7 +54,7 @@ export class ApplicationState {
     }
 
     get code(): string {
-        return label.toUpperCase().replace(` `, `_`) + round;
+        return this.label.toUpperCase().replace(` `, `_`) + this.round;
     }
 
     toString() {

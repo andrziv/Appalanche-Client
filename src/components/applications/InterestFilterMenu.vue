@@ -6,7 +6,7 @@ import IconXMark from "@/components/icons/IconXMark.vue";
 const store = useFilterStore();
 
 const showConditionMenu = ref(false);
-const interestOperator = ref<'>' | '>=' | '=' | 'range' | ''>('');
+const interestOperator = ref<'>'| '>=' | '=' | '<=' | '<' | 'range' | ''>('');
 const interestValue = ref<number | null>(null);
 const interestValue2 = ref<number | null>(null);
 
@@ -30,7 +30,7 @@ function removeInterest(index: number) {
   store.interestFilters.splice(index, 1);
 }
 
-function startNewCondition(operator: '>' | '>=' | '=' | 'range') {
+function startNewCondition(operator: '>'| '>=' | '=' | '<=' | '<' | 'range') {
   interestOperator.value = operator;
 }
 
@@ -103,7 +103,7 @@ function resetCondition() {
                    placeholder="max"/>
           </template>
           <template v-else>
-            <span class="text-sm flex-shrink-0">x {{ interestOperator }}</span>
+            <span class="text-sm shrink-0">x {{ interestOperator }}</span>
             <input v-model.number="interestValue"
                    type="number"
                    min="0"
@@ -113,7 +113,7 @@ function resetCondition() {
           </template>
         </div>
 
-        <div class="flex items-center space-x-2 flex-shrink-0 text-sm font-semibold text-black dark:text-gray-100">
+        <div class="flex items-center space-x-2 shrink-0 text-sm font-semibold text-black dark:text-gray-100">
           <a class="rounded-sm text-center px-2 py-1 bg-green-500 hover:bg-green-600 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
              @click="finalizeCondition">
             Finalize

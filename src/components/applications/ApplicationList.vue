@@ -33,27 +33,27 @@ const formatDate = (date: Date) =>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in applications" :key="jobApp.id">
+    <tr v-for="jobApp in applications" :key="jobApp.idValue">
       <td class="text-left">
-        <div class="font-semibold">{{ jobApp.positionName }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.employerName }}</div>
+        <div class="font-semibold">{{ jobApp.position }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.employer }}</div>
       </td>
-      <td><a :href="jobApp.link" target="_blank">{{ jobApp.jobId }}</a></td>
-      <td>{{ jobApp.level }}</td>
-      <td class="interest">{{ jobApp.interest }}/10</td>
+      <td><a :href="jobApp.jobLink" target="_blank">{{ jobApp.jobIdentifier }}</a></td>
+      <td>{{ jobApp.experienceLevel }}</td>
+      <td class="interest">{{ jobApp.interestLevel }}/10</td>
       <td class="status">
         <div class="w-full text-center text-white font-medium rounded-md px-2 py-1"
-             :style="{ backgroundColor: jobApp.status.colour }">
-          {{ jobApp.status.toString() }}
+             :style="{ backgroundColor: jobApp.applicationStatus.colour }">
+          {{ jobApp.applicationStatus.toString() }}
         </div>
       </td>
       <td>
-        <div class="font-semibold">{{ formatDate(jobApp.dateApplied) }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.dateApplied) }} days ago</div>
+        <div class="font-semibold">{{ formatDate(jobApp.appliedDate) }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.appliedDate) }} days ago</div>
       </td>
       <td>
-        <div class="font-semibold">{{ formatDate(jobApp.lastResponse) }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.lastResponse) }} days ago</div>
+        <div class="font-semibold">{{ formatDate(jobApp.lastResponseDate) }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.lastResponseDate) }} days ago</div>
       </td>
     </tr>
     </tbody>

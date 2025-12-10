@@ -30,7 +30,7 @@ export class ExperienceLevel {
     }
 
     get code(): string {
-        return label.toUpperCase().replace(` `, `_`);
+        return this.label.toUpperCase().replace(` `, `_`);
     }
 
     toString() {

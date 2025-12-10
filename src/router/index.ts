@@ -5,6 +5,8 @@ import {useAuthStore} from '@/stores/authentication'
 import ApplicationsView from '@/views/ApplicationsView.vue';
 import LoginView from '@/views/LoginView.vue';
 import SignupView from '@/views/SignupView.vue';
+import SettingsView from "@/views/SettingsView.vue";
+import {useProfileStore} from "@/stores/profile";
 
 const routes = [
     {
@@ -37,6 +39,16 @@ const routes = [
             requiresNoAuth: true
         },
     },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: SettingsView,
+        meta: {
+            title: 'Settings',
+            requiresAuth: true,
+            requiresNoAuth: false
+        },
+    },
 ];
 
 const router = createRouter({
@@ -44,18 +56,24 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-    const auth = useAuthStore();
+router.beforeEach(async (to, _from, next) => {
+    const authStore = useAuthStore();
+    const profileStore = useProfileStore();
 
-    if (!auth.authCheckComplete) {
-        await auth.fetchUser();
+    if (!authStore.authCheckComplete) {
+        await authStore.fetchUser();
     }
 
-    if (to.matched.some(record => record.meta.requiresAuth) && !auth.isAuthenticated) {
+    const authenticated = authStore.isAuthenticated;
+    if (authenticated && profileStore.profile == null) {
+        await profileStore.fetchProfile();
+    }
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
         return next({name: 'Login'});
     }
 
-    if (to.matched.some(record => record.meta.requiresNoAuth) && auth.isAuthenticated) {
+    if (to.matched.some(record => record.meta.requiresNoAuth) && authenticated) {
         return next({name: 'Applications'});
     }
 

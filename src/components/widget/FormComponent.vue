@@ -5,6 +5,7 @@ import IconExclamation from "@/components/icons/IconExclamation.vue";
 interface Props {
   label: string;
   id: string;
+  required?: boolean;
   error?: string;
   muteErrorMessage?: boolean;
   type?: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  required: true,
   error: null,
   type: 'text',
   placeholder: '',
@@ -37,7 +39,7 @@ const isMuted = computed(() => {
       {{ props.label }}
     </label>
     <input :id="props.id" v-model="model" :type="props.type" :placeholder="props.placeholder"
-           :autocomplete="props.autocomplete" required
+           :autocomplete="props.autocomplete" :required="required"
            class="inputField" :class="{ 'border border-red-400': props.error }"/>
 
     <div v-if="props.error && !isMuted" class="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400">
