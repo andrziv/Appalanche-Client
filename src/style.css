@@ -33,5 +33,5 @@
 }
 
 .theme-shadow-dropdown {
-    @apply shadow-2xl dark:shadow-xl dark:shadow-zinc-900;
+    @apply drop-shadow-2xl dark:drop-shadow-lg dark:drop-shadow-zinc-950;
 }

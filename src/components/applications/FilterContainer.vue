@@ -14,7 +14,7 @@ const props = defineProps<{
   <SimpleDropdown>
     <template #dropdown-button="{dropdownOpen}">
       <div class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer transition"
-           :class="filterActive ? 'toggledButtonBackground' : 'buttonBackground'">
+           :class="filterActive ? 'toggled-button-background' : 'filter-button-background'">
         <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">{{ props.label }}</span>
         <IconDownChevron class="h-4 w-auto transition-transform theme-icon" :class="{ 'rotate-180': dropdownOpen }"/>
       </div>
@@ -37,11 +37,11 @@ const props = defineProps<{
 <style scoped>
 @reference "../../style.css";
 
-.buttonBackground {
+.filter-button-background {
   @apply bg-[#C4615B] dark:bg-zinc-900 hover:bg-[#D8827D] dark:hover:bg-zinc-800;
 }
 
-.toggledButtonBackground {
+.toggled-button-background {
   @apply bg-[#CB3B3B] dark:bg-[#9B2C2C] hover:bg-[#EA4242] dark:hover:bg-[#9B3B3B];
 }
 </style>
