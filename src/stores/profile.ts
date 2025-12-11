@@ -18,8 +18,8 @@ export const useProfileStore = defineStore('profile', {
     }),
 
     getters: {
-        fullName: (state) : string | null => {
-            if(state.profile == null) {
+        fullName: (state): string | null => {
+            if (state.profile == null) {
                 return null;
             } else {
                 return state.profile.firstname + " " + state.profile.surname;
@@ -59,14 +59,28 @@ export const useProfileStore = defineStore('profile', {
                     portfolioSite: portfolio
                 });
 
-                if (response.status !== 200) {
+                if (response.status !== 204) {
                     this.error = {
                         "message": "Could not Update Profile",
                     };
                     return false;
                 }
 
-                return await this.fetchProfile();
+                if(this.profile == null) {
+                    return await this.fetchProfile();
+                } else {
+                    this.profile = {
+                        ...this.profile,
+                        accountId: this.profile.accountId,
+                        firstname: firstName,
+                        surname: lastName,
+                        linkedInProfile: linkedIn,
+                        gitHubProfile: gitHub,
+                        portfolioSite: portfolio
+                    };
+                }
+
+                return true;
             } catch (err: any) {
                 this.error = err.response.data;
                 return false;
