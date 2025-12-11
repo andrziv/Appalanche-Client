@@ -18,7 +18,8 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
   <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800">
     <div class="max-w-7xl mx-auto py-4 space-y-4">
       <div class="flex justify-between items-center px-8">
-        <div class="flex w-1/3 items-center rounded-sm text-sm bg-[#CB3B3B] dark:bg-zinc-900 text-white focus-within:drop-shadow-xl">
+        <div class="flex w-1/3 items-center rounded-sm text-sm text-white focus-within:drop-shadow-xl"
+             :class="searchQuery.length > 0 ? 'active-search-background' : 'filter-search-background'">
           <IconSearch class="h-6 w-auto px-2 invert dark:invert-70"/>
           <input v-model="searchQuery"
                  type="text"
@@ -122,5 +123,13 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
 </template>
 
 <style scoped>
+@reference "../../style.css";
 
+.filter-search-background {
+  @apply bg-[#C4615B] dark:bg-zinc-900;
+}
+
+.active-search-background {
+  @apply bg-[#CB3B3B] dark:bg-[#9B2C2C];
+}
 </style>
