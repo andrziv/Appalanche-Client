@@ -10,6 +10,7 @@ import FilterContainer from "@/components/applications/FilterContainer.vue";
 import IconGear from "@/components/icons/IconGear.vue";
 import IconDoor from "@/components/icons/IconDoor.vue";
 import {useProfileStore} from "@/stores/profile";
+import ProfileDropdown from "@/components/navbar/ProfileDropdown.vue";
 
 const route = useRoute();
 const authStore = useAuthStore();
@@ -54,28 +55,7 @@ const regions = ["USA", "Canada", "Mexico"];
             <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">Sign Up</span>
           </a>
         </div>
-        <div v-else class="flex space-x-4">
-          <FilterContainer title="" :label="profileStore.fullName" description="" :filter-active="false">
-            <template #dropdown-menu>
-              <div class="flex flex-col space-y-2 pt-1">
-                <a class="flex items-center gap-1.5 px-3 py-2 text-sm bg-gray-200 dark:bg-zinc-900 rounded-sm hover:bg-gray-300 dark:hover:bg-zinc-800 transition"
-                   href="/settings">
-                  <IconGear/>
-                  <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Settings
-                  </span>
-                </a>
-                <a class="flex items-center gap-1.5 px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm hover:bg-gray-400 dark:hover:bg-zinc-800 transition"
-                   href="/signup">
-                  <IconDoor/>
-                  <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">
-                    Log Out
-                  </span>
-                </a>
-              </div>
-            </template>
-          </FilterContainer>
-        </div>
+        <ProfileDropdown v-else :label="profileStore.fullName"/>
       </div>
     </nav>
     <SubNav/>

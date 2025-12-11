@@ -31,3 +31,7 @@
         filter: invert(0.7);
     }
 }
+
+.theme-shadow-dropdown {
+    @apply shadow-2xl dark:shadow-xl dark:shadow-zinc-900;
+}
