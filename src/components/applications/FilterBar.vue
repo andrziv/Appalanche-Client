@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
-import {useFilterStore} from '@/stores/filters'
 import {ExperienceLevel} from "@/models/ExperienceLevel";
 import {ApplicationState} from "@/models/ApplicationState";
 import FilterContainer from "@/components/applications/FilterContainer.vue";
@@ -9,9 +8,10 @@ import IconXMark from "@/components/icons/IconXMark.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import AddApplicationButton from "@/components/applications/add_position_buttons/AddApplicationButton.vue";
 import ImportCSVButton from "@/components/applications/add_position_buttons/ImportCSVButton.vue";
+import {useApplicationStore} from "@/stores/applications";
 
-const store = useFilterStore();
-const {searchQuery, experience, status, appliedRange, responseRange} = storeToRefs(store);
+const store = useApplicationStore();
+const {filters} = storeToRefs(store);
 </script>
 
 <template>
@@ -19,9 +19,9 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
     <div class="max-w-7xl mx-auto py-4 space-y-4">
       <div class="flex justify-between items-center px-8">
         <div class="flex w-1/3 items-center rounded-sm text-sm text-white focus-within:drop-shadow-xl"
-             :class="searchQuery.length > 0 ? 'active-search-background' : 'filter-search-background'">
+             :class="filters.searchQuery.length > 0 ? 'active-search-background' : 'filter-search-background'">
           <IconSearch class="h-6 w-auto px-2 invert dark:invert-70"/>
-          <input v-model="searchQuery"
+          <input v-model="filters.searchQuery"
                  type="text"
                  placeholder="Search company, position, or ID..."
                  class="w-full p-2 focus:outline-none"/>
@@ -38,11 +38,12 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         <FilterContainer label="Experience"
                          title="Experience"
                          description="Filter jobs by experience desired for position"
-                         :filterActive="store.experience.length > 0">
+                         :filterActive="filters.experienceLevels.length > 0">
           <template #dropdown-menu>
             <div class="flex flex-col space-y-2 pt-1">
               <div v-for="level in ExperienceLevel.values()" :key="level.label" class="flex items-center space-x-2">
-                <input type="checkbox" :id="`exp-${level.label}`" :value="level.label" v-model="experience"
+                <input type="checkbox" :id="`exp-${level.label}`" :value="level.label"
+                       v-model="filters.experienceLevels"
                        class="appearance-none h-4 w-4 bg-gray-200 hover:bg-gray-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm
                      checked:bg-green-600 hover:checked:bg-green-800 dark:hover:checked:bg-green-400 cursor-pointer transition"/>
                 <label :for="`exp-${level.label}`" class="flex flex-col cursor-pointer">
@@ -58,7 +59,7 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         <FilterContainer label="Interest"
                          title="Personal Interest"
                          description="Filter jobs by your recorded interest in the position"
-                         :filterActive="store.interestFilters.length > 0">
+                         :filterActive="filters.interestCriteria.length > 0">
           <template #dropdown-menu>
             <InterestFilterMenu/>
           </template>
@@ -67,11 +68,11 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         <FilterContainer label="Status"
                          title="Application Status"
                          description="Filter jobs by currently recorded application status"
-                         :filterActive="store.status.length > 0">
+                         :filterActive="filters.statusCodes.length > 0">
           <template #dropdown-menu>
             <div class="flex flex-col space-y-2 pt-1">
               <div v-for="state in ApplicationState.values()" :key="state.label" class="flex items-center space-x-2">
-                <input type="checkbox" :id="`exp-${state.label}`" :value="state.label" v-model="status"
+                <input type="checkbox" :id="`exp-${state.label}`" :value="state.label" v-model="filters.statusCodes"
                        class="appearance-none h-4 w-4 bg-gray-200 hover:bg-gray-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm
                      checked:bg-green-600 hover:checked:bg-green-800 dark:hover:checked:bg-green-400 cursor-pointer transition"/>
                 <label :for="`exp-${state.label}`" class="flex flex-col cursor-pointer">
@@ -85,13 +86,13 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         <FilterContainer label="Applied Range"
                          title="Application Date Range"
                          description="Filter jobs between dates for application times"
-                         :filterActive="!!(store.appliedRange[0] || store.appliedRange[1])">
+                         :filterActive="!!(filters.appliedBefore || filters.appliedAfter)">
           <template #dropdown-menu>
             <div class="flex items-center space-x-1 text-sm pt-1">
-              <input type="date" v-model="appliedRange[0]"
+              <input type="date" v-model="filters.appliedBefore"
                      class="rounded-sm px-2 py-1 bg-gray-200 dark:bg-zinc-800 dark:text-gray-100"/>
               <span> to </span>
-              <input type="date" v-model="appliedRange[1]"
+              <input type="date" v-model="filters.appliedAfter"
                      class="rounded-sm px-2 py-1 bg-gray-200 dark:bg-zinc-800 dark:text-gray-100"/>
             </div>
           </template>
@@ -100,13 +101,13 @@ const {searchQuery, experience, status, appliedRange, responseRange} = storeToRe
         <FilterContainer label="Response Range"
                          title="Response Date Range"
                          description="Filter jobs between dates for last response times"
-                         :filterActive="!!(store.responseRange[0] || store.responseRange[1])">
+                         :filterActive="!!(filters.responseBefore || filters.responseAfter)">
           <template #dropdown-menu>
             <div class="flex items-center space-x-1 text-sm pt-1">
-              <input type="date" v-model="responseRange[0]"
+              <input type="date" v-model="filters.responseBefore"
                      class="rounded-sm px-2 py-1 bg-gray-200 dark:bg-zinc-800 dark:text-gray-100"/>
               <span> to </span>
-              <input type="date" v-model="responseRange[1]"
+              <input type="date" v-model="filters.responseAfter"
                      class="rounded-sm px-2 py-1 bg-gray-200 dark:bg-zinc-800 dark:text-gray-100"/>
             </div>
           </template>
