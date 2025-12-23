@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
-import {JobApplication} from "@/models/JobApplication";
+import type {JobApplication} from "@/models/JobApplication";
 import {InterestCondition} from "@/models/InterestCondition";
 
 export const useApplicationStore = defineStore('applications', {
@@ -91,7 +91,7 @@ export const useApplicationStore = defineStore('applications', {
             try {
                 await axios.patch(`/applications/${id}`, changes);
 
-                const index = this.items.findIndex(app => app.idValue === id);
+                const index = this.items.findIndex(app => app.id === id);
                 if (index !== -1) {
                     this.items[index] = {...this.items[index], ...changes};
                 }
@@ -104,7 +104,7 @@ export const useApplicationStore = defineStore('applications', {
             try {
                 await axios.delete(`/applications/${id}`);
 
-                this.items = this.items.filter(app => app.idValue !== id);
+                this.items = this.items.filter(app => app.id !== id);
                 this.pagination.totalElements--;
 
                 if (this.items.length === 0 && this.pagination.page > 0) {

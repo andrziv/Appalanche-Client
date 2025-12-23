@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
 import {ExperienceLevel} from "@/models/ExperienceLevel";
-import {ApplicationState} from "@/models/ApplicationState";
+import {APPLICATION_STATUSES, ApplicationStatus} from "@/models/ApplicationStatus";
 import FilterContainer from "@/components/applications/FilterContainer.vue";
 import InterestFilterMenu from "@/components/applications/InterestFilterMenu.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
@@ -71,12 +71,12 @@ const {filters} = storeToRefs(store);
                          :filterActive="filters.statusCodes.length > 0">
           <template #dropdown-menu>
             <div class="flex flex-col space-y-2 pt-1">
-              <div v-for="state in ApplicationState.values()" :key="state.label" class="flex items-center space-x-2">
-                <input type="checkbox" :id="`exp-${state.label}`" :value="state.label" v-model="filters.statusCodes"
+              <div v-for="state in APPLICATION_STATUSES" :key="state" class="flex items-center space-x-2">
+                <input type="checkbox" :id="`exp-${state}`" :value="state" v-model="filters.statusCodes"
                        class="appearance-none h-4 w-4 bg-gray-200 hover:bg-gray-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm
                      checked:bg-green-600 hover:checked:bg-green-800 dark:hover:checked:bg-green-400 cursor-pointer transition"/>
-                <label :for="`exp-${state.label}`" class="flex flex-col cursor-pointer">
-                  <span class="font-medium text-sm text-gray-800 dark:text-gray-200">{{ state.label }}</span>
+                <label :for="`exp-${state}`" class="flex flex-col cursor-pointer">
+                  <span class="font-medium text-sm text-gray-800 dark:text-gray-200">{{ state }}</span>
                 </label>
               </div>
             </div>

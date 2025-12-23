@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed} from 'vue';
 import ApplicationList from '@/components/applications/ApplicationList.vue';
 import FilterBar from '@/components/applications/FilterBar.vue';
-import {hardcodedApps} from '@/models/MockData';
+import {useApplicationStore} from "@/stores/applications";
+import {storeToRefs} from "pinia";
 
-const filteredApplications = computed(() => {
-  return hardcodedApps;
-})
+const store = useApplicationStore();
+const {items} = storeToRefs(store);
+store.fetchApplications();
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const filteredApplications = computed(() => {
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div
           class="-mt-16 flex flex-col min-h-full w-full max-w-7xl overflow-y-auto mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
-        <ApplicationList :applications="filteredApplications"/>
+        <ApplicationList :applications="items"/>
         <div class="h-25 bg-gray-200 dark:bg-zinc-950 mt-auto shrink-0"/>
       </div>
     </div>

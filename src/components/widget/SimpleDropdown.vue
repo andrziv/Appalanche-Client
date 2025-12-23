@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {onBeforeUnmount, onMounted, ref} from "vue";
-import IconDownChevron from "@/components/icons/IconDownChevron.vue";
 
 const open = ref(false);
 const dropdownRef = ref<HTMLElement | null>(null);

@@ -6,9 +6,6 @@ import ThemedImage from "@/components/icons/ThemedImage.vue";
 import lightLogo from '@/assets/appalanche.svg';
 import darkLogo from '@/assets/appalanche_grayscale.svg';
 import {useAuthStore} from "@/stores/authentication";
-import FilterContainer from "@/components/applications/FilterContainer.vue";
-import IconGear from "@/components/icons/IconGear.vue";
-import IconDoor from "@/components/icons/IconDoor.vue";
 import {useProfileStore} from "@/stores/profile";
 import ProfileDropdown from "@/components/navbar/ProfileDropdown.vue";
 
