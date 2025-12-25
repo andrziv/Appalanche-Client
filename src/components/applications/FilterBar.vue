@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
 import {ExperienceLevel} from "@/models/ExperienceLevel";
-import {APPLICATION_STATUSES, ApplicationStatus} from "@/models/ApplicationStatus";
+import {APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 import FilterContainer from "@/components/applications/FilterContainer.vue";
 import InterestFilterMenu from "@/components/applications/InterestFilterMenu.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";

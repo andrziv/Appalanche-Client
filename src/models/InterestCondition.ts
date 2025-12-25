@@ -22,13 +22,13 @@ export function operatorTypeMapping(operator: OperatorType) {
 
 export class InterestCondition {
     public operator: OperatorType;
-    public value: number;
-    public value2?: number;
+    public conditionNum: number;
+    public conditionNum2?: number;
 
-    public constructor(operator: 'gt' | 'gte' | 'eq' | 'lte' | 'lt' | 'between', value: number, value2?: number) {
+    public constructor(operator: OperatorType, value: number, value2?: number) {
         this.operator = operator;
-        this.value = value;
-        this.value2 = value2;
+        this.conditionNum = value;
+        this.conditionNum2 = value2;
     }
 
     public isValid(): boolean {
@@ -37,26 +37,26 @@ export class InterestCondition {
         }
 
         if (this.operator === 'between') {
-            return this.value !== null && this.value2 !== null;
+            return this.conditionNum !== null && this.conditionNum2 !== null;
         }
 
-        return this.value !== null;
+        return this.conditionNum !== null;
     }
 
     public displayString(): string {
         const mappedOperator = operatorTypeMapping(this.operator);
         if (this.operator === 'between') {
-            return [this.value, mappedOperator, 'x', mappedOperator, this.value2].join(" ");
+            return [this.conditionNum, mappedOperator, 'x', mappedOperator, this.conditionNum2].join(" ");
         }
 
-        return ['x', mappedOperator, this.value].join(" ");
+        return ['x', mappedOperator, this.conditionNum].join(" ");
     }
 
     toString() {
         if (this.operator === 'between') {
-            return [this.operator, this.value, this.value2].join(":");
+            return [this.operator, this.conditionNum, this.conditionNum2].join(":");
         }
 
-        return [this.operator, this.value].join(":");
+        return [this.operator, this.conditionNum].join(":");
     }
 }

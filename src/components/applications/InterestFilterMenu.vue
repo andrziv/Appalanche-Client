@@ -2,14 +2,18 @@
 import {ref} from 'vue';
 import {useApplicationStore} from '@/stores/applications';
 import IconXMark from "@/components/icons/IconXMark.vue";
-import {InterestCondition, OPERATORS, OperatorType, operatorTypeMapping} from "@/models/InterestCondition";
+import {InterestCondition, OPERATORS, operatorTypeMapping} from "@/models/InterestCondition";
+import type {OperatorType} from '@/models/InterestCondition';
 
 const store = useApplicationStore();
 
 const showConditionMenu = ref(false);
-const interestCondition = ref<InterestCondition>(null);
+const interestCondition = ref<InterestCondition | null>(null);
 
 function finalizeCondition() {
+  if (interestCondition.value === null) {
+    return;
+  }
   if (interestCondition.value.isValid()) {
     store.filters.interestCriteria.push(interestCondition.value);
   }
@@ -70,14 +74,14 @@ function resetCondition() {
       <div v-else class="flex flex-wrap items-center space-x-2">
         <div class="flex items-center space-x-2 flex-1 min-w-0 text-sm text-black dark:text-white">
           <template v-if="interestCondition.operator === 'between'">
-            <input v-model.number="interestCondition.value"
+            <input v-model.number="interestCondition.conditionNum"
                    type="number"
                    min="0"
                    max="10"
                    class="w-16 px-2 py-1 rounded-sm bg-gray-200 dark:bg-zinc-800"
                    placeholder="min"/>
             <span class="text-sm">{{ operatorTypeMapping('between') }} x {{ operatorTypeMapping('between') }}</span>
-            <input v-model.number="interestCondition.value2"
+            <input v-model.number="interestCondition.conditionNum2"
                    type="number"
                    min="0"
                    max="10"
@@ -86,7 +90,7 @@ function resetCondition() {
           </template>
           <template v-else>
             <span class="text-sm shrink-0">x {{ operatorTypeMapping(interestCondition.operator) }}</span>
-            <input v-model.number="interestCondition.value"
+            <input v-model.number="interestCondition.conditionNum"
                    type="number"
                    min="0"
                    max="10"

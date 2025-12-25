@@ -6,7 +6,7 @@ import IconDoor from "@/components/icons/IconDoor.vue";
 import IconGear from "@/components/icons/IconGear.vue";
 
 const props = defineProps<{
-  label: string;
+  label: string | null;
 }>();
 </script>
 
