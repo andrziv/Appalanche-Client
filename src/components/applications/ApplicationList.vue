@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {JobApplication} from "@/models/JobApplication";
+import IconExternal from "@/components/icons/IconExternal.vue";
 
 defineProps<{ applications: JobApplication[] }>();
 
@@ -39,7 +40,19 @@ const formatDate = (dateString: string) =>
         <div class="font-semibold">{{ jobApp.title }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.company }}</div>
       </td>
-      <td><a href="https://google.com" target="_blank">{{ jobApp.requisitionId }}</a></td>
+      <td>
+        <div v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center">
+          <a :href='jobApp.jobPostingLink'
+             target="_blank"
+             rel="noopener noreferrer">
+            {{ jobApp.requisitionId }}
+          </a>
+          <IconExternal class="h-3 w-auto theme-icon"/>
+        </div>
+        <div v-else>
+          {{ jobApp.requisitionId }}
+        </div>
+      </td>
       <td>{{ jobApp.experience.label }}</td>
       <td class="interest">{{ jobApp.interest }}/10</td>
       <td class="status">
