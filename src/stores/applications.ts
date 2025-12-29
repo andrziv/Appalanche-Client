@@ -2,6 +2,8 @@ import {defineStore} from 'pinia';
 import axios from 'axios';
 import type {JobApplication} from "@/models/JobApplication";
 import {InterestCondition} from "@/models/InterestCondition";
+import {convertApplicationHateoas} from "@/utility/ResponseAdapters";
+import {getUserTimezone} from "@/utility/DateUtilities";
 
 export const useApplicationStore = defineStore('applications', {
     state: () => ({
@@ -17,10 +19,10 @@ export const useApplicationStore = defineStore('applications', {
             statusCodes: [] as string[],
             experienceLevels: [] as string[],
             interestCriteria: [] as InterestCondition[],
-            appliedAfter: null as Date | null,
-            appliedBefore: null as Date | null,
-            responseAfter: null as Date | null,
-            responseBefore: null as Date | null
+            appliedAfter: null as string | null,
+            appliedBefore: null as string | null,
+            responseAfter: null as string | null,
+            responseBefore: null as string | null
         },
         sort: 'createdAt,desc',
         isLoading: false,
@@ -51,25 +53,28 @@ export const useApplicationStore = defineStore('applications', {
             try {
                 const response = await axios.get('/application', {
                     params: {
-                        page: this.pagination.page,
-                        size: this.pagination.size,
-                        sort: this.sort,
-
                         search: this.filters.searchQuery || undefined,
-                        appliedAfter: this.filters.appliedAfter || undefined,
-                        appliedBefore: this.filters.appliedBefore || undefined,
                         statusCodes: this.filters.statusCodes.length ?
                             this.filters.statusCodes.join(',') : undefined,
+                        experienceLevelCodes: this.filters.experienceLevels.length ?
+                            this.filters.experienceLevels.join(',') : undefined,
                         interestCriteria: this.filters.interestCriteria.length ?
                             this.filters.interestCriteria.join(',') : undefined,
-                        experienceLevels: this.filters.experienceLevels.length ?
-                            this.filters.experienceLevels.join(',') : undefined
+                        appliedAfter: this.filters.appliedAfter || undefined,
+                        appliedBefore: this.filters.appliedBefore || undefined,
+                        responseAfter: this.filters.responseAfter || undefined,
+                        responseBefore: this.filters.responseBefore || undefined,
+                        timezone: getUserTimezone(),
+
+                        page: this.pagination.page,
+                        size: this.pagination.size,
+                        sort: this.sort
                     }
                 });
 
-                this.items = response.data.content;
-                this.pagination.totalElements = response.data.totalElements;
-                this.pagination.totalPages = response.data.totalPages;
+                const { items, meta } = convertApplicationHateoas(response.data);
+                this.items = items;
+                this.pagination = meta;
             } catch (err: any) {
                 this.error = err.response.data;
             } finally {
@@ -121,6 +126,12 @@ export const useApplicationStore = defineStore('applications', {
             this.fetchApplications();
         },
 
+        updateFilters(newFilters: any) {
+            this.filters = {...this.filters, ...newFilters};
+            this.pagination.page = 0;
+            this.fetchApplications();
+        },
+
         clearFilters() {
             const filters = {
                 searchQuery: '',
@@ -135,10 +146,36 @@ export const useApplicationStore = defineStore('applications', {
             this.updateFilters(filters);
         },
 
-        updateFilters(newFilters: any) {
-            this.filters = {...this.filters, ...newFilters};
-            this.pagination.page = 0;
-            this.fetchApplications();
+        setSearchQuery(search: string) {
+            this.filters.searchQuery = search;
+            this.setPage(0);
+        },
+
+        setStatusQuery(statusCodes: string[]) {
+            this.filters.statusCodes = statusCodes;
+            this.setPage(0);
+        },
+
+        setExperienceQuery(experienceCodes: string[]) {
+            this.filters.experienceLevels = experienceCodes;
+            this.setPage(0);
+        },
+
+        setInterestQuery(interestPredicates: InterestCondition[]) {
+            this.filters.interestCriteria = interestPredicates;
+            this.setPage(0);
+        },
+
+        setAppliedRange(appliedAfter: string | null, appliedBefore: string | null) {
+            this.filters.appliedAfter = appliedAfter;
+            this.filters.appliedBefore = appliedBefore;
+            this.setPage(0);
+        },
+
+        setResponseRange(responseAfter: string | null, responseBefore: string | null) {
+            this.filters.responseAfter = responseAfter;
+            this.filters.responseBefore = responseBefore;
+            this.setPage(0);
         }
     }
 });

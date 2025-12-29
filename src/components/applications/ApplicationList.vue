@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type {JobApplication} from "@/models/JobApplication";
-import {colourFor} from "@/models/ApplicationStatus";
 
 defineProps<{ applications: JobApplication[] }>();
 
@@ -45,7 +44,7 @@ const formatDate = (dateString: string) =>
       <td class="interest">{{ jobApp.interest }}/10</td>
       <td class="status">
         <div class="w-full text-center text-white font-medium rounded-md px-2 py-1"
-             :style="{ backgroundColor: colourFor(jobApp.status) }">
+             :style="{backgroundColor: jobApp.status.colour, color: jobApp.status.textColour}">
           {{ jobApp.status.label }}
         </div>
       </td>
