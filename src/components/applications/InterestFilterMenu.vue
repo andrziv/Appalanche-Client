@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useApplicationStore} from '@/stores/applications';
 import IconXMark from "@/components/icons/IconXMark.vue";
 import {InterestCondition, OPERATORS, operatorTypeMapping} from "@/models/InterestCondition";
 import type {OperatorType} from '@/models/InterestCondition';
 
-const store = useApplicationStore();
+const props = defineProps<{
+  interestCriteria: InterestCondition[]
+}>();
+
+const emit = defineEmits(['update:interestCriteria']);
 
 const showConditionMenu = ref(false);
 const interestCondition = ref<InterestCondition | null>(null);
@@ -14,14 +17,19 @@ function finalizeCondition() {
   if (interestCondition.value === null) {
     return;
   }
+
+  const copy = props.interestCriteria.slice();
   if (interestCondition.value.isValid()) {
-    store.filters.interestCriteria.push(interestCondition.value);
+    copy.push(interestCondition.value);
   }
   resetCondition();
+  emit('update:interestCriteria', copy);
 }
 
 function removeInterest(index: number) {
-  store.filters.interestCriteria.splice(index, 1);
+  const copy = props.interestCriteria.slice();
+  copy.splice(index, 1);
+  emit('update:interestCriteria', copy);
 }
 
 function startNewCondition(operator: OperatorType) {
@@ -35,8 +43,8 @@ function resetCondition() {
 
 <template>
   <div @click.stop class="flex flex-col space-y-3 text-gray-800 dark:text-gray-100">
-    <div v-if="store.filters.interestCriteria.length > 0" class="flex flex-wrap gap-2 max-w-60">
-      <div v-for="(filter, index) in store.filters.interestCriteria" :key="index" @click="removeInterest(index)"
+    <div v-if="props.interestCriteria.length > 0" class="flex flex-wrap gap-2 max-w-60">
+      <div v-for="(filter, index) in props.interestCriteria" :key="index" @click="removeInterest(index)"
            class="inline-flex items-center w-fit space-x-2 px-3 py-1 bg-green-200 dark:bg-green-800 text-sm rounded-sm cursor-pointer hover:bg-green-300 dark:hover:bg-green-700 transition">
         <div>
           <span>

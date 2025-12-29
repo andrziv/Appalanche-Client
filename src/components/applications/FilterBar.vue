@@ -11,6 +11,7 @@ import {useApplicationStore} from "@/stores/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
 import SimpleDateRange from "@/components/widget/SimpleDateRange.vue";
+import {InterestCondition} from "@/models/InterestCondition";
 
 const store = useApplicationStore();
 const {filters} = storeToRefs(store);
@@ -35,6 +36,16 @@ const handleExperienceChange = (experienceLevelCodes: string[]) => {
   timeout = setTimeout(() => {
     store.setExperienceQuery(experienceLevelCodes);
   }, 500);
+}
+
+const handleInterestCriteriaChange = (criteria: InterestCondition[]) => {
+  if (timeout) {
+    clearTimeout(timeout);
+  }
+
+  timeout = setTimeout(() => {
+    store.setInterestQuery(criteria);
+  }, 250);
 }
 
 const handleStatusChange = (statusCodes: string[]) => {
@@ -111,7 +122,8 @@ const handleResponseRangeChange = (after: string | null, before: string | null) 
                          description="Filter jobs by your recorded interest in the position"
                          :filterActive="filters.interestCriteria.length > 0">
           <template #dropdown-menu>
-            <InterestFilterMenu/>
+            <InterestFilterMenu :interest-criteria="filters.interestCriteria"
+                                @update:interest-criteria="newList => handleInterestCriteriaChange(newList)"/>
           </template>
         </FilterContainer>
 
