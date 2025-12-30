@@ -1,60 +1,54 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useFilterStore} from '@/stores/filters';
 import IconXMark from "@/components/icons/IconXMark.vue";
+import {InterestCondition, OPERATORS, operatorTypeMapping} from "@/models/InterestCondition";
+import type {OperatorType} from '@/models/InterestCondition';
 
-const store = useFilterStore();
+const props = defineProps<{
+  interestCriteria: InterestCondition[]
+}>();
+
+const emit = defineEmits(['update:interestCriteria']);
 
 const showConditionMenu = ref(false);
-const interestOperator = ref<'>'| '>=' | '=' | '<=' | '<' | 'range' | ''>('');
-const interestValue = ref<number | null>(null);
-const interestValue2 = ref<number | null>(null);
+const interestCondition = ref<InterestCondition | null>(null);
 
 function finalizeCondition() {
-  if (interestOperator.value === 'range' && interestValue.value != null && interestValue2.value != null) {
-    store.interestFilters.push({
-      operator: 'range',
-      value: interestValue.value,
-      value2: interestValue2.value
-    });
-  } else if (interestOperator.value && interestValue.value != null) {
-    store.interestFilters.push({
-      operator: interestOperator.value,
-      value: interestValue.value
-    });
+  if (interestCondition.value === null) {
+    return;
+  }
+
+  const copy = props.interestCriteria.slice();
+  if (interestCondition.value.isValid()) {
+    copy.push(interestCondition.value);
   }
   resetCondition();
+  emit('update:interestCriteria', copy);
 }
 
 function removeInterest(index: number) {
-  store.interestFilters.splice(index, 1);
+  const copy = props.interestCriteria.slice();
+  copy.splice(index, 1);
+  emit('update:interestCriteria', copy);
 }
 
-function startNewCondition(operator: '>'| '>=' | '=' | '<=' | '<' | 'range') {
-  interestOperator.value = operator;
+function startNewCondition(operator: OperatorType) {
+  interestCondition.value = new InterestCondition(operator, 0, 0);
 }
 
 function resetCondition() {
-  interestOperator.value = '';
-  interestValue.value = null;
-  interestValue2.value = null;
-  showConditionMenu.value = false;
+  interestCondition.value = null;
 }
 </script>
 
 <template>
   <div @click.stop class="flex flex-col space-y-3 text-gray-800 dark:text-gray-100">
-    <div v-if="store.interestFilters.length > 0" class="flex flex-wrap gap-2 max-w-60">
-      <div v-for="(filter, index) in store.interestFilters"
-           :key="index"
-           class="inline-flex items-center w-fit space-x-2 px-3 py-1 bg-green-200 dark:bg-green-800 text-sm rounded-sm cursor-pointer hover:bg-green-300 dark:hover:bg-green-700 transition"
-           @click="removeInterest(index)">
+    <div v-if="props.interestCriteria.length > 0" class="flex flex-wrap gap-2 max-w-60">
+      <div v-for="(filter, index) in props.interestCriteria" :key="index" @click="removeInterest(index)"
+           class="inline-flex items-center w-fit space-x-2 px-3 py-1 bg-green-200 dark:bg-green-800 text-sm rounded-sm cursor-pointer hover:bg-green-300 dark:hover:bg-green-700 transition">
         <div>
-          <span v-if="filter.operator === 'range'">
-            {{ filter.value }} <= x <= {{ filter.value2 }}
-          </span>
-          <span v-else>
-            x {{ filter.operator }} {{ filter.value }}
+          <span>
+            {{ filter.displayString() }}
           </span>
         </div>
 
@@ -63,7 +57,7 @@ function resetCondition() {
     </div>
 
     <div>
-      <div v-if="!interestOperator" class="flex space-x-2 items-center">
+      <div v-if="!interestCondition" class="flex space-x-2 items-center">
         <a v-if="!showConditionMenu"
            class="rounded-sm text-center text-sm font-semibold w-full px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
            @click="showConditionMenu = true">
@@ -71,11 +65,11 @@ function resetCondition() {
         </a>
         <div v-else class="flex flex-col space-y-2">
           <div class="grid grid-cols-3 gap-2">
-            <a v-for="op in ['>', '>=', '=', '<=', '<', 'range']" :key="op"
+            <a v-for="op in OPERATORS" :key="op"
                class="rounded-sm text-center text-sm font-semibold px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
-               @click="startNewCondition(op as string)">
-              <template v-if="op === 'range'">x ≤ interest ≤ y</template>
-              <template v-else>x {{ op }} interest</template>
+               @click="startNewCondition(op as OperatorType)">
+              <template v-if="op === 'between'">x ≤ interest ≤ y</template>
+              <template v-else>x {{ operatorTypeMapping(op) }} interest</template>
             </a>
           </div>
 
@@ -87,15 +81,15 @@ function resetCondition() {
       </div>
       <div v-else class="flex flex-wrap items-center space-x-2">
         <div class="flex items-center space-x-2 flex-1 min-w-0 text-sm text-black dark:text-white">
-          <template v-if="interestOperator === 'range'">
-            <input v-model.number="interestValue"
+          <template v-if="interestCondition.operator === 'between'">
+            <input v-model.number="interestCondition.conditionNum"
                    type="number"
                    min="0"
                    max="10"
                    class="w-16 px-2 py-1 rounded-sm bg-gray-200 dark:bg-zinc-800"
                    placeholder="min"/>
-            <span class="text-sm">≤ x ≤</span>
-            <input v-model.number="interestValue2"
+            <span class="text-sm">{{ operatorTypeMapping('between') }} x {{ operatorTypeMapping('between') }}</span>
+            <input v-model.number="interestCondition.conditionNum2"
                    type="number"
                    min="0"
                    max="10"
@@ -103,8 +97,8 @@ function resetCondition() {
                    placeholder="max"/>
           </template>
           <template v-else>
-            <span class="text-sm shrink-0">x {{ interestOperator }}</span>
-            <input v-model.number="interestValue"
+            <span class="text-sm shrink-0">x {{ operatorTypeMapping(interestCondition.operator) }}</span>
+            <input v-model.number="interestCondition.conditionNum"
                    type="number"
                    min="0"
                    max="10"

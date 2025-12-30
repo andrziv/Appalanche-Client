@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import type {JobApplication} from "@/models/JobApplication";
+import IconExternal from "@/components/icons/IconExternal.vue";
 
 defineProps<{ applications: JobApplication[] }>();
 
-const daysSince = (date: Date) => {
+const daysSince = (dateString: string) => {
+  const date = new Date(dateString);
   const today = new Date();
   const diffTime = Math.abs(today.getTime() - date.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 };
 
-const formatDate = (date: Date) =>
-    new Date(date).toLocaleDateString('en-US', {
+const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -33,18 +35,30 @@ const formatDate = (date: Date) =>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in applications" :key="jobApp.idValue">
+    <tr v-for="jobApp in applications" :key="jobApp.id">
       <td class="text-left">
-        <div class="font-semibold">{{ jobApp.position }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.employer }}</div>
+        <div class="font-semibold">{{ jobApp.title }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.company }}</div>
       </td>
-      <td><a :href="jobApp.jobLink" target="_blank">{{ jobApp.jobIdentifier }}</a></td>
-      <td>{{ jobApp.experienceLevel }}</td>
-      <td class="interest">{{ jobApp.interestLevel }}/10</td>
+      <td>
+        <div v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center">
+          <a :href='jobApp.jobPostingLink'
+             target="_blank"
+             rel="noopener noreferrer">
+            {{ jobApp.requisitionId }}
+          </a>
+          <IconExternal class="h-3 w-auto theme-icon"/>
+        </div>
+        <div v-else>
+          {{ jobApp.requisitionId }}
+        </div>
+      </td>
+      <td>{{ jobApp.experience.label }}</td>
+      <td class="interest">{{ jobApp.interest }}/10</td>
       <td class="status">
         <div class="w-full text-center text-white font-medium rounded-md px-2 py-1"
-             :style="{ backgroundColor: jobApp.applicationStatus.colour }">
-          {{ jobApp.applicationStatus.toString() }}
+             :style="{backgroundColor: jobApp.status.colour, color: jobApp.status.textColour}">
+          {{ jobApp.status.label }}
         </div>
       </td>
       <td>
@@ -52,8 +66,8 @@ const formatDate = (date: Date) =>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.appliedDate) }} days ago</div>
       </td>
       <td>
-        <div class="font-semibold">{{ formatDate(jobApp.lastResponseDate) }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.lastResponseDate) }} days ago</div>
+        <div class="font-semibold">{{ formatDate(jobApp.responseDate) }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.responseDate) }} days ago</div>
       </td>
     </tr>
     </tbody>

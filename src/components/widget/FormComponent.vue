@@ -6,7 +6,7 @@ interface Props {
   label: string;
   id: string;
   required?: boolean;
-  error?: string;
+  error?: string | null;
   muteErrorMessage?: boolean;
   type?: string;
   placeholder?: string;

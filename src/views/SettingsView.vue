@@ -7,11 +7,11 @@ import {useProfileStore} from "@/stores/profile";
 const profileStore = useProfileStore();
 
 const form = reactive({
-  firstname: profileStore.profile.firstname,
-  surname: profileStore.profile.surname,
-  linkedinProfile: profileStore.profile.linkedInProfile,
-  githubProfile: profileStore.profile.gitHubProfile,
-  portfolioSite: profileStore.profile.portfolioSite
+  firstname: profileStore.profile?.firstname ?? "",
+  surname: profileStore.profile?.surname ?? "",
+  linkedinProfile: profileStore.profile?.linkedInProfile ?? "",
+  githubProfile: profileStore.profile?.gitHubProfile ?? "",
+  portfolioSite: profileStore.profile?.portfolioSite ?? ""
 });
 
 const errors = ref<Record<string, string>>({});
