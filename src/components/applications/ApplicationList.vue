@@ -41,14 +41,15 @@ const formatDate = (dateString: string) =>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.company }}</div>
       </td>
       <td>
-        <div v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center">
-          <a :href='jobApp.jobPostingLink'
-             target="_blank"
-             rel="noopener noreferrer">
-            {{ jobApp.requisitionId }}
-          </a>
+        <a v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center"
+           :href='jobApp.jobPostingLink'
+           target="_blank"
+           rel="noopener noreferrer">
+            <span>
+              {{ jobApp.requisitionId }}
+            </span>
           <IconExternal class="h-3 w-auto theme-icon"/>
-        </div>
+        </a>
         <div v-else>
           {{ jobApp.requisitionId }}
         </div>
