@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ApplicationList from '@/components/applications/ApplicationList.vue';
-import FilterBar from '@/components/applications/FilterBar.vue';
+import ApplicationFunctionBar from '@/components/applications/ApplicationFunctionBar.vue';
 import {useApplicationStore} from "@/stores/applications";
 import {storeToRefs} from "pinia";
 
@@ -11,7 +11,7 @@ store.fetchApplications();
 
 <template>
   <div class="flex flex-col h-full">
-    <FilterBar/>
+    <ApplicationFunctionBar/>
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div

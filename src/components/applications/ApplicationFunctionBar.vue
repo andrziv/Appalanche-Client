@@ -5,13 +5,14 @@ import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 import FilterContainer from "@/components/applications/FilterContainer.vue";
 import InterestFilterMenu from "@/components/applications/InterestFilterMenu.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
-import AddApplicationButton from "@/components/applications/add_position_buttons/AddApplicationButton.vue";
+import CreateApplicationButton from "@/components/applications/add_position_buttons/CreateApplicationButton.vue";
 import ImportCSVButton from "@/components/applications/add_position_buttons/ImportCSVButton.vue";
 import {useApplicationStore} from "@/stores/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
 import SimpleDateRange from "@/components/widget/SimpleDateRange.vue";
 import {InterestCondition} from "@/models/InterestCondition";
+import {JobApplicationForm} from "@/models/JobApplication";
 
 const store = useApplicationStore();
 const {filters} = storeToRefs(store);
@@ -77,6 +78,10 @@ const handleResponseRangeChange = (after: string | null, before: string | null) 
     store.setResponseRange(after, before);
   }, 500);
 }
+
+function createApplication(draft: JobApplicationForm) {
+  store.addApplication(draft);
+}
 </script>
 
 <template>
@@ -91,7 +96,7 @@ const handleResponseRangeChange = (after: string | null, before: string | null) 
         </div>
 
         <div class="flex space-x-3 text-center text-sm text-gray-200 font-semibold">
-          <AddApplicationButton/>
+          <CreateApplicationButton @create:application="newApp => createApplication(newApp)"/>
           <ImportCSVButton/>
         </div>
       </div>

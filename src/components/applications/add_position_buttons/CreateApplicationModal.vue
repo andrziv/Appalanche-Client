@@ -29,12 +29,12 @@ const formData = ref<JobApplicationForm>(getInitialState());
 const appliedDateInput = createIsoBinding(toRef(formData.value, "appliedDate"), "date");
 const responseDateInput = createIsoBinding(toRef(formData.value, "responseDate"), "date");
 
-const emit = defineEmits(["close", "update:createApplication"]);
+const emit = defineEmits(["close", "create:application"]);
 
 function save() {
   const payload = {...formData.value};
 
-  emit('update:createApplication', payload);
+  emit('create:application', payload);
   close();
 }
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import AddApplicationModal from "@/components/applications/add_position_buttons/AddApplicationModal.vue";
-import {useApplicationStore} from "@/stores/applications";
+import CreateApplicationModal from "@/components/applications/add_position_buttons/CreateApplicationModal.vue";
 import {JobApplicationForm} from "@/models/JobApplication";
 
-const store = useApplicationStore();
 const isShowingAddModal = ref(false);
+
+const emit = defineEmits(["create:application"]);
 
 const showAddModal = () => {
   isShowingAddModal.value = true;
@@ -16,7 +16,7 @@ const hideAddModal = () => {
 };
 
 function createApplication(draft: JobApplicationForm) {
-  store.addApplication(draft);
+  emit("create:application", draft);
 }
 
 </script>
@@ -28,8 +28,8 @@ function createApplication(draft: JobApplicationForm) {
       Add Application
     </a>
 
-    <AddApplicationModal @update:create-application="newApp => createApplication((newApp))"
-                         :show="isShowingAddModal" @close="hideAddModal"/>
+    <CreateApplicationModal @create:application="newApp => createApplication((newApp))"
+                            :show="isShowingAddModal" @close="hideAddModal"/>
   </div>
 </template>
 
