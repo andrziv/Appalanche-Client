@@ -97,7 +97,8 @@ function save() {
     <template #footer>
       <div class="flex justify-end space-x-2">
         <button type=submit form="addApplicationForm"
-                class="px-3 py-1 rounded-sm bg-red-800 dark:bg-red-900 text-white hover:bg-red-700 transition">
+                class="px-3 py-1 rounded-sm bg-red-800 dark:bg-red-900 text-white hover:bg-red-700
+                cursor-pointer transition">
           Save
         </button>
       </div>

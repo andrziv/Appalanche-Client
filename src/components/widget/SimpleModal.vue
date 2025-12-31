@@ -18,7 +18,7 @@ const close = () => emit('close');
         <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
           {{ props.title }}
         </h2>
-        <button @click="close" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+        <button @click="close" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer">
           <IconXMark class="h-4 w-auto dark:invert-70"/>
         </button>
       </header>
