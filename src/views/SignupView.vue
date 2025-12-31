@@ -3,7 +3,7 @@ import {reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useAuthStore} from '@/stores/authentication';
 import LoadingButton from "@/components/widget/LoadingButton.vue";
-import FormComponent from "@/components/widget/FormComponent.vue";
+import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 
 const router = useRouter();
 const auth = useAuthStore();
@@ -41,18 +41,18 @@ const handleSignup = async () => {
       <form class="space-y-2" @submit.prevent="handleSignup">
         <div class="space-y-6">
           <div class="flex flex-wrap items-center justify-between">
-            <FormComponent id="firstName" v-model="form.firstName" label="First Name" type="text"
-                           autocomplete="first-name" placeholder="First Name"/>
+            <TextFormComponent id="firstName" v-model="form.firstName" label="First Name" type="text"
+                               autocomplete="first-name" placeholder="First Name"/>
 
-            <FormComponent id="lastName" v-model="form.lastName" label="Last Name" type="text"
-                           autocomplete="last-name" placeholder="Last Name"/>
+            <TextFormComponent id="lastName" v-model="form.lastName" label="Last Name" type="text"
+                               autocomplete="last-name" placeholder="Last Name"/>
           </div>
 
-          <FormComponent id="email" v-model="form.email" label="Email Address" :error="errors.message" type="email"
-                         autocomplete="email" placeholder="Email Address"/>
+          <TextFormComponent id="email" v-model="form.email" label="Email Address" :error="errors.message" type="email"
+                             autocomplete="email" placeholder="Email Address"/>
 
-          <FormComponent id="password" v-model="form.password" label="Password" :error="errors.password" type="password"
-                         autocomplete="current-password" placeholder="Password"/>
+          <TextFormComponent id="password" v-model="form.password" label="Password" :error="errors.password"
+                             type="password" autocomplete="current-password" placeholder="Password"/>
         </div>
 
         <LoadingButton class="mt-8" :isSpinning="auth.isLoading" text="Sign Up"/>

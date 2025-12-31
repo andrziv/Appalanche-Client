@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FormComponent from "@/components/widget/FormComponent.vue";
+import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 import LoadingButton from "@/components/widget/LoadingButton.vue";
 import {reactive, ref} from "vue";
 import {useProfileStore} from "@/stores/profile";
@@ -42,19 +42,19 @@ const handleProfileUpdate = async () => {
         <form class="mt-8 space-y-2" @submit.prevent="handleProfileUpdate">
           <div class="space-y-6">
             <div class="flex flex-row justify-center space-x-8">
-              <FormComponent id="firstName" v-model="form.firstname" label="First Name" type="text" :required="false"
-                             autocomplete="first-name" placeholder="First Name" class="w-full"/>
+              <TextFormComponent id="firstName" v-model="form.firstname" label="First Name" type="text"
+                                 :required="false" autocomplete="first-name" placeholder="First Name" class="w-full"/>
 
-              <FormComponent id="lastName" v-model="form.surname" label="Last Name" type="text" :required="false"
-                             autocomplete="last-name" placeholder="Last Name" class="w-full"/>
+              <TextFormComponent id="lastName" v-model="form.surname" label="Last Name" type="text" :required="false"
+                                 autocomplete="last-name" placeholder="Last Name" class="w-full"/>
             </div>
 
-            <FormComponent id="linkedinLink" v-model="form.linkedinProfile" label="LinkedIn Profile" :required="false"
-                           type="url" placeholder="Link to your LinkedIn Profile"/>
-            <FormComponent id="githubLink" v-model="form.githubProfile" label="GitHub Profile" :required="false"
-                           type="url" placeholder="Link to your GitHub Profile"/>
-            <FormComponent id="portfolioLink" v-model="form.portfolioSite" label="Portfolio Site" :required="false"
-                           type="url" placeholder="Link to your Portfolio Site"/>
+            <TextFormComponent id="linkedinLink" v-model="form.linkedinProfile" label="LinkedIn Profile"
+                               :required="false" type="url" placeholder="Link to your LinkedIn Profile"/>
+            <TextFormComponent id="githubLink" v-model="form.githubProfile" label="GitHub Profile" :required="false"
+                               type="url" placeholder="Link to your GitHub Profile"/>
+            <TextFormComponent id="portfolioLink" v-model="form.portfolioSite" label="Portfolio Site" :required="false"
+                               type="url" placeholder="Link to your Portfolio Site"/>
           </div>
 
           <LoadingButton class="mt-8" :isSpinning="profileStore.isLoading" text="Update"/>

@@ -4,7 +4,7 @@ import {useRouter} from 'vue-router';
 import {useAuthStore} from '@/stores/authentication';
 import LoadingButton from "@/components/widget/LoadingButton.vue";
 import IconExclamation from "@/components/icons/IconExclamation.vue";
-import FormComponent from "@/components/widget/FormComponent.vue";
+import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 
 const router = useRouter();
 const auth = useAuthStore();
@@ -39,11 +39,12 @@ const handleLogin = async () => {
 
       <form class="space-y-2" @submit.prevent="handleLogin">
         <div class="space-y-6">
-          <FormComponent id="email" v-model="form.email" label="Email Address" type="email" :error="errors.message"
-                         :muteErrorMessage="true" autocomplete="email" placeholder="Email Address"/>
+          <TextFormComponent id="email" v-model="form.email" label="Email Address" type="email" :error="errors.message"
+                             :muteErrorMessage="true" autocomplete="email" placeholder="Email Address"/>
 
-          <FormComponent id="password" v-model="form.password" label="Password" type="password" :error="errors.message"
-                         :muteErrorMessage="true" autocomplete="current-password" placeholder="Password"/>
+          <TextFormComponent id="password" v-model="form.password" label="Password" type="password"
+                             :error="errors.message"
+                             :muteErrorMessage="true" autocomplete="current-password" placeholder="Password"/>
         </div>
 
         <div v-if="errors.message" class="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400">

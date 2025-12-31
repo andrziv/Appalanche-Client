@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
-import type {JobApplication} from "@/models/JobApplication";
+import type {JobApplication, JobApplicationForm} from "@/models/JobApplication";
 import {InterestCondition} from "@/models/InterestCondition";
 import {convertApplicationHateoas} from "@/utility/ResponseAdapters";
 import {getUserTimezone} from "@/utility/DateUtilities";
@@ -72,7 +72,7 @@ export const useApplicationStore = defineStore('applications', {
                     }
                 });
 
-                const { items, meta } = convertApplicationHateoas(response.data);
+                const {items, meta} = convertApplicationHateoas(response.data);
                 this.items = items;
                 this.pagination = meta;
             } catch (err: any) {
@@ -82,9 +82,9 @@ export const useApplicationStore = defineStore('applications', {
             }
         },
 
-        async addApplication(payload: JobApplication) {
+        async addApplication(payload: JobApplicationForm) {
             try {
-                await axios.post('/applications', payload);
+                await axios.post('/application', payload);
 
                 await this.fetchApplications();
             } catch (err: any) {
@@ -94,7 +94,7 @@ export const useApplicationStore = defineStore('applications', {
 
         async updateApplication(id: number, changes: any) {
             try {
-                await axios.patch(`/applications/${id}`, changes);
+                await axios.patch(`/application/${id}`, changes);
 
                 const index = this.items.findIndex(app => app.id === id);
                 if (index !== -1) {
@@ -107,7 +107,7 @@ export const useApplicationStore = defineStore('applications', {
 
         async deleteApplication(id: number) {
             try {
-                await axios.delete(`/applications/${id}`);
+                await axios.delete(`/application/${id}`);
 
                 this.items = this.items.filter(app => app.id !== id);
                 this.pagination.totalElements--;

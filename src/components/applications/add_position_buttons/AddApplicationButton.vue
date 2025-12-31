@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import AddApplicationModal from "@/components/applications/add_position_buttons/AddApplicationModal.vue";
+import {useApplicationStore} from "@/stores/applications";
+import {JobApplicationForm} from "@/models/JobApplication";
 
+const store = useApplicationStore();
 const isShowingAddModal = ref(false);
 
 const showAddModal = () => {
@@ -12,6 +15,10 @@ const hideAddModal = () => {
   isShowingAddModal.value = false;
 };
 
+function createApplication(draft: JobApplicationForm) {
+  store.addApplication(draft);
+}
+
 </script>
 
 <template>
@@ -21,7 +28,8 @@ const hideAddModal = () => {
       Add Application
     </a>
 
-    <AddApplicationModal :show="isShowingAddModal" @close="hideAddModal"/>
+    <AddApplicationModal @update:create-application="newApp => createApplication((newApp))"
+                         :show="isShowingAddModal" @close="hideAddModal"/>
   </div>
 </template>
 

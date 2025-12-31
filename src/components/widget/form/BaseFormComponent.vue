@@ -5,23 +5,13 @@ import IconExclamation from "@/components/icons/IconExclamation.vue";
 interface Props {
   label: string;
   id: string;
-  required?: boolean;
   error?: string | null;
   muteErrorMessage?: boolean;
-  type?: string;
-  placeholder?: string;
-  autocomplete?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  required: true,
   error: null,
-  type: 'text',
-  placeholder: '',
-  autocomplete: 'off'
 });
-
-const model = defineModel<string>({required: true});
 
 const isMuted = computed(() => {
   if (props.muteErrorMessage !== undefined) {
@@ -38,9 +28,8 @@ const isMuted = computed(() => {
            :class="{ 'text-red-600 dark:text-red-400': props.error }">
       {{ props.label }}
     </label>
-    <input :id="props.id" v-model="model" :type="props.type" :placeholder="props.placeholder"
-           :autocomplete="props.autocomplete" :required="required"
-           class="inputField" :class="{ 'border border-red-400': props.error }"/>
+
+    <slot/>
 
     <div v-if="props.error && !isMuted" class="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400">
       <IconExclamation class="w-4 h-auto fill-red-600 dark:fill-red-400 shrink-0"/>
@@ -50,9 +39,5 @@ const isMuted = computed(() => {
 </template>
 
 <style scoped>
-@reference "../../style.css";
 
-.inputField {
-  @apply w-full px-3 py-2 rounded-sm text-sm bg-zinc-200 dark:bg-zinc-900 text-gray-600 dark:text-white focus:outline-none focus:drop-shadow-xl;
-}
 </style>
