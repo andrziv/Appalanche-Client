@@ -21,7 +21,7 @@ const getInitialState = (): JobApplicationForm => ({
   experienceLevelCode: '',
   jobPostingLink: "",
   appliedDate: new Date().toISOString(),
-  responseDate: ''
+  responseDate: null
 });
 
 const formData = ref<JobApplicationForm>(getInitialState());
@@ -35,12 +35,17 @@ function save() {
   const payload = {...formData.value};
 
   emit('update:createApplication', payload);
+  close();
+}
+
+function close() {
+  Object.assign(formData.value, getInitialState());
   emit("close");
 }
 </script>
 
 <template>
-  <SimpleModal :show="props.show" title="Add Application" @close="emit('close')">
+  <SimpleModal :show="props.show" title="Add Application" @close="close">
     <div class="flex flex-col sm:mx-auto sm:w-full sm:max-w-md text-gray-700 dark:text-gray-200">
       <form id="addApplicationForm" class="space-y-2" @submit.prevent="save">
         <div class="space-y-6">
