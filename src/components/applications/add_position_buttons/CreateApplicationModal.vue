@@ -59,7 +59,7 @@ function close() {
           </div>
 
           <TextFormComponent id="postingLink" v-model="formData.jobPostingLink" label="Posting Link"
-                             type="text" :required="false" placeholder="https://... (optional)"
+                             type="url" :required="false" placeholder="https://... (optional)"
                              input-class="bg-neutral-100 dark:bg-zinc-800"/>
 
           <TextFormComponent id="requisitionId" v-model="formData.requisitionId" label="Job/Requisition ID"
@@ -90,9 +90,11 @@ function close() {
 
           <div class="flex flex-row justify-center space-x-8">
             <TextFormComponent id="appliedDate" v-model="appliedDateInput" label="Date of Application" type="date"
+                               :required="false"
                                class="w-full" input-class="bg-neutral-100 dark:bg-zinc-800"/>
 
             <TextFormComponent id="responseDate" v-model="responseDateInput" label="Date of Last Response" type="date"
+                               :required="false"
                                class="w-full" input-class="bg-neutral-100 dark:bg-zinc-800"/>
           </div>
         </div>
