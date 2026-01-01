@@ -25,6 +25,7 @@ const formatDate = (dateString: string) =>
   <table class="w-full table-auto">
     <thead class="sticky top-0 z-10 bg-white dark:bg-zinc-900">
     <tr>
+      <th></th>
       <th>Position</th>
       <th>Job ID</th>
       <th>Level</th>
@@ -36,6 +37,10 @@ const formatDate = (dateString: string) =>
     </thead>
     <tbody>
     <tr v-for="jobApp in applications" :key="jobApp.id">
+      <td class="w-20 min-w-20">
+        <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
+        class="object-contain rounded-xs"/>
+      </td>
       <td class="text-left">
         <div class="font-semibold">{{ jobApp.title }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.company }}</div>
