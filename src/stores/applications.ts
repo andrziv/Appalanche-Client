@@ -96,10 +96,7 @@ export const useApplicationStore = defineStore('applications', {
             try {
                 await axios.patch(`/application/${id}`, changes);
 
-                const index = this.items.findIndex(app => app.id === id);
-                if (index !== -1) {
-                    this.items[index] = {...this.items[index], ...changes};
-                }
+                await this.fetchApplications();
             } catch (err: any) {
                 this.error = err.response.data;
             }

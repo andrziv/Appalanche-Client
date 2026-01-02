@@ -3,7 +3,7 @@ import ApplicationBrowseList from '@/components/applications/ApplicationBrowseLi
 import ApplicationFunctionBar from '@/components/applications/function_bar/ApplicationFunctionBar.vue';
 import {useApplicationStore} from "@/stores/applications";
 import {storeToRefs} from "pinia";
-import {JobApplication} from "@/models/JobApplication";
+import {isEqual, JobApplication, JobApplicationForm} from "@/models/JobApplication";
 import {ref} from "vue";
 import ApplicationEditingList from "@/components/applications/ApplicationEditingList.vue";
 
@@ -13,8 +13,32 @@ store.fetchApplications();
 
 const targetApplication = ref<JobApplication | null>(null);
 
+function selectTarget(newTarget: JobApplication | null) {
+  targetApplication.value = newTarget;
+}
+
 function updateApplication(application: JobApplication) {
-  store.updateApplication(application.id, application);
+  if (!application || !targetApplication.value || !isEqual(targetApplication.value, application)) {
+    return;
+  }
+
+  const updateForm: JobApplicationForm = {
+    requisitionId: application.requisitionId,
+    title: application.title,
+    company: application.company,
+    interest: application.interest,
+    statusCode: application.status.code,
+    experienceLevelCode: application.experience.code,
+    jobPostingLink: application.jobPostingLink,
+    appliedDate: application.appliedDate,
+    responseDate: application.responseDate,
+  };
+
+  store.updateApplication(targetApplication.value.id, updateForm);
+}
+
+function deleteApplication(applicationId: number) {
+  store.deleteApplication(applicationId);
 }
 </script>
 
@@ -23,11 +47,12 @@ function updateApplication(application: JobApplication) {
     <ApplicationFunctionBar/>
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
-      <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
-        <ApplicationBrowseList v-if="!targetApplication" :applications="items" @select:application="newTarget => targetApplication = newTarget"/>
+      <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-lg">
+        <ApplicationBrowseList v-if="!targetApplication" :applications="items" @select:application="selectTarget"/>
         <ApplicationEditingList v-else :applications="items" :target-application="targetApplication"
-                                @select:application="newTarget => targetApplication = newTarget"
-                                @update:target-application="updatedApplication => updateApplication(updatedApplication)"/>
+                                @select:application="selectTarget"
+                                @update:target-application="updateApplication"
+                                @delete:target-application="deleteApplication"/>
       </div>
     </div>
   </div>
