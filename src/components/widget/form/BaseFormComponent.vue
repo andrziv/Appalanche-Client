@@ -24,7 +24,7 @@ const isMuted = computed(() => {
 
 <template>
   <div class="flex flex-col space-y-2">
-    <label :for="props.id" class="text-sm font-semibold text-gray-900 dark:text-gray-200"
+    <label v-if="props.label" :for="props.id" class="text-sm font-semibold text-gray-900 dark:text-gray-200"
            :class="{ 'text-red-600 dark:text-red-400': props.error }">
       {{ props.label }}
     </label>
