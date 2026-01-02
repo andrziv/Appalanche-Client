@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import type {JobApplication} from "@/models/JobApplication";
 import IconExternal from "@/components/icons/IconExternal.vue";
+import {JobApplication} from "@/models/JobApplication";
 
-defineProps<{ applications: JobApplication[] }>();
+const props = defineProps<{
+  applications: JobApplication[]
+}>();
+
+const emit = defineEmits(["select:application"]);
 
 const daysSince = (dateString: string) => {
   const date = new Date(dateString);
   const today = new Date();
   const diffTime = Math.abs(today.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 };
 
 const formatDate = (dateString: string) =>
@@ -36,10 +39,10 @@ const formatDate = (dateString: string) =>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in applications" :key="jobApp.id">
+    <tr v-for="jobApp in props.applications" :key="jobApp.id" @click="emit('select:application', jobApp)">
       <td class="w-20 min-w-20">
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
-        class="object-contain rounded-xs"/>
+             class="object-contain rounded-xs"/>
       </td>
       <td class="text-left">
         <div class="font-semibold">{{ jobApp.title }}</div>
@@ -81,7 +84,7 @@ const formatDate = (dateString: string) =>
 </template>
 
 <style scoped>
-@reference "../../style.css";
+@reference "@/style.css";
 
 table {
   @apply min-w-full;

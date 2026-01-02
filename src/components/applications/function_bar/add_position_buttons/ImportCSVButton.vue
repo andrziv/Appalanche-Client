@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import ImportCSVModal from "@/components/applications/add_position_buttons/ImportCSVModal.vue";
+import ImportCSVModal from "@/components/applications/function_bar/add_position_buttons/ImportCSVModal.vue";
 
 const isShowingCSVModal = ref(false);
 

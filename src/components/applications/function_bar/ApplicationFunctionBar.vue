@@ -2,11 +2,11 @@
 import {storeToRefs} from 'pinia'
 import {ExperienceLevel} from "@/models/ExperienceLevel";
 import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
-import FilterContainer from "@/components/applications/FilterContainer.vue";
-import InterestFilterMenu from "@/components/applications/InterestFilterMenu.vue";
+import FilterContainer from "@/components/applications/function_bar/FilterContainer.vue";
+import InterestFilterMenu from "@/components/applications/function_bar/InterestFilterMenu.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
-import CreateApplicationButton from "@/components/applications/add_position_buttons/CreateApplicationButton.vue";
-import ImportCSVButton from "@/components/applications/add_position_buttons/ImportCSVButton.vue";
+import CreateApplicationButton from "@/components/applications/function_bar/add_position_buttons/CreateApplicationButton.vue";
+import ImportCSVButton from "@/components/applications/function_bar/add_position_buttons/ImportCSVButton.vue";
 import {useApplicationStore} from "@/stores/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
@@ -184,7 +184,7 @@ function createApplication(draft: JobApplicationForm) {
 </template>
 
 <style scoped>
-@reference "../../style.css";
+@reference "@/style.css";
 
 .filter-search-background {
   @apply bg-[#C4615B] dark:bg-zinc-900;

@@ -35,7 +35,7 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-@reference "../../style.css";
+@reference "@/style.css";
 
 .filter-button-background {
   @apply bg-[#C4615B] dark:bg-zinc-900 hover:bg-[#D8827D] dark:hover:bg-zinc-800;
