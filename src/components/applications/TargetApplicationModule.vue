@@ -112,7 +112,7 @@ function maxRounds(code: string): number {
       </div>
     </div>
     <div class="p-4 border-b border-neutral-100 dark:border-zinc-800">
-      <form id="modifyApplicationForm" @submit.prevent="save">
+      <form id="modifyApplicationForm" @submit.prevent="save" class="space-y-2">
         <div class="flex flex-wrap items-center justify-between">
           <div class="flex flex-row space-x-4">
             <div class="w-2/3 flex space-x-4 rounded-full text-sm items-center font-semibold transition" :style="{backgroundColor: draftApplication.status.colour}">
@@ -184,8 +184,6 @@ function maxRounds(code: string): number {
               Date of Last Response
             </p>
           </div>
-
-
         </div>
       </form>
     </div>
