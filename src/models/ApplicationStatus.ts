@@ -65,3 +65,8 @@ export interface ApplicationStatus {
     colour: string;
     textColour: string;
 }
+
+export interface ApplicationStatusMetadata {
+    codeFragment: string;
+    maxRounds: number;
+}

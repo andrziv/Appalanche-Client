@@ -80,7 +80,7 @@ function close() {
             </SelectorFormComponent>
 
             <SelectorFormComponent id="experience" v-model="formData.experienceLevelCode" label="Job Experience Level"
-                                   :options="ExperienceLevel.values()" value-key="code"
+                                   :options="ExperienceLevel.values()" value-key="code" :use-full-value="false"
                                    class="w-fit" input-class="bg-neutral-100 dark:bg-zinc-800">
               <template #optionLabel="{ item }">
                 {{ item.label }} ({{ item.description }})

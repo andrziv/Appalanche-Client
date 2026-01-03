@@ -3,13 +3,51 @@ import {isEqual, JobApplication} from "@/models/JobApplication";
 import {getInterestColor} from "@/utility/ColourUtilities";
 import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 import {createIsoBinding} from "@/utility/DateUtilities";
-import {computed, ref, toRaw, watch} from "vue";
+import {computed, onMounted, ref, toRaw, watch} from "vue";
+import {useReferenceStore} from "@/stores/static_app_references";
+import SelectorFormComponent from "@/components/widget/form/SelectorFormComponent.vue";
+import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 
 const props = defineProps<{
   targetApplication: JobApplication,
 }>();
 
 const draftApplication = ref<JobApplication>(structuredClone(toRaw(props.targetApplication)));
+
+const refStore = useReferenceStore();
+
+onMounted(() => {
+  refStore.fetchAll();
+});
+
+const statusCoreProxy = computed({
+  get: () => {
+    const metadata = refStore.getStatusMetadataByCode(draftApplication.value.status.code);
+    if (!metadata) {
+      return null;
+    }
+    return metadata.codeFragment;
+  },
+  set: (newCode: string) => {
+    const status = refStore.getMinStatusByCodeFragment(newCode);
+    if (!status) {
+      return;
+    }
+    draftApplication.value.status = status;
+  }
+});
+
+const statusRoundProxy = computed({
+  get: () => draftApplication.value.status.round,
+  set: (newRound: number) => {
+    const potentialCode = [draftApplication.value.status.label.toUpperCase().replace(" ", '_'), newRound].join('_');
+    const status = refStore.getStatusByCode(potentialCode);
+    if (!status) {
+      return;
+    }
+    draftApplication.value.status = status;
+  }
+});
 
 const appliedDateRef = computed({
   get: () => draftApplication.value.appliedDate,
@@ -46,6 +84,14 @@ function deleteTarget() {
 }
 
 const MODIFIABLE_TEXT_FIELD = 'p-1 rounded-none border-b-2 border-neutral-300 dark:border-zinc-800 bg-transparent';
+
+function maxRounds(code: string): number {
+  const metadata = refStore.getStatusMetadataByCode(code);
+  if (!metadata) {
+    return 0;
+  }
+  return metadata.maxRounds;
+}
 </script>
 
 <template>
@@ -68,15 +114,39 @@ const MODIFIABLE_TEXT_FIELD = 'p-1 rounded-none border-b-2 border-neutral-300 da
     <div class="p-4 border-b border-neutral-100 dark:border-zinc-800">
       <form id="modifyApplicationForm" @submit.prevent="save">
         <div class="flex flex-wrap items-center justify-between">
-          <div class="flex flex-row justify-center space-x-4">
-            <p class="info-badge"
-               :style="{backgroundColor: draftApplication.status.colour, color: draftApplication.status.textColour}">
-              {{ draftApplication.status.label }}
-            </p>
-            <p class="info-badge bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-zinc-300">
-              {{ draftApplication.experience.label }}
-            </p>
+          <div class="flex flex-row space-x-4">
+            <div class="w-2/3 flex space-x-4 rounded-full text-sm items-center font-semibold transition" :style="{backgroundColor: draftApplication.status.colour}">
+              <SelectorFormComponent id="status" label="" v-model="statusCoreProxy" value-key="code"
+                                     :options="SIMPLE_FE_APPLICATION_STATUSES" :use-full-value="false" class="shrink-0"
+                                     input-class="px-4 py-1 rounded-full text-sm font-semibold
+                                     bg-transparent dark:bg-transparent text-white transition"
+                                     :input-style="{backgroundColor: draftApplication.status.colour}"
+                                     drop-down-class="text-white transition">
+                <template #optionLabel="{ item }">
+                  {{ item.label }}
+                </template>
+              </SelectorFormComponent>
+
+              <div v-if="maxRounds(draftApplication.status.code) > 1" class="flex flex-row">
+                <p class="w-fit text-white">Round: </p>
+                <TextFormComponent id="status_round" label="" v-model="statusRoundProxy" type="number"
+                                   class="w-16" input-class="py-0 text-white bg-transparent dark:bg-transparent"
+                min="1" :max="maxRounds(draftApplication.status.code)"/>
+              </div>
+
+            </div>
+
+            <SelectorFormComponent id="experience" label="" v-model="draftApplication.experience"
+                                   :options="refStore.experiences" :use-full-value="true"
+                                   class="flex shrink-0"
+                                   input-class="px-4 py-1 rounded-full text-sm font-semibold
+                                   bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-zinc-300 transition ease-in-out">
+              <template #optionLabel="{ item }">
+                {{ item.label }}
+              </template>
+            </SelectorFormComponent>
           </div>
+
           <p class="info-badge text-white" :style="{backgroundColor: getInterestColor(draftApplication.interest)}">
             Interest: {{ draftApplication.interest }}
           </p>
