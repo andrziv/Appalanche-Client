@@ -4,10 +4,25 @@ import IconDownChevron from "@/components/icons/IconDownChevron.vue";
 import SimpleDropdown from "@/components/widget/SimpleDropdown.vue";
 import IconDoor from "@/components/icons/IconDoor.vue";
 import IconGear from "@/components/icons/IconGear.vue";
+import {useAuthStore} from "@/stores/authentication";
+import {useProfileStore} from "@/stores/profile";
+import {useApplicationStore} from "@/stores/applications";
+import router from "@/router";
+
+const authStore = useAuthStore();
+const profileStore = useProfileStore();
+const applicationStore = useApplicationStore();
 
 const props = defineProps<{
   label: string | null;
 }>();
+
+async function logout() {
+  await authStore.logout();
+  profileStore.clear();
+  applicationStore.clearAll();
+  await router.push({ name: 'Login' });
+}
 </script>
 
 <template>
@@ -20,19 +35,20 @@ const props = defineProps<{
     </template>
 
     <template #dropdown-menu>
-      <div class="absolute left-0 p-2 flex flex-col space-y-2 w-max min-w-full pt-1 bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown">
+      <div class="absolute left-0 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
+      bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown">
         <a class="profile-dropdown-button" href="/settings">
           <IconGear class="theme-icon"/>
           <span class="text-sm font-semibold themed-harsh-text">
             Settings
           </span>
         </a>
-        <a class="profile-dropdown-button" href="/signup">
+        <button class="profile-dropdown-button" @click="logout">
           <IconDoor class="theme-icon"/>
           <span class="text-sm font-semibold themed-harsh-text">
             Log Out
           </span>
-        </a>
+        </button>
       </div>
     </template>
   </SimpleDropdown>

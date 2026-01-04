@@ -173,6 +173,14 @@ export const useApplicationStore = defineStore('applications', {
             this.filters.responseAfter = responseAfter;
             this.filters.responseBefore = responseBefore;
             this.setPage(0);
+        },
+
+        clearAll() {
+            this.items = [];
+            this.clearFilters();
+            this.sort = 'createdAt,desc';
+            this.isLoading = false;
+            this.error = null;
         }
     }
 });

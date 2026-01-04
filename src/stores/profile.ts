@@ -66,7 +66,7 @@ export const useProfileStore = defineStore('profile', {
                     return false;
                 }
 
-                if(this.profile == null) {
+                if (this.profile == null) {
                     return await this.fetchProfile();
                 } else {
                     this.profile = {
@@ -87,6 +87,12 @@ export const useProfileStore = defineStore('profile', {
             } finally {
                 this.isLoading = false;
             }
+        },
+
+        clear() {
+            this.profile = null;
+            this.isLoading = false;
+            this.error = null;
         }
     }
 })

@@ -90,7 +90,16 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async logout() {
-            // TODO: add smth to allow user to escape our jail
+            this.isLoading = true;
+            try {
+                await axios.post('/authenticate/logout');
+                this.user = null;
+            } catch (err) {
+                this.user = null;
+            } finally {
+                this.isLoading = false;
+                this.authCheckComplete = false;
+            }
         }
     }
 })
