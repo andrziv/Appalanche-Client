@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconExternal from "@/components/icons/IconExternal.vue";
 import {JobApplication} from "@/models/JobApplication";
+import {truncateMiddle} from "@/utility/StringUtilities";
 
 const props = defineProps<{
   applications: JobApplication[]
@@ -44,23 +45,25 @@ const formatDate = (dateString: string) =>
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
              class="object-contain rounded-xs"/>
       </td>
-      <td class="text-left">
+      <td class="text-left max-w-[20rem]">
         <div class="font-semibold">{{ jobApp.title }}</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">{{ jobApp.company }}</div>
       </td>
       <td>
-        <a v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center"
-           :href='jobApp.jobPostingLink'
-           target="_blank"
-           rel="noopener noreferrer"
-           @click.stop>
+        <div class="truncate font-mono">
+          <a v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center"
+             :href='jobApp.jobPostingLink'
+             target="_blank"
+             rel="noopener noreferrer"
+             @click.stop>
             <span>
-              {{ jobApp.requisitionId }}
+              {{ truncateMiddle(jobApp.requisitionId) }}
             </span>
-          <IconExternal class="h-3 w-auto shrink-0 theme-icon"/>
-        </a>
-        <div v-else>
-          {{ jobApp.requisitionId }}
+            <IconExternal class="h-3 w-auto shrink-0 theme-icon"/>
+          </a>
+          <div v-else>
+            {{ truncateMiddle(jobApp.requisitionId) }}
+          </div>
         </div>
       </td>
       <td>{{ jobApp.experience.label }}</td>
