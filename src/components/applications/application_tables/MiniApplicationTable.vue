@@ -2,7 +2,8 @@
 import type {JobApplication} from "@/models/JobApplication";
 
 const props = defineProps<{
-  applications: JobApplication[]
+  applications: JobApplication[],
+  targetApplication: JobApplication
 }>();
 
 const emit = defineEmits(["select:application"]);
@@ -17,7 +18,8 @@ const emit = defineEmits(["select:application"]);
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in props.applications" :key="jobApp.id" @click="emit('select:application', jobApp)">
+    <tr v-for="jobApp in props.applications" :key="jobApp.id" @click="emit('select:application', jobApp)"
+        :class="targetApplication.id === jobApp.id ? 'bg-neutral-200 dark:bg-zinc-700' : ''">
       <td class="w-20 min-w-20">
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
              class="object-contain rounded-xs"/>

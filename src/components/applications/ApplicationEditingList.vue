@@ -6,7 +6,7 @@ import LogoBannerPadding from "@/components/applications/LogoBannerPadding.vue";
 
 const props = defineProps<{
   applications: JobApplication[],
-  targetApplication: JobApplication,
+  targetApplication: JobApplication
 }>();
 
 const emit = defineEmits(["select:application", "update:targetApplication", "delete:targetApplication"]);
@@ -27,7 +27,7 @@ const pingDelete = (applicationId: number) => {
 <template>
   <div class="flex flex-row w-full h-full overflow-hidden">
     <div class="flex flex-col h-full overflow-y-auto w-1/3 border-r border-neutral-100 dark:border-zinc-800">
-      <MiniApplicationTable :applications="props.applications" @select:application="pingSelect"/>
+      <MiniApplicationTable :applications="props.applications" :target-application="targetApplication" @select:application="pingSelect"/>
       <LogoBannerPadding/>
     </div>
 
