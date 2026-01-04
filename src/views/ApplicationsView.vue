@@ -4,17 +4,24 @@ import ApplicationFunctionBar from '@/components/applications/function_bar/Appli
 import {useApplicationStore} from "@/stores/applications";
 import {storeToRefs} from "pinia";
 import {isEqual, JobApplication, JobApplicationForm} from "@/models/JobApplication";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import ApplicationEditingList from "@/components/applications/ApplicationEditingList.vue";
 
 const store = useApplicationStore();
 const {items} = storeToRefs(store);
 store.fetchApplications();
 
-const targetApplication = ref<JobApplication | null>(null);
+const selectedId = ref<number | null>(null);
+
+const targetApplication = computed(() => {
+  if (!selectedId.value) {
+    return null;
+  }
+  return items.value.find(app => app.id === selectedId.value) || null;
+});
 
 function selectTarget(newTarget: JobApplication | null) {
-  targetApplication.value = newTarget;
+  selectedId.value = newTarget ? newTarget.id : null;
 }
 
 function updateApplication(application: JobApplication) {
