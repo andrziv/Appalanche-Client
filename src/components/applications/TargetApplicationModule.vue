@@ -114,8 +114,9 @@ function maxRounds(code: string): number {
     <div class="p-4 border-b border-neutral-100 dark:border-zinc-800">
       <form id="modifyApplicationForm" @submit.prevent="save" class="space-y-2">
         <div class="flex flex-wrap items-center justify-between">
-          <div class="flex flex-row space-x-4">
-            <div class="w-2/3 flex space-x-4 rounded-full text-sm items-center font-semibold transition" :style="{backgroundColor: draftApplication.status.colour}">
+          <div class="flex flex-row items-center space-x-4">
+            <div class="w-2/3 flex space-x-4 rounded-full text-sm items-center font-semibold transition"
+                 :style="{backgroundColor: draftApplication.status.colour}">
               <SelectorFormComponent id="status" label="" v-model="statusCoreProxy" value-key="code"
                                      :options="SIMPLE_FE_APPLICATION_STATUSES" :use-full-value="false" class="shrink-0"
                                      input-class="px-4 py-1 rounded-full text-sm font-semibold
@@ -131,9 +132,8 @@ function maxRounds(code: string): number {
                 <p class="w-fit text-white">Round: </p>
                 <TextFormComponent id="status_round" label="" v-model="statusRoundProxy" type="number"
                                    class="w-16" input-class="py-0 text-white bg-transparent dark:bg-transparent"
-                min="1" :max="maxRounds(draftApplication.status.code)"/>
+                                   min="1" :max="maxRounds(draftApplication.status.code)"/>
               </div>
-
             </div>
 
             <SelectorFormComponent id="experience" label="" v-model="draftApplication.experience"
@@ -147,9 +147,17 @@ function maxRounds(code: string): number {
             </SelectorFormComponent>
           </div>
 
-          <p class="info-badge text-white" :style="{backgroundColor: getInterestColor(draftApplication.interest)}">
-            Interest: {{ draftApplication.interest }}
-          </p>
+
+          <div class="w-fit flex rounded-full text-sm items-center font-semibold transition"
+               :style="{backgroundColor: getInterestColor(draftApplication.interest)}">
+            <p class="w-fit ml-4 text-white">Interest: </p>
+            <TextFormComponent id="interest" label="" v-model="draftApplication.interest" type="number"
+                               class="py-0.75"
+                               input-class="px-4 py-0 rounded-full text-sm font-semibold
+                                     bg-transparent dark:bg-transparent text-white transition"
+                               :input-style="{backgroundColor: draftApplication.status.colour}"
+                               min="1" max="10"/>
+          </div>
         </div>
 
         <div class="flex flex-wrap items-center justify-between">
@@ -232,10 +240,6 @@ function maxRounds(code: string): number {
 
 <style scoped>
 @reference "@/style.css";
-
-.info-badge {
-  @apply px-4 py-1 rounded-full text-sm font-semibold;
-}
 
 .close-button {
   @apply px-2 py-1.5 rounded-xs cursor-pointer text-sm font-semibold bg-gray-400 dark:bg-neutral-800 text-white dark:text-zinc-400 hover:bg-neutral-600;
