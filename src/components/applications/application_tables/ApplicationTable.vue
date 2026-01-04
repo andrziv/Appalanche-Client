@@ -52,11 +52,12 @@ const formatDate = (dateString: string) =>
         <a v-if="jobApp.jobPostingLink" class="flex flex-1 space-x-2 items-center"
            :href='jobApp.jobPostingLink'
            target="_blank"
-           rel="noopener noreferrer">
+           rel="noopener noreferrer"
+           @click.stop>
             <span>
               {{ jobApp.requisitionId }}
             </span>
-          <IconExternal class="h-3 w-auto theme-icon"/>
+          <IconExternal class="h-3 w-auto shrink-0 theme-icon"/>
         </a>
         <div v-else>
           {{ jobApp.requisitionId }}
