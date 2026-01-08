@@ -11,17 +11,17 @@ const store = useApplicationStore();
 const {items} = storeToRefs(store);
 store.fetchApplications();
 
-const selectedId = ref<number | null>(null);
+const selectedId = ref<string | null>(null);
 
 const targetApplication = computed(() => {
   if (!selectedId.value) {
     return null;
   }
-  return items.value.find(app => app.id === selectedId.value) || null;
+  return items.value.find(app => app.applicationId === selectedId.value) || null;
 });
 
 function selectTarget(newTarget: JobApplication | null) {
-  selectedId.value = newTarget ? newTarget.id : null;
+  selectedId.value = newTarget ? newTarget.applicationId : null;
 }
 
 function updateApplication(application: JobApplication) {
@@ -41,10 +41,10 @@ function updateApplication(application: JobApplication) {
     responseDate: application.responseDate,
   };
 
-  store.updateApplication(targetApplication.value.id, updateForm);
+  store.updateApplication(targetApplication.value.applicationId, updateForm);
 }
 
-function deleteApplication(applicationId: number) {
+function deleteApplication(applicationId: string) {
   store.deleteApplication(applicationId);
 }
 </script>

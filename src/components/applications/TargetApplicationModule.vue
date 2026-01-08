@@ -80,7 +80,7 @@ function save() {
 }
 
 function deleteTarget() {
-  emit('delete:targetApplication', draftApplication.value.id);
+  emit('delete:targetApplication', draftApplication.value.applicationId);
 }
 
 const MODIFIABLE_TEXT_FIELD = 'p-1 rounded-none border-b-2 border-neutral-300 dark:border-zinc-800 bg-transparent';

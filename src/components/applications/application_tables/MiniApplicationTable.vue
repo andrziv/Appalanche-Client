@@ -18,8 +18,8 @@ const emit = defineEmits(["select:application"]);
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in props.applications" :key="jobApp.id" @click="emit('select:application', jobApp)"
-        :class="targetApplication.id === jobApp.id ? 'bg-neutral-200 dark:bg-zinc-700' : ''">
+    <tr v-for="jobApp in props.applications" :key="jobApp.applicationId" @click="emit('select:application', jobApp)"
+        :class="targetApplication.applicationId === jobApp.applicationId ? 'bg-neutral-200 dark:bg-zinc-700' : ''">
       <td class="w-20 min-w-20">
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
              class="object-contain rounded-xs"/>

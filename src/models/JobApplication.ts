@@ -2,7 +2,6 @@ import type {ExperienceLevel} from "./ExperienceLevel.ts";
 import type {ApplicationStatus} from "./ApplicationStatus.ts";
 
 export interface JobApplication {
-    id: number;
     applicationId: string;
     requisitionId: string;
     title: string;
@@ -11,6 +10,7 @@ export interface JobApplication {
     status: ApplicationStatus;
     experience: ExperienceLevel;
     jobPostingLink: string;
+    description: string;
     appliedDate: string;
     responseDate: string;
 }
@@ -28,8 +28,7 @@ export interface JobApplicationForm {
 }
 
 export function isEqual(app1: JobApplication, app2: JobApplication) {
-    return app1.id !== app2.id
-        || app1.applicationId !== app2.applicationId
+    return app1.applicationId !== app2.applicationId
         || app1.requisitionId !== app2.requisitionId
         || app1.title !== app2.title
         || app1.company !== app2.company

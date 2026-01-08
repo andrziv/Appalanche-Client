@@ -40,7 +40,7 @@ const formatDate = (dateString: string) =>
     </tr>
     </thead>
     <tbody>
-    <tr v-for="jobApp in props.applications" :key="jobApp.id" @click="emit('select:application', jobApp)">
+    <tr v-for="jobApp in props.applications" :key="jobApp.applicationId" @click="emit('select:application', jobApp)">
       <td class="w-20 min-w-20">
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
              class="object-contain rounded-xs"/>

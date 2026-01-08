@@ -92,9 +92,9 @@ export const useApplicationStore = defineStore('applications', {
             }
         },
 
-        async updateApplication(id: number, changes: any) {
+        async updateApplication(applicationId: string, changes: any) {
             try {
-                await axios.patch(`/application/${id}`, changes);
+                await axios.patch(`/application/${applicationId}`, changes);
 
                 await this.fetchApplications();
             } catch (err: any) {
@@ -102,11 +102,11 @@ export const useApplicationStore = defineStore('applications', {
             }
         },
 
-        async deleteApplication(id: number) {
+        async deleteApplication(applicationId: string) {
             try {
-                await axios.delete(`/application/${id}`);
+                await axios.delete(`/application/${applicationId}`);
 
-                this.items = this.items.filter(app => app.id !== id);
+                this.items = this.items.filter(app => app.applicationId !== applicationId);
                 this.pagination.totalElements--;
 
                 if (this.items.length === 0 && this.pagination.page > 0) {
