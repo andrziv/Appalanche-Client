@@ -24,7 +24,7 @@ export const useApplicationStore = defineStore('applications', {
             responseAfter: null as string | null,
             responseBefore: null as string | null
         },
-        sort: 'createdAt,desc',
+        sort: 'responseDate,desc',
         isLoading: false,
         error: null as Record<string, string> | null
     }),
