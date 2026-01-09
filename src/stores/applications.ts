@@ -205,6 +205,7 @@ export const useApplicationStore = defineStore('applications', {
 
         clearAll() {
             this.items = [];
+            this.fetchedDetails.clear();
             this.clearFilters();
             this.sort = 'createdAt,desc';
             this.isLoading = false;

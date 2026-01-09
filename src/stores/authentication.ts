@@ -11,7 +11,8 @@ export const useAuthStore = defineStore('auth', {
         user: null as Account | null,
         isLoading: false,
         error: null as Record<string, string> | null,
-        authCheckComplete: false
+        authCheckComplete: false,
+        refreshTimer: null as ReturnType<typeof setTimeout> | null
     }),
 
     getters: {
@@ -54,6 +55,7 @@ export const useAuthStore = defineStore('auth', {
                 }
 
                 this.user = await response.data;
+                this.scheduleRefresh(response.data.expiresInSeconds);
                 return true;
             } catch (err: any) {
                 this.error = err.response.data;
@@ -94,12 +96,44 @@ export const useAuthStore = defineStore('auth', {
             try {
                 await axios.post('/authenticate/logout');
                 this.user = null;
+
+                if (this.refreshTimer) {
+                    clearTimeout(this.refreshTimer);
+                }
+                this.refreshTimer = null;
             } catch (err) {
                 this.user = null;
             } finally {
                 this.isLoading = false;
                 this.authCheckComplete = false;
             }
+        },
+
+        async cookieRefresh() {
+            try {
+                const response = await axios.post('/authenticate/refresh');
+                this.authCheckComplete = true;
+
+                this.scheduleRefresh(response.data.accessExpiryMilliseconds);
+            } catch (error) {
+                this.logout();
+            }
+        },
+
+        scheduleRefresh(lifespanMilliseconds: number) {
+            if (this.refreshTimer) {
+                clearTimeout(this.refreshTimer);
+            }
+
+            const refreshDelayMs = lifespanMilliseconds * 2 / 3;
+
+            if (refreshDelayMs < 5000) {
+                return;
+            }
+
+            this.refreshTimer = setTimeout(() => {
+                this.cookieRefresh();
+            }, refreshDelayMs);
         }
     }
 })

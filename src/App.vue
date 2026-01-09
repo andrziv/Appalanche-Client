@@ -1,5 +1,24 @@
 <script setup lang="ts">
 import Navbar from "@/components/navbar/Navbar.vue";
+import {useAuthStore} from "@/stores/authentication";
+import {onMounted, onUnmounted} from "vue";
+
+const authStore = useAuthStore();
+
+const handleVisibilityChange = () => {
+  if (document.visibilityState === 'visible' && authStore.isAuthenticated) {
+    authStore.cookieRefresh();
+  }
+};
+
+onMounted(async () => {
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  await authStore.cookieRefresh();
+});
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+});
 </script>
 
 <template>
