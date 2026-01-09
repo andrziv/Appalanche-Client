@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
-import LoadingButton from "@/components/widget/LoadingButton.vue";
 import {reactive, ref} from "vue";
+import type {ProfileInfo} from "@/stores/profile";
 import {useProfileStore} from "@/stores/profile";
+import ProfileBasicSettings from "@/components/profile/settings/ProfileBasicSettings.vue";
 
 const profileStore = useProfileStore();
 
-const form = reactive({
+const form = reactive<ProfileInfo>({
   firstname: profileStore.profile?.firstname ?? "",
   surname: profileStore.profile?.surname ?? "",
-  linkedinProfile: profileStore.profile?.linkedInProfile ?? "",
-  githubProfile: profileStore.profile?.gitHubProfile ?? "",
+  linkedInProfile: profileStore.profile?.linkedInProfile ?? "",
+  gitHubProfile: profileStore.profile?.gitHubProfile ?? "",
   portfolioSite: profileStore.profile?.portfolioSite ?? ""
 });
 
 const errors = ref<Record<string, string>>({});
 
-const handleProfileUpdate = async () => {
+const handleProfileUpdate = async (newData: ProfileInfo) => {
   errors.value = {};
-  const success = await profileStore.modify(form.firstname, form.surname, form.linkedinProfile, form.githubProfile, form.portfolioSite);
+  const success = await profileStore.modify(newData.firstname, newData.surname, newData.linkedInProfile, newData.gitHubProfile, newData.portfolioSite);
 
   if (success) {
-
   } else {
     if (profileStore.error) {
       errors.value = profileStore.error;
@@ -34,32 +33,8 @@ const handleProfileUpdate = async () => {
   <div class="flex flex-col h-full">
     <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
     <div class="-mt-16 min-h-full w-full max-w-7xl overflow-y-auto mx-auto bg-white dark:bg-zinc-950 rounded-t-sm">
-      <div class="flex flex-col px-8 py-10 w-full p-4">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-200">
-          Change Account Details
-        </h2>
-
-        <form class="mt-8 space-y-2" @submit.prevent="handleProfileUpdate">
-          <div class="space-y-6">
-            <div class="flex flex-row justify-center space-x-8">
-              <TextFormComponent id="firstName" v-model="form.firstname" label="First Name" type="text"
-                                 :required="false" autocomplete="first-name" placeholder="First Name" class="w-full"/>
-
-              <TextFormComponent id="lastName" v-model="form.surname" label="Last Name" type="text" :required="false"
-                                 autocomplete="last-name" placeholder="Last Name" class="w-full"/>
-            </div>
-
-            <TextFormComponent id="linkedinLink" v-model="form.linkedinProfile" label="LinkedIn Profile"
-                               :required="false" type="url" placeholder="Link to your LinkedIn Profile"/>
-            <TextFormComponent id="githubLink" v-model="form.githubProfile" label="GitHub Profile" :required="false"
-                               type="url" placeholder="Link to your GitHub Profile"/>
-            <TextFormComponent id="portfolioLink" v-model="form.portfolioSite" label="Portfolio Site" :required="false"
-                               type="url" placeholder="Link to your Portfolio Site"/>
-          </div>
-
-          <LoadingButton class="mt-8" :isSpinning="profileStore.isLoading" text="Update"/>
-        </form>
-      </div>
+      <ProfileBasicSettings :info="form" :is-loading="profileStore.isLoading" :errors="errors"
+                            @submit:data="handleProfileUpdate"/>
     </div>
   </div>
 </template>

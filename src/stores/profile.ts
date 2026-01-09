@@ -1,6 +1,20 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
 
+export interface JobSite {
+    siteId: string;
+    name: string;
+    url: string;
+}
+
+export interface ProfileInfo {
+    firstname: string;
+    surname: string;
+    linkedInProfile: string;
+    gitHubProfile: string;
+    portfolioSite: string;
+}
+
 export interface AccountProfile {
     accountId: string;
     firstname: string;
@@ -8,6 +22,7 @@ export interface AccountProfile {
     linkedInProfile: string;
     gitHubProfile: string;
     portfolioSite: string;
+    jobSites: JobSite[];
 }
 
 export const useProfileStore = defineStore('profile', {
@@ -52,8 +67,8 @@ export const useProfileStore = defineStore('profile', {
 
             try {
                 const response = await axios.patch('/profile', {
-                    firstName: firstName,
-                    lastName: lastName,
+                    firstname: firstName,
+                    surname: lastName,
                     linkedInProfile: linkedIn,
                     gitHubProfile: gitHub,
                     portfolioSite: portfolio
