@@ -12,7 +12,9 @@ export const useAuthStore = defineStore('auth', {
         isLoading: false,
         error: null as Record<string, string> | null,
         authCheckComplete: false,
-        refreshTimer: null as ReturnType<typeof setTimeout> | null
+        refreshTimer: null as ReturnType<typeof setTimeout> | null,
+        lastRefreshedAt: 0,
+        lifespanMilliseconds: 0,
     }),
 
     getters: {
@@ -55,6 +57,7 @@ export const useAuthStore = defineStore('auth', {
                 }
 
                 this.user = await response.data;
+                this.lastRefreshedAt = Date.now();
                 this.scheduleRefresh(response.data.expiresInSeconds);
                 return true;
             } catch (err: any) {
@@ -101,6 +104,8 @@ export const useAuthStore = defineStore('auth', {
                     clearTimeout(this.refreshTimer);
                 }
                 this.refreshTimer = null;
+                this.lastRefreshedAt = 0;
+                this.lifespanMilliseconds = 0;
             } catch (err) {
                 this.user = null;
             } finally {
@@ -115,6 +120,7 @@ export const useAuthStore = defineStore('auth', {
                 this.authCheckComplete = true;
 
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
+                this.lastRefreshedAt = Date.now();
             } catch (error) {
                 this.logout();
             }
@@ -126,6 +132,7 @@ export const useAuthStore = defineStore('auth', {
             }
 
             const refreshDelayMs = lifespanMilliseconds * 2 / 3;
+            this.lifespanMilliseconds = lifespanMilliseconds;
 
             if (refreshDelayMs < 5000) {
                 return;
@@ -134,6 +141,30 @@ export const useAuthStore = defineStore('auth', {
             this.refreshTimer = setTimeout(() => {
                 this.cookieRefresh();
             }, refreshDelayMs);
+        },
+
+        realignCookieRefreshSchedule() {
+            if (!this.isAuthenticated) {
+                return;
+            }
+
+            const now = Date.now();
+            const targetRefreshTime = this.lastRefreshedAt + (this.lifespanMilliseconds * 2 / 3);
+
+            if (now >= targetRefreshTime) {
+                this.cookieRefresh();
+                return;
+            }
+
+            if (this.refreshTimer) {
+                clearTimeout(this.refreshTimer);
+            }
+
+            const timeUntilRefresh = targetRefreshTime - now;
+
+            this.refreshTimer = setTimeout(() => {
+                this.cookieRefresh();
+            }, timeUntilRefresh);
         }
     }
-})
+});

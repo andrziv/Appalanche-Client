@@ -7,13 +7,13 @@ const authStore = useAuthStore();
 
 const handleVisibilityChange = () => {
   if (document.visibilityState === 'visible' && authStore.isAuthenticated) {
-    authStore.cookieRefresh();
+    authStore.realignCookieRefreshSchedule();
   }
 };
 
 onMounted(async () => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
-  await authStore.cookieRefresh();
+  authStore.realignCookieRefreshSchedule();
 });
 
 onUnmounted(() => {
