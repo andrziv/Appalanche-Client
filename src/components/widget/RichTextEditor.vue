@@ -110,6 +110,8 @@ onBeforeUnmount(() => editor.value?.destroy());
 
 <style scoped>
 @reference '@/style.css';
+
+// we need to style the Placeholder specifically according to TipTap docs.
 :deep(.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
   float: left;
