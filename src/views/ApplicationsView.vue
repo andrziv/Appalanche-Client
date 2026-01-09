@@ -59,12 +59,14 @@ function deleteApplication(applicationId: string) {
     <ApplicationFunctionBar/>
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
-      <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-lg">
-        <ApplicationBrowseList v-if="!targetApplication" :applications="items" @select:application="selectTarget"/>
+      <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
+        <ApplicationBrowseList v-if="!targetApplication" :applications="items" @select:application="selectTarget"
+                               class="rounded-t-sm"/>
         <ApplicationEditingList v-else :applications="items" :target-application="targetApplication"
                                 @select:application="selectTarget"
                                 @update:target-application="updateApplication"
-                                @delete:target-application="deleteApplication"/>
+                                @delete:target-application="deleteApplication"
+                                class="rounded-t-sm"/>
       </div>
     </div>
   </div>
