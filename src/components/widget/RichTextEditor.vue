@@ -108,6 +108,7 @@ onBeforeUnmount(() => editor.value?.destroy());
   </div>
 </template>
 
+<!--suppress CssUnusedSymbol -->
 <style scoped>
 @reference '@/style.css';
 
