@@ -73,19 +73,19 @@ onBeforeUnmount(() => editor.value?.destroy());
          dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700">
       <button type="button" @click="editor.chain().focus().toggleBold().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('bold')}"
-              class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200">
+              class="control-header-button">
         <IconBold class="theme-icon h-3.5 w-auto"/>
       </button>
 
       <button type="button" @click="editor.chain().focus().toggleItalic().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('italic')}"
-              class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200">
+              class="control-header-button">
         <IconItalic class="theme-icon h-3.5 w-auto"/>
       </button>
 
       <button type="button" @click="editor.chain().focus().toggleUnderline().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('underline')}"
-              class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200">
+              class="control-header-button">
         <IconUnderline class="theme-icon h-3.5 w-auto"/>
       </button>
 
@@ -93,13 +93,13 @@ onBeforeUnmount(() => editor.value?.destroy());
 
       <button type="button" @click="editor.chain().focus().toggleBulletList().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('bulletList')}"
-              class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200">
+              class="control-header-button">
         <IconBulletList class="theme-icon h-6 w-auto"/>
       </button>
 
       <button type="button" @click="editor.chain().focus().toggleOrderedList().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('orderedList')}"
-              class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200">
+              class="control-header-button">
         <IconNumberedList class="theme-icon h-6.5 w-auto"/>
       </button>
     </div>
@@ -109,11 +109,16 @@ onBeforeUnmount(() => editor.value?.destroy());
 </template>
 
 <style scoped>
+@reference '@/style.css';
 :deep(.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
   float: left;
   color: #9ca3af;
   pointer-events: none;
   height: 0;
+}
+
+.control-header-button {
+  @apply p-1.5 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 transition text-gray-700 dark:text-gray-200;
 }
 </style>
