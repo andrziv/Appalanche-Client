@@ -23,6 +23,7 @@ export interface JobApplicationForm {
     statusCode: string;
     experienceLevelCode: string;
     jobPostingLink: string;
+    description: string;
     appliedDate: string;
     responseDate: string;
 }
@@ -36,6 +37,7 @@ export function isEqual(app1: JobApplication, app2: JobApplication) {
         || app1.status.code !== app2.status.code
         || app1.experience.code !== app2.experience.code
         || app1.jobPostingLink !== app2.jobPostingLink
+        || app1.description !== app2.description
         || app1.appliedDate !== app2.appliedDate
         || app1.responseDate !== app2.responseDate;
 }

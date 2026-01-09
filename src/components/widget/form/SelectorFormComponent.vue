@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import BaseFormComponent from "@/components/widget/form/BaseFormComponent.vue";
 import {twMerge} from 'tailwind-merge';
-import {computed, StyleValue} from "vue";
+import {computed} from "vue";
+import type {StyleValue} from "vue";
 
 interface Props {
   label: string;

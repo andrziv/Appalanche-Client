@@ -20,6 +20,7 @@ const getInitialState = (): JobApplicationForm => ({
   statusCode: '',
   experienceLevelCode: '',
   jobPostingLink: "",
+  description: '',
   appliedDate: new Date().toISOString(),
   responseDate: null
 });

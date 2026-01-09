@@ -37,6 +37,7 @@ function updateApplication(application: JobApplication) {
     statusCode: application.status.code,
     experienceLevelCode: application.experience.code,
     jobPostingLink: application.jobPostingLink,
+    description: application.description,
     appliedDate: application.appliedDate,
     responseDate: application.responseDate,
   };
