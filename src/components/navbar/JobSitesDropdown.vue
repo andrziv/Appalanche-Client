@@ -3,7 +3,21 @@ import {ref} from 'vue';
 import IconExternal from '../icons/IconExternal.vue';
 import IconDownChevron from '../icons/IconDownChevron.vue';
 import IconJobBoard from '../icons/IconJobBoard.vue';
-import temp from "@/assets/vue.svg";
+import type {JobSite} from "@/stores/profile";
+
+const props = withDefaults(defineProps<{
+  jobSites?: JobSite[],
+}>(),{
+  jobSites: () => [{
+    siteId: "fixed-jobsite-1",
+    name: "LinkedIn",
+    url: "https://www.linkedin.com"
+  }, {
+    siteId: "fixed-jobsite-2",
+    name: "Indeed",
+    url: "https://ca.indeed.com/"
+  }]
+});
 
 const dropdownOpen = ref(false);
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -18,24 +32,6 @@ const closeDropdown = () => {
     dropdownOpen.value = false;
   }, 150);
 }
-
-const jobSites = [
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/jobs',
-    icon: 'https://cdn-icons-png.flaticon.com/512/174/174857.png'
-  },
-  {
-    name: 'Indeed',
-    url: 'https://indeed.com',
-    icon: 'https://cdn-icons-png.flaticon.com/512/732/732221.png'
-  },
-  {
-    name: 'levels.fyi',
-    url: 'https://www.levels.fyi',
-    icon: temp
-  }
-];
 </script>
 
 <template>
@@ -55,14 +51,17 @@ const jobSites = [
         leave-from-class="opacity-100 translate-x-0"
         leave-to-class="opacity-0 -translate-x-2">
       <div v-if="dropdownOpen" class="absolute top-full w-40 bg-white dark:bg-zinc-950 shadow-md">
-        <a v-for="site in jobSites"
+        <a v-for="site in props.jobSites"
            :key="site.name"
            :href="site.url"
            target="_blank"
            rel="noopener noreferrer"
            class="flex items-center justify-between px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
           <div class="flex items-center space-x-2">
-            <img :src="site.icon" class="h-4 w-4" alt="icon"/>
+            <div class="w-5 min-w-5">
+              <img :src="`/logo/name/${site.name}`" :alt="`${site.name} Logo`"
+                   class="object-contain rounded-xs"/>
+            </div>
             <span class="text-gray-600 dark:text-zinc-400">{{ site.name }}</span>
           </div>
           <IconExternal class="h-3 w-3 text-gray-500 theme-icon"/>

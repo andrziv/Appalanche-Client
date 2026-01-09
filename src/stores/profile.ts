@@ -104,6 +104,38 @@ export const useProfileStore = defineStore('profile', {
             }
         },
 
+        async addJobSite(jobSiteUrl: string) {
+            this.error = null;
+
+            try {
+                await axios.post('/profile/job-sites', {
+                    url: jobSiteUrl
+                });
+
+                await this.fetchProfile();
+                return true;
+            } catch (err: any) {
+                this.error = err.response.data;
+                return false;
+            }
+        },
+
+        async removeJobSite(jobSiteId: string) {
+            this.error = null;
+
+            try {
+                await axios.delete('/profile/job-sites/' + jobSiteId, {});
+
+                await this.fetchProfile();
+                return true;
+            } catch (err: any) {
+                this.error = err.response.data;
+                return false;
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
         clear() {
             this.profile = null;
             this.isLoading = false;
