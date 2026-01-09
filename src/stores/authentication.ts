@@ -121,6 +121,7 @@ export const useAuthStore = defineStore('auth', {
 
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
                 this.lastRefreshedAt = Date.now();
+                console.log("Cookies refreshed.");
             } catch (error) {
                 this.logout();
             }
@@ -131,6 +132,7 @@ export const useAuthStore = defineStore('auth', {
                 clearTimeout(this.refreshTimer);
             }
 
+            console.log(`Refresh interval: ${lifespanMilliseconds}`);
             const refreshDelayMs = lifespanMilliseconds * 2 / 3;
             this.lifespanMilliseconds = lifespanMilliseconds;
 
@@ -144,10 +146,6 @@ export const useAuthStore = defineStore('auth', {
         },
 
         realignCookieRefreshSchedule() {
-            if (!this.isAuthenticated) {
-                return;
-            }
-
             const now = Date.now();
             const targetRefreshTime = this.lastRefreshedAt + (this.lifespanMilliseconds * 2 / 3);
 
