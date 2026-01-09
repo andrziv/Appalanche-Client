@@ -7,6 +7,7 @@ import {computed, onMounted, ref, toRaw, watch} from "vue";
 import {useReferenceStore} from "@/stores/static_app_references";
 import SelectorFormComponent from "@/components/widget/form/SelectorFormComponent.vue";
 import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
+import RichTextEditor from "@/components/widget/RichTextEditor.vue";
 
 const props = defineProps<{
   targetApplication: JobApplication,
@@ -196,44 +197,7 @@ function maxRounds(code: string): number {
       </form>
     </div>
     <div class="p-4">
-      <p class="whitespace-pre-line">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lobortis luctus sollicitudin. Aenean tristique
-        eros nec velit fermentum molestie eu non dui. Pellentesque urna dolor, laoreet id eleifend ut, imperdiet nec
-        nulla. Vestibulum ultrices ligula fringilla nunc sagittis, vitae elementum dolor malesuada. In elementum
-        pulvinar metus a mattis. Phasellus pharetra, tortor sed porta dignissim, libero eros rhoncus dui, sed tempus
-        massa justo sed nisi. Cras vitae hendrerit sem. Phasellus tempor tortor massa, a hendrerit urna varius a. Fusce
-        vel dolor et justo lobortis elementum pretium id ipsum.
-
-        Sed faucibus aliquam sem et sagittis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-        inceptos himenaeos. Sed vel dolor turpis. Phasellus lobortis pellentesque semper. Praesent nisi mauris, maximus
-        nec sem eget, mollis rhoncus odio. Maecenas vitae purus eleifend, vehicula est eu, pulvinar ante. Suspendisse in
-        vestibulum neque, eu tempus risus.
-
-        Nulla quis massa sit amet felis congue vulputate. Maecenas a mauris vel orci pellentesque sollicitudin ut in
-        ante. Praesent sit amet ligula elementum, pulvinar orci sed, eleifend elit. Morbi efficitur quam ac hendrerit
-        lobortis. Morbi id aliquam lectus. Proin nisl augue, ultricies sit amet neque a, vestibulum consectetur diam.
-        Vestibulum commodo consectetur turpis a sagittis. Fusce eros enim, rutrum eu mauris in, auctor hendrerit risus.
-        Nunc vel lobortis diam, vel vehicula lorem. Nunc placerat pellentesque euismod. Sed elementum in magna sed
-        dignissim. Fusce porta commodo enim sit amet tincidunt. Cras et tellus placerat, bibendum leo vel, vulputate
-        dui. Vestibulum lacus nulla, pharetra a ultricies tempus, ullamcorper eu justo. Nunc faucibus nulla eget varius
-        hendrerit. Sed ut nunc vel leo ultrices faucibus.
-
-        Etiam consequat, tortor nec consectetur fermentum, nibh tortor luctus nibh, ut ornare enim lorem quis neque.
-        Mauris tristique hendrerit arcu, sit amet sollicitudin massa malesuada in. Cras auctor efficitur dui, id
-        dignissim ex bibendum quis. Nam orci libero, auctor nec elementum et, pellentesque nec libero. Aliquam porttitor
-        sit amet tellus eget fringilla. Quisque a rhoncus nunc, ut ornare ipsum. Morbi tellus enim, aliquam sit amet
-        consectetur vel, tempor a ipsum. Donec ut feugiat libero. Nulla facilisi. Sed condimentum vulputate vestibulum.
-        Vestibulum sit amet magna condimentum, gravida lorem quis, suscipit leo. Maecenas nec aliquet ligula, vel
-        facilisis libero. Nulla id fermentum nulla.
-
-        Praesent vitae nulla non dolor blandit finibus at ac eros. Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit. Sed tincidunt augue ac bibendum venenatis. Sed suscipit sed tellus ac tincidunt. Sed nec magna rutrum,
-        mattis ex a, mollis turpis. Nullam porttitor accumsan rhoncus. Morbi a aliquet nisl. Nullam in scelerisque
-        magna. Aenean luctus erat in massa tincidunt interdum. Curabitur consectetur, felis id commodo sodales, urna
-        quam auctor massa, at pulvinar lacus ipsum vitae sem. Nullam laoreet, felis sed hendrerit dictum, ipsum dolor
-        lobortis urna, vitae iaculis erat urna quis justo. Pellentesque accumsan turpis ut rhoncus luctus. Fusce quis
-        neque eu libero semper malesuada vitae non felis.
-      </p>
+      <RichTextEditor :model-value="draftApplication.description" :editable="true" @update:model-value="newText => draftApplication.description = newText"/>
     </div>
   </div>
 </template>

@@ -17,6 +17,10 @@ const targetApplication = computed(() => {
   if (!selectedId.value) {
     return null;
   }
+
+  if (!store.fetchedDetails.has(selectedId.value)) {
+    store.fetchApplication(selectedId.value);
+  }
   return items.value.find(app => app.applicationId === selectedId.value) || null;
 });
 

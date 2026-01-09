@@ -8,6 +8,7 @@ import {getUserTimezone} from "@/utility/DateUtilities";
 export const useApplicationStore = defineStore('applications', {
     state: () => ({
         items: [] as JobApplication[],
+        fetchedDetails: new Set<string>(),
         pagination: {
             page: 0,
             size: 20,
@@ -46,6 +47,32 @@ export const useApplicationStore = defineStore('applications', {
     // TODO: should creating, updating, or deleting create another network call to fetch the latest?
     //  or should we try to make the frontend "smart"?
     actions: {
+        async fetchApplication(applicationId: string, force: boolean = false) {
+            const existingIndex = this.items.findIndex(app => app.applicationId === applicationId);
+            const existingItem = this.items[existingIndex];
+
+            if (!force && existingItem && this.fetchedDetails.has(applicationId)) {
+                return existingItem;
+            }
+
+            try {
+                const response = await axios.get(`/application/${applicationId}`);
+                const fullApp = response.data;
+
+                if (existingIndex !== -1) {
+                    this.items[existingIndex] = fullApp;
+                } else {
+                    this.items.push(fullApp);
+                }
+
+                this.fetchedDetails.add(applicationId);
+
+                return fullApp;
+            } catch (err: any) {
+                this.error = err.response.data;
+            }
+        },
+
         async fetchApplications() {
             this.isLoading = true;
             this.error = null;
@@ -75,6 +102,7 @@ export const useApplicationStore = defineStore('applications', {
                 const {items, meta} = convertApplicationHateoas(response.data);
                 this.items = items;
                 this.pagination = meta;
+                this.fetchedDetails.clear();
             } catch (err: any) {
                 this.error = err.response.data;
             } finally {
@@ -96,7 +124,7 @@ export const useApplicationStore = defineStore('applications', {
             try {
                 await axios.patch(`/application/${applicationId}`, changes);
 
-                await this.fetchApplications();
+                await this.fetchApplication(applicationId, true);
             } catch (err: any) {
                 this.error = err.response.data;
             }
