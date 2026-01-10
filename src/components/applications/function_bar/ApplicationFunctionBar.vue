@@ -13,7 +13,7 @@ import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
 import SimpleDateRange from "@/components/widget/SimpleDateRange.vue";
 import {InterestCondition} from "@/models/InterestCondition";
-import {JobApplicationForm} from "@/models/JobApplication";
+import type {JobApplicationForm} from "@/models/JobApplication";
 
 const store = useApplicationStore();
 const {filters} = storeToRefs(store);

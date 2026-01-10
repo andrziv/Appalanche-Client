@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {isEqual, JobApplication} from "@/models/JobApplication";
+import type {JobApplication} from "@/models/JobApplication";
+import {isEqual} from "@/models/JobApplication";
 import {getInterestColor} from "@/utility/ColourUtilities";
 import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 import {createIsoBinding} from "@/utility/DateUtilities";
@@ -197,7 +198,8 @@ function maxRounds(code: string): number {
       </form>
     </div>
     <div class="p-4">
-      <RichTextEditor :model-value="draftApplication.description" :editable="true" @update:model-value="newText => draftApplication.description = newText"/>
+      <RichTextEditor :model-value="draftApplication.description" :editable="true"
+                      @update:model-value="newText => draftApplication.description = newText"/>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
 import SimpleModal from "@/components/widget/SimpleModal.vue";
 import {ref, toRef} from "vue";
 import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
-import {JobApplicationForm} from "@/models/JobApplication";
+import type {JobApplicationForm} from "@/models/JobApplication";
 import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 import {ExperienceLevel} from "@/models/ExperienceLevel";
 import SelectorFormComponent from "@/components/widget/form/SelectorFormComponent.vue";
@@ -22,7 +22,7 @@ const getInitialState = (): JobApplicationForm => ({
   jobPostingLink: "",
   description: '',
   appliedDate: new Date().toISOString(),
-  responseDate: null
+  responseDate: ''
 });
 
 const formData = ref<JobApplicationForm>(getInitialState());

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {JobApplication} from "@/models/JobApplication";
+import type {JobApplication} from "@/models/JobApplication";
 import ApplicationTable from "@/components/applications/application_tables/ApplicationTable.vue";
 import LogoBannerPadding from "@/components/applications/LogoBannerPadding.vue";
 import PaginationControl from "@/components/widget/PaginationControl.vue";

@@ -3,7 +3,8 @@ import ApplicationBrowseList from '@/components/applications/ApplicationBrowseLi
 import ApplicationFunctionBar from '@/components/applications/function_bar/ApplicationFunctionBar.vue';
 import {useApplicationStore} from "@/stores/applications";
 import {storeToRefs} from "pinia";
-import {isEqual, JobApplication, JobApplicationForm} from "@/models/JobApplication";
+import type {JobApplication, JobApplicationForm} from "@/models/JobApplication";
+import {isEqual} from "@/models/JobApplication";
 import {computed, ref} from "vue";
 import ApplicationEditingList from "@/components/applications/ApplicationEditingList.vue";
 

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import CreateApplicationModal from "@/components/applications/function_bar/add_position_buttons/CreateApplicationModal.vue";
-import {JobApplicationForm} from "@/models/JobApplication";
+import CreateApplicationModal
+  from "@/components/applications/function_bar/add_position_buttons/CreateApplicationModal.vue";
+import type {JobApplicationForm} from "@/models/JobApplication";
 
 const isShowingAddModal = ref(false);
 

@@ -4,7 +4,8 @@ import CopyableSiteLink from "@/components/navbar/CopyableSiteLink.vue";
 import IconPersonalSite from "@/components/icons/IconPersonalSite.vue";
 import ThemedImage from "@/components/icons/ThemedImage.vue";
 import {useAuthStore} from "@/stores/authentication";
-import {JobSite, useProfileStore} from "@/stores/profile";
+import type {JobSite} from "@/stores/profile";
+import {useProfileStore} from "@/stores/profile";
 import {storeToRefs} from "pinia";
 
 const authStore = useAuthStore();

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconExternal from "@/components/icons/IconExternal.vue";
-import {JobApplication} from "@/models/JobApplication";
+import type {JobApplication} from "@/models/JobApplication";
 import {truncateMiddle} from "@/utility/StringUtilities";
 
 const props = defineProps<{
