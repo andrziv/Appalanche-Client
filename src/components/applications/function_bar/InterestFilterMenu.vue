@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import IconXMark from "@/components/icons/IconXMark.vue";
-import {InterestCondition, OPERATORS, operatorTypeMapping} from "@/models/InterestCondition";
+import IconXMark from "@/components/icons/simple-characters/IconXMark.vue";
 import type {OperatorType} from '@/models/InterestCondition';
+import {InterestCondition, OPERATORS, operatorTypeMapping} from "@/models/InterestCondition";
 
 const props = defineProps<{
   interestCriteria: InterestCondition[]

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue';
-import IconExclamation from "@/components/icons/IconExclamation.vue";
+import IconExclamation from "@/components/icons/simple-characters/IconExclamation.vue";
 
 interface Props {
   label: string;

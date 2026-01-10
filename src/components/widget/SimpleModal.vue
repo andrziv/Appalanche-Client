@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconXMark from "@/components/icons/IconXMark.vue";
+import IconXMark from "@/components/icons/simple-characters/IconXMark.vue";
 
 const props = defineProps<{
   show: boolean;

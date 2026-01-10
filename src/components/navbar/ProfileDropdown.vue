@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import IconDownChevron from "@/components/icons/IconDownChevron.vue";
+import IconDownChevron from "@/components/icons/simple-characters/IconDownChevron.vue";
 import SimpleDropdown from "@/components/widget/SimpleDropdown.vue";
 import IconDoor from "@/components/icons/IconDoor.vue";
 import IconGear from "@/components/icons/IconGear.vue";
@@ -21,7 +21,7 @@ async function logout() {
   await authStore.logout();
   profileStore.clear();
   applicationStore.clearAll();
-  await router.push({ name: 'Login' });
+  await router.push({name: 'Login'});
 }
 </script>
 

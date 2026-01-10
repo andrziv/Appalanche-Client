@@ -3,7 +3,7 @@ import {reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useAuthStore} from '@/stores/authentication';
 import LoadingButton from "@/components/widget/LoadingButton.vue";
-import IconExclamation from "@/components/icons/IconExclamation.vue";
+import IconExclamation from "@/components/icons/simple-characters/IconExclamation.vue";
 import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 
 const router = useRouter();

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import IconExternal from '../icons/IconExternal.vue';
-import IconDownChevron from '../icons/IconDownChevron.vue';
+import IconDownChevron from '../icons/simple-characters/IconDownChevron.vue';
 import IconJobBoard from '../icons/IconJobBoard.vue';
 import type {JobSite} from "@/stores/profile";
 
 const props = withDefaults(defineProps<{
   jobSites?: JobSite[],
-}>(),{
+}>(), {
   jobSites: () => [{
     siteId: "fixed-jobsite-1",
     name: "LinkedIn",

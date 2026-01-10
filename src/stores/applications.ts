@@ -10,7 +10,7 @@ export const useApplicationStore = defineStore('applications', {
         items: [] as JobApplication[],
         fetchedDetails: new Set<string>(),
         pagination: {
-            page: 0,
+            number: 0,
             size: 20,
             totalElements: 0,
             totalPages: 0,
@@ -25,7 +25,7 @@ export const useApplicationStore = defineStore('applications', {
             responseAfter: null as string | null,
             responseBefore: null as string | null
         },
-        sort: 'responseDate,desc',
+        sort: ['responseDate,desc', 'createdAt,desc'],
         isLoading: false,
         error: null as Record<string, string> | null
     }),
@@ -61,7 +61,7 @@ export const useApplicationStore = defineStore('applications', {
 
                 if (existingIndex !== -1) {
                     this.items[existingIndex] = fullApp;
-                } else {
+                } else if (!this.isLoading) {
                     this.items.push(fullApp);
                 }
 
@@ -93,9 +93,12 @@ export const useApplicationStore = defineStore('applications', {
                         responseBefore: this.filters.responseBefore || undefined,
                         timezone: getUserTimezone(),
 
-                        page: this.pagination.page,
+                        page: this.pagination.number,
                         size: this.pagination.size,
                         sort: this.sort
+                    },
+                    paramsSerializer: {
+                        indexes: null
                     }
                 });
 
@@ -137,8 +140,8 @@ export const useApplicationStore = defineStore('applications', {
                 this.items = this.items.filter(app => app.applicationId !== applicationId);
                 this.pagination.totalElements--;
 
-                if (this.items.length === 0 && this.pagination.page > 0) {
-                    this.pagination.page--;
+                if (this.items.length === 0 && this.pagination.number > 0) {
+                    this.pagination.number--;
                     await this.fetchApplications();
                 }
             } catch (err: any) {
@@ -146,18 +149,18 @@ export const useApplicationStore = defineStore('applications', {
             }
         },
 
-        setPage(pageNumber: number) {
-            this.pagination.page = pageNumber;
-            this.fetchApplications();
+        async setPage(pageNumber: number) {
+            this.pagination.number = pageNumber;
+            await this.fetchApplications();
         },
 
-        updateFilters(newFilters: any) {
+        async updateFilters(newFilters: any) {
             this.filters = {...this.filters, ...newFilters};
-            this.pagination.page = 0;
-            this.fetchApplications();
+            this.pagination.number = 0;
+            await this.fetchApplications();
         },
 
-        clearFilters() {
+        async clearFilters() {
             const filters = {
                 searchQuery: '',
                 statusCodes: [],
@@ -168,46 +171,61 @@ export const useApplicationStore = defineStore('applications', {
                 responseAfter: null,
                 responseBefore: null
             }
-            this.updateFilters(filters);
+            await this.updateFilters(filters);
         },
 
-        setSearchQuery(search: string) {
+        async setSearchQuery(search: string) {
             this.filters.searchQuery = search;
-            this.setPage(0);
+            await this.setPage(0);
         },
 
-        setStatusQuery(statusCodes: string[]) {
+        async setStatusQuery(statusCodes: string[]) {
             this.filters.statusCodes = statusCodes;
-            this.setPage(0);
+            await this.setPage(0);
         },
 
-        setExperienceQuery(experienceCodes: string[]) {
+        async setExperienceQuery(experienceCodes: string[]) {
             this.filters.experienceLevels = experienceCodes;
-            this.setPage(0);
+            await this.setPage(0);
         },
 
-        setInterestQuery(interestPredicates: InterestCondition[]) {
+        async setInterestQuery(interestPredicates: InterestCondition[]) {
             this.filters.interestCriteria = interestPredicates;
-            this.setPage(0);
+            await this.setPage(0);
         },
 
-        setAppliedRange(appliedAfter: string | null, appliedBefore: string | null) {
+        async setAppliedRange(appliedAfter: string | null, appliedBefore: string | null) {
             this.filters.appliedAfter = appliedAfter;
             this.filters.appliedBefore = appliedBefore;
-            this.setPage(0);
+            await this.setPage(0);
         },
 
-        setResponseRange(responseAfter: string | null, responseBefore: string | null) {
+        async setResponseRange(responseAfter: string | null, responseBefore: string | null) {
             this.filters.responseAfter = responseAfter;
             this.filters.responseBefore = responseBefore;
-            this.setPage(0);
+            await this.setPage(0);
+        },
+
+        resetFilters() {
+            const filters = {
+                searchQuery: '',
+                statusCodes: [],
+                experienceLevels: [],
+                interestCriteria: [],
+                appliedAfter: null,
+                appliedBefore: null,
+                responseAfter: null,
+                responseBefore: null
+            }
+
+            this.filters = {...this.filters, ...filters};
         },
 
         clearAll() {
             this.items = [];
             this.fetchedDetails.clear();
-            this.clearFilters();
-            this.sort = 'createdAt,desc';
+            this.resetFilters();
+            this.sort = ['responseDate,desc', 'createdAt,desc'];
             this.isLoading = false;
             this.error = null;
         }

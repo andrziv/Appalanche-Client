@@ -18,14 +18,20 @@ const targetApplication = computed(() => {
     return null;
   }
 
-  if (!store.fetchedDetails.has(selectedId.value)) {
-    store.fetchApplication(selectedId.value);
-  }
   return items.value.find(app => app.applicationId === selectedId.value) || null;
 });
 
-function selectTarget(newTarget: JobApplication | null) {
-  selectedId.value = newTarget ? newTarget.applicationId : null;
+async function selectTarget(newTarget: JobApplication | null) {
+  if (!newTarget) {
+    selectedId.value = null;
+    return;
+  }
+
+  selectedId.value = newTarget.applicationId;
+
+  if (!store.fetchedDetails.has(newTarget.applicationId)) {
+    await store.fetchApplication(newTarget.applicationId);
+  }
 }
 
 function updateApplication(application: JobApplication) {
@@ -52,6 +58,17 @@ function updateApplication(application: JobApplication) {
 function deleteApplication(applicationId: string) {
   store.deleteApplication(applicationId);
 }
+
+async function updatePage(newPage: number) {
+  const wasSelected = !!targetApplication.value;
+  await store.setPage(newPage);
+
+  if (wasSelected) {
+    await selectTarget(store.items[0] ?? null);
+  } else {
+    await selectTarget(null);
+  }
+}
 </script>
 
 <template>
@@ -60,10 +77,12 @@ function deleteApplication(applicationId: string) {
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
-        <ApplicationBrowseList v-if="!targetApplication" :applications="items" @select:application="selectTarget"
-                               class="rounded-t-sm"/>
+        <ApplicationBrowseList v-if="!targetApplication" :applications="items" :page="store.pagination.number"
+                               :total-pages="store.pagination.totalPages" @select:application="selectTarget"
+                               @update:page="updatePage" class="rounded-t-sm"/>
         <ApplicationEditingList v-else :applications="items" :target-application="targetApplication"
-                                @select:application="selectTarget"
+                                :page="store.pagination.number" :total-pages="store.pagination.totalPages"
+                                @update:page="updatePage" @select:application="selectTarget"
                                 @update:target-application="updateApplication"
                                 @delete:target-application="deleteApplication"
                                 class="rounded-t-sm"/>

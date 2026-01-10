@@ -4,8 +4,9 @@ import {ExperienceLevel} from "@/models/ExperienceLevel";
 import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 import FilterContainer from "@/components/applications/function_bar/FilterContainer.vue";
 import InterestFilterMenu from "@/components/applications/function_bar/InterestFilterMenu.vue";
-import IconXMark from "@/components/icons/IconXMark.vue";
-import CreateApplicationButton from "@/components/applications/function_bar/add_position_buttons/CreateApplicationButton.vue";
+import IconXMark from "@/components/icons/simple-characters/IconXMark.vue";
+import CreateApplicationButton
+  from "@/components/applications/function_bar/add_position_buttons/CreateApplicationButton.vue";
 import ImportCSVButton from "@/components/applications/function_bar/add_position_buttons/ImportCSVButton.vue";
 import {useApplicationStore} from "@/stores/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconDownChevron from "@/components/icons/IconDownChevron.vue";
+import IconDownChevron from "@/components/icons/simple-characters/IconDownChevron.vue";
 import SimpleDropdown from "@/components/widget/SimpleDropdown.vue";
 
 const props = defineProps<{
