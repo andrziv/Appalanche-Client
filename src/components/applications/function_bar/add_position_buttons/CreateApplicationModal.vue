@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import SimpleModal from "@/components/widget/SimpleModal.vue";
-import {ref, toRef} from "vue";
+import {onMounted, ref, toRef} from "vue";
 import TextFormComponent from "@/components/widget/form/TextFormComponent.vue";
 import type {JobApplicationForm} from "@/models/JobApplication";
 import {SIMPLE_FE_APPLICATION_STATUSES} from "@/models/ApplicationStatus";
 import {ExperienceLevel} from "@/models/ExperienceLevel";
 import SelectorFormComponent from "@/components/widget/form/SelectorFormComponent.vue";
 import {createIsoBinding} from "@/utility/DateUtilities";
+import {useReferenceStore} from "@/stores/static_app_references";
+
+const refStore = useReferenceStore();
+
+onMounted(() => {
+  refStore.fetchAll();
+});
 
 const props = defineProps<{
   show: boolean;
@@ -34,7 +41,7 @@ const emit = defineEmits(["close", "create:application"]);
 
 function save() {
   const payload = {...formData.value};
-
+  payload.statusCode = refStore.getMinStatusByCodeFragment(payload.statusCode).code;
   emit('create:application', payload);
   close();
 }
