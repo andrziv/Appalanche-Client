@@ -42,6 +42,10 @@ const emit = defineEmits(["close", "create:application"]);
 function save() {
   const payload = {...formData.value};
   payload.statusCode = refStore.getMinStatusByCodeFragment(payload.statusCode).code;
+  if (payload.requisitionId === null || payload.requisitionId.trim() === '') {
+    payload.requisitionId = "n/a";
+  }
+
   emit('create:application', payload);
   close();
 }
