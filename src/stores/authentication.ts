@@ -22,6 +22,34 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
+        // TODO: calling three times in the worst-case scenario atm, but if I default to cookie-refreshing as first step
+        //  it means that every page refresh requires an extra DB cycle on server (refresh cookie check).
+        async initializeAuth() {
+            if (this.authCheckComplete) {
+                return;
+            }
+
+            try {
+                await this.fetchUser();
+            } catch (error: any) {
+                this.user = null;
+            } finally {
+                this.authCheckComplete = true;
+            }
+
+            if (!this.isAuthenticated) {
+                try {
+                    await this.cookieRefresh();
+                    await this.fetchUser();
+                } catch (err: any) {
+                    this.user = null;
+                    this.error = err.response.data;
+                } finally {
+                    this.authCheckComplete = true;
+                }
+            }
+        },
+
         async fetchUser() {
             this.isLoading = true;
             try {
@@ -33,8 +61,9 @@ export const useAuthStore = defineStore('auth', {
                 } else {
                     this.user = await response.data;
                 }
-            } catch (err) {
+            } catch (err: any) {
                 this.user = null;
+                this.error = err.response.data;
             } finally {
                 this.isLoading = false;
                 this.authCheckComplete = true;

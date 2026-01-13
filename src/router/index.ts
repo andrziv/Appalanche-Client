@@ -61,7 +61,7 @@ router.beforeEach(async (to, _from, next) => {
     const profileStore = useProfileStore();
 
     if (!authStore.authCheckComplete) {
-        await authStore.fetchUser();
+        await authStore.initializeAuth();
     }
 
     const authenticated = authStore.isAuthenticated;
