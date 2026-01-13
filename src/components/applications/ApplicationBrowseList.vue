@@ -4,11 +4,14 @@ import ApplicationTable from "@/components/applications/application_tables/Appli
 import LogoBannerPadding from "@/components/applications/LogoBannerPadding.vue";
 import PaginationControl from "@/components/widget/PaginationControl.vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   applications: JobApplication[],
   page: number,
-  totalPages: number
-}>();
+  totalPages: number,
+  isLoadingList?: boolean
+}>(), {
+  isLoadingList: false
+});
 
 const emit = defineEmits(["select:application", "update:page"]);
 
@@ -19,7 +22,7 @@ const handlePageChange = (newPage: number) => {
 
 <template>
   <div class="flex flex-col h-full overflow-y-auto">
-    <ApplicationTable :applications="props.applications"
+    <ApplicationTable :applications="props.applications" :is-loading="props.isLoadingList"
                       @select:application="newTarget => emit('select:application', newTarget)"/>
     <div class="p-4 bg-gray-100 dark:bg-zinc-800/20 mt-auto">
       <PaginationControl :model-value="props.page" :total-pages="props.totalPages"

@@ -8,13 +8,15 @@ import {isEqual} from "@/models/JobApplication";
 import {ref} from "vue";
 import ApplicationEditingList from "@/components/applications/ApplicationEditingList.vue";
 import {useDraftStore} from "@/stores/applications/draft-application";
+import {createDelayedBinding} from "@/utility/DelayUtilities";
 
 const serverStore = useApplicationStore();
 const draftStore = useDraftStore();
-const {items} = storeToRefs(serverStore);
-const {currentDraft} = storeToRefs(draftStore);
+const {items, isLoading} = storeToRefs(serverStore);
+const {currentDraft, isLoadingData, isLoadingSave} = storeToRefs(draftStore);
 serverStore.fetchApplications();
 
+const showLoadingContent = createDelayedBinding(isLoading, 250);
 const selectedId = ref<string | null>(null);
 
 async function selectTarget(newTarget: JobApplication | null) {
@@ -63,10 +65,12 @@ async function updatePage(newPage: number) {
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
         <ApplicationBrowseList v-if="!currentDraft" :applications="items" :page="serverStore.pagination.number"
-                               :total-pages="serverStore.pagination.totalPages" @select:application="selectTarget"
-                               @update:page="updatePage" class="rounded-t-sm"/>
+                               :total-pages="serverStore.pagination.totalPages" :is-loading-list="showLoadingContent"
+                               @select:application="selectTarget" @update:page="updatePage" class="rounded-t-sm"/>
         <ApplicationEditingList v-else :applications="items" :target-application="currentDraft"
                                 :page="serverStore.pagination.number" :total-pages="serverStore.pagination.totalPages"
+                                :is-loading-list="showLoadingContent" :is-loading-draft="isLoadingData"
+                                :is-saving="isLoadingSave"
                                 @update:page="updatePage" @select:application="selectTarget"
                                 @update:target-application="updateApplication"
                                 @delete:target-application="deleteApplication"

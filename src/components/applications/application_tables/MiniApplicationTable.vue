@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type {JobApplication} from "@/models/JobApplication";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   applications: JobApplication[],
-  targetApplication: JobApplication
-}>();
+  targetApplication: JobApplication,
+  isLoading?: boolean
+}>(), {
+  isLoading: false
+});
 
 const emit = defineEmits(["select:application"]);
 </script>
@@ -17,9 +20,21 @@ const emit = defineEmits(["select:application"]);
       <th>Position</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody v-if="props.isLoading" class="divide-y divide-gray-100">
+    <tr v-for="n in 20" :key="n" class="animate-pulse">
+      <td class="w-1 px-2 py-2 align-middle">
+        <div class="h-13 w-13 bg-gray-200 dark:bg-zinc-800 rounded-xs"/>
+      </td>
+      <td class="px-2 py-2 align-middle space-y-2">
+        <div class="h-4 bg-gray-200 dark:bg-zinc-800 rounded w-3/4"/>
+        <div class="h-3 bg-gray-200 dark:bg-zinc-800 rounded w-1/2"/>
+      </td>
+    </tr>
+    </tbody>
+    <tbody v-else>
     <tr v-for="jobApp in props.applications" :key="jobApp.applicationId" @click="emit('select:application', jobApp)"
-        :class="targetApplication.applicationId === jobApp.applicationId ? 'bg-neutral-200 dark:bg-zinc-700' : ''">
+        class="real"
+        :class="props.targetApplication.applicationId === jobApp.applicationId ? 'bg-neutral-200 dark:bg-zinc-700' : ''">
       <td class="w-20 min-w-20">
         <img :src="`/logo/name/${jobApp.company}`" :alt="`${jobApp.company} Logo`"
              class="object-contain rounded-xs"/>
@@ -49,6 +64,10 @@ thead th {
 }
 
 tbody tr {
-  @apply border-b-[0.5px] border-neutral-100 dark:border-zinc-800 hover:bg-neutral-100 hover:dark:bg-zinc-800;
+  @apply border-b-[0.5px] border-neutral-100 dark:border-zinc-800;
+}
+
+tbody tr.real {
+  @apply hover:bg-neutral-100 hover:dark:bg-zinc-800;
 }
 </style>
