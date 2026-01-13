@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import SubNav from "@/components/navbar/SubNav.vue";
 import ThemedImage from "@/components/icons/ThemedImage.vue";
 import lightLogo from '@/assets/appalanche.svg';
@@ -16,9 +16,6 @@ const profileStore = useProfileStore();
 const pageTitle = computed(() => {
   return route.meta?.title || route.name || "Untitled Page";
 });
-
-const selectedRegion = ref("USA");
-const regions = ["USA", "Canada", "Mexico"];
 </script>
 
 <template>
@@ -37,11 +34,6 @@ const regions = ["USA", "Canada", "Mexico"];
       </a>
 
       <div class="flex space-x-4">
-        <select v-model="selectedRegion"
-                class="px-3 bg-gray-200 dark:bg-zinc-900 rounded-full text-gray-600 dark:text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
-          <option v-for="region in regions" :key="region">{{ region }}</option>
-        </select>
-
         <div v-if="!authStore.isAuthenticated" class="flex space-x-2">
           <a class="px-3 py-2 text-sm bg-gray-200 dark:bg-zinc-900 rounded-sm hover:bg-gray-300 dark:hover:bg-zinc-800 transition"
              href="/login">
