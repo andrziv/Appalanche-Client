@@ -1,71 +1,55 @@
 <script setup lang="ts">
 import ApplicationBrowseList from '@/components/applications/ApplicationBrowseList.vue';
 import ApplicationFunctionBar from '@/components/applications/function_bar/ApplicationFunctionBar.vue';
-import {useApplicationStore} from "@/stores/applications";
+import useApplicationStore from "@/stores/applications/applications";
 import {storeToRefs} from "pinia";
-import type {JobApplication, JobApplicationForm} from "@/models/JobApplication";
+import type {JobApplication} from "@/models/JobApplication";
 import {isEqual} from "@/models/JobApplication";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import ApplicationEditingList from "@/components/applications/ApplicationEditingList.vue";
+import {useDraftStore} from "@/stores/applications/draft-application";
 
-const store = useApplicationStore();
-const {items} = storeToRefs(store);
-store.fetchApplications();
+const serverStore = useApplicationStore();
+const draftStore = useDraftStore();
+const {items} = storeToRefs(serverStore);
+const {currentDraft} = storeToRefs(draftStore);
+serverStore.fetchApplications();
 
 const selectedId = ref<string | null>(null);
-
-const targetApplication = computed(() => {
-  if (!selectedId.value) {
-    return null;
-  }
-
-  return items.value.find(app => app.applicationId === selectedId.value) || null;
-});
 
 async function selectTarget(newTarget: JobApplication | null) {
   if (!newTarget) {
     selectedId.value = null;
+    draftStore.clear();
     return;
   }
 
   selectedId.value = newTarget.applicationId;
-
-  if (!store.fetchedDetails.has(newTarget.applicationId)) {
-    await store.fetchApplication(newTarget.applicationId);
-  }
+  await draftStore.initializeDraft(newTarget.applicationId);
 }
 
 function updateApplication(application: JobApplication) {
-  if (!application || !targetApplication.value || !isEqual(targetApplication.value, application)) {
+  if (!application || !currentDraft.value || !isEqual(currentDraft.value, application)) {
     return;
   }
 
-  const updateForm: JobApplicationForm = {
-    requisitionId: application.requisitionId,
-    title: application.title,
-    company: application.company,
-    interest: application.interest,
-    statusCode: application.status.code,
-    experienceLevelCode: application.experience.code,
-    jobPostingLink: application.jobPostingLink,
-    description: application.description,
-    appliedDate: application.appliedDate,
-    responseDate: application.responseDate,
-  };
-
-  store.updateApplication(targetApplication.value.applicationId, updateForm);
+  draftStore.currentDraft = application;
+  draftStore.saveDraft();
 }
 
 function deleteApplication(applicationId: string) {
-  store.deleteApplication(applicationId);
+  serverStore.deleteApplication(applicationId);
+  if (draftStore.currentDraft == null || draftStore.currentDraft.applicationId === applicationId) {
+    draftStore.clear();
+  }
 }
 
 async function updatePage(newPage: number) {
-  const wasSelected = !!targetApplication.value;
-  await store.setPage(newPage);
+  const wasSelected = currentDraft.value != null;
+  await serverStore.setPage(newPage);
 
   if (wasSelected) {
-    await selectTarget(store.items[0] ?? null);
+    await selectTarget(serverStore.items[0] ?? null);
   } else {
     await selectTarget(null);
   }
@@ -78,11 +62,11 @@ async function updatePage(newPage: number) {
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
-        <ApplicationBrowseList v-if="!targetApplication" :applications="items" :page="store.pagination.number"
-                               :total-pages="store.pagination.totalPages" @select:application="selectTarget"
+        <ApplicationBrowseList v-if="!currentDraft" :applications="items" :page="serverStore.pagination.number"
+                               :total-pages="serverStore.pagination.totalPages" @select:application="selectTarget"
                                @update:page="updatePage" class="rounded-t-sm"/>
-        <ApplicationEditingList v-else :applications="items" :target-application="targetApplication"
-                                :page="store.pagination.number" :total-pages="store.pagination.totalPages"
+        <ApplicationEditingList v-else :applications="items" :target-application="currentDraft"
+                                :page="serverStore.pagination.number" :total-pages="serverStore.pagination.totalPages"
                                 @update:page="updatePage" @select:application="selectTarget"
                                 @update:target-application="updateApplication"
                                 @delete:target-application="deleteApplication"

@@ -6,12 +6,14 @@ import IconDoor from "@/components/icons/IconDoor.vue";
 import IconGear from "@/components/icons/IconGear.vue";
 import {useAuthStore} from "@/stores/authentication";
 import {useProfileStore} from "@/stores/profile";
-import {useApplicationStore} from "@/stores/applications";
+import useApplicationStore from "@/stores/applications/applications";
 import router from "@/router";
+import {useDraftStore} from "@/stores/applications/draft-application";
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore();
 const applicationStore = useApplicationStore();
+const draftStore = useDraftStore();
 
 const props = defineProps<{
   label: string | null;
@@ -21,6 +23,7 @@ async function logout() {
   await authStore.logout();
   profileStore.clear();
   applicationStore.clearAll();
+  draftStore.clear();
   await router.push({name: 'Login'});
 }
 </script>

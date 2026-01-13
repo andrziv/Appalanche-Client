@@ -8,7 +8,7 @@ import IconXMark from "@/components/icons/simple-characters/IconXMark.vue";
 import CreateApplicationButton
   from "@/components/applications/function_bar/add_position_buttons/CreateApplicationButton.vue";
 import ImportCSVButton from "@/components/applications/function_bar/add_position_buttons/ImportCSVButton.vue";
-import {useApplicationStore} from "@/stores/applications";
+import useApplicationStore from "@/stores/applications/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
 import SimpleDateRange from "@/components/widget/SimpleDateRange.vue";

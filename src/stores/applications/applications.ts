@@ -5,7 +5,7 @@ import {InterestCondition} from "@/models/InterestCondition";
 import {convertApplicationHateoas} from "@/utility/ResponseAdapters";
 import {getUserTimezone} from "@/utility/DateUtilities";
 
-export const useApplicationStore = defineStore('applications', {
+const useApplicationStore = defineStore('applications', {
     state: () => ({
         items: [] as JobApplication[],
         fetchedDetails: new Set<string>(),
@@ -44,8 +44,6 @@ export const useApplicationStore = defineStore('applications', {
         }
     },
 
-    // TODO: should creating, updating, or deleting create another network call to fetch the latest?
-    //  or should we try to make the frontend "smart"?
     actions: {
         async fetchApplication(applicationId: string, force: boolean = false) {
             const existingIndex = this.items.findIndex(app => app.applicationId === applicationId);
@@ -66,8 +64,6 @@ export const useApplicationStore = defineStore('applications', {
                 }
 
                 this.fetchedDetails.add(applicationId);
-
-                return fullApp;
             } catch (err: any) {
                 this.error = err.response.data;
             }
@@ -231,3 +227,4 @@ export const useApplicationStore = defineStore('applications', {
         }
     }
 });
+export default useApplicationStore
