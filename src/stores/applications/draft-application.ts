@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import useApplicationStore from './applications';
-import type {JobApplication} from '@/models/JobApplication';
+import type {JobApplication, JobApplicationForm} from '@/models/JobApplication';
 
 export const useDraftStore = defineStore('draft', {
     state: () => ({
@@ -10,6 +10,27 @@ export const useDraftStore = defineStore('draft', {
         isLoadingSave: false,
         error: null as Record<string, string> | null
     }),
+
+    getters: {
+        convertToForm: (state): JobApplicationForm | null => {
+            if (!state.currentDraft || !state.originalId) {
+                return null;
+            }
+
+            return {
+                requisitionId: state.currentDraft.requisitionId,
+                title: state.currentDraft.title,
+                company: state.currentDraft.company,
+                interest: state.currentDraft.interest,
+                statusCode: state.currentDraft.status.code,
+                experienceLevelCode: state.currentDraft.experience.code,
+                jobPostingLink: state.currentDraft.jobPostingLink,
+                description: state.currentDraft.description,
+                appliedDate: state.currentDraft.appliedDate,
+                responseDate: state.currentDraft.responseDate,
+            }
+        }
+    },
 
     actions: {
         async initializeDraft(applicationId: string) {
@@ -48,7 +69,7 @@ export const useDraftStore = defineStore('draft', {
             this.isLoadingSave = true;
             try {
                 const appStore = useApplicationStore();
-                await appStore.updateApplication(this.originalId, this.currentDraft);
+                await appStore.updateApplication(this.originalId, this.convertToForm);
             } catch (err: any) {
                 this.error = err.response.data;
             } finally {

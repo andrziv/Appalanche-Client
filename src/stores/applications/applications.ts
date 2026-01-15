@@ -120,6 +120,10 @@ const useApplicationStore = defineStore('applications', {
         },
 
         async updateApplication(applicationId: string, changes: any) {
+            if (changes == null || applicationId == null) {
+                return;
+            }
+
             try {
                 await axios.patch(`/application/${applicationId}`, changes);
 
