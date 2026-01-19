@@ -4,11 +4,9 @@ import {computed} from 'vue';
 const props = withDefaults(defineProps<{
   modelValue: number,
   totalPages: number,
-  siblingCount?: number,
-  edgeSiblingMinimum?: number
+  siblingCount?: number
 }>(), {
-  siblingCount: 1,
-  edgeSiblingMinimum: 2,
+  siblingCount: 1
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -23,7 +21,8 @@ const range = (start: number, end: number) => {
 const paginationRange = computed(() => {
   const totalPageCount = props.totalPages;
   const siblingCount = props.siblingCount;
-  const minSiblingCount = props.edgeSiblingMinimum;
+  const firstPageIndex = 1;
+  const lastPageIndex = totalPageCount;
 
   const currentPage = props.modelValue + 1;
 
@@ -36,22 +35,20 @@ const paginationRange = computed(() => {
   const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
   const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount);
 
-  const shouldShowLeftDots = leftSiblingIndex > 2;
-  const shouldShowRightDots = rightSiblingIndex < totalPageCount - 1;
+  const accountedLeftIndex = currentPage == lastPageIndex ? Math.max(leftSiblingIndex - 1, firstPageIndex) : leftSiblingIndex;
+  const accountedRightIndex = currentPage == firstPageIndex ? Math.min(rightSiblingIndex + 1, lastPageIndex) : rightSiblingIndex;
 
-  const firstPageIndex = 1;
-  const lastPageIndex = totalPageCount;
+  const shouldShowLeftDots = accountedLeftIndex - firstPageIndex > 2;
+  const shouldShowRightDots = totalPageCount - accountedRightIndex > 2;
 
   if (!shouldShowLeftDots && shouldShowRightDots) {
-    const leftIndex = leftSiblingIndex == 2 ? firstPageIndex : leftSiblingIndex;
-    const accountedRightIndex = (rightSiblingIndex - firstPageIndex < minSiblingCount) ? rightSiblingIndex + 1 : rightSiblingIndex;
+    const leftIndex = leftSiblingIndex - firstPageIndex <= 2 ? firstPageIndex : leftSiblingIndex;
     const visibleRange = range(leftIndex, accountedRightIndex);
     return [...visibleRange, DOTS, totalPageCount];
   }
 
   if (shouldShowLeftDots && !shouldShowRightDots) {
-    const rightIndex = rightSiblingIndex == lastPageIndex - 1 ? lastPageIndex : rightSiblingIndex;
-    const accountedLeftIndex = (rightIndex - leftSiblingIndex < minSiblingCount) ? leftSiblingIndex - 1 : leftSiblingIndex;
+    const rightIndex = lastPageIndex - rightSiblingIndex <= 2 ? lastPageIndex : rightSiblingIndex;
     const visibleRange = range(accountedLeftIndex, rightIndex);
     return [firstPageIndex, DOTS, ...visibleRange];
   }
@@ -61,7 +58,7 @@ const paginationRange = computed(() => {
     return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
   }
 
-  return [];
+  return range(firstPageIndex, lastPageIndex);
 });
 
 const onPageChange = (page: number | string) => {
@@ -86,20 +83,26 @@ const prev = () => {
 </script>
 
 <template>
-  <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2">
+  <div v-if="totalPages > 1" class="@container flex items-center justify-center space-x-2">
     <button @click="prev" :disabled="modelValue === 0"
             class="std-buttons page-buttons disabled:opacity-50 disabled:cursor-not-allowed">
       <
     </button>
 
-    <div v-for="(page, index) in paginationRange" :key="index">
-      <span v-if="page === DOTS" class="px-2 text-gray-400 dark:text-gray-500">
-        ...
-      </span>
-      <button v-else @click="onPageChange(page)" class="std-buttons min-w-8"
-              :class="[(page === modelValue + 1) ? 'active-page-button' : 'page-buttons']">
-        {{ page }}
-      </button>
+    <span class="text-sm font-medium whitespace-nowrap px-2 @min-[30rem]:hidden">
+      Page {{ modelValue + 1 }} of {{ totalPages }}
+    </span>
+
+    <div class="hidden items-center space-x-2 @min-[30rem]:flex">
+      <div v-for="(page, index) in paginationRange" :key="index">
+        <span v-if="page === DOTS" class="px-2 text-gray-400 dark:text-gray-500">
+          ...
+        </span>
+        <button v-else @click="onPageChange(page)" class="std-buttons min-w-8"
+                :class="[(page === modelValue + 1) ? 'active-page-button' : 'page-buttons']">
+          {{ page }}
+        </button>
+      </div>
     </div>
 
     <button @click="next" :disabled="modelValue >= totalPages - 1"
