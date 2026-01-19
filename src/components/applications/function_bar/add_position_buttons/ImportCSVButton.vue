@@ -15,10 +15,10 @@ const hideCSVModal = () => {
 
 <template>
   <div class="relative inline-block text-left">
-    <a @click="showCSVModal"
+    <button @click="showCSVModal"
        class="px-4 py-2 rounded-sm cursor-pointer bg-gray-600 dark:bg-zinc-900 hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
       Import CSV
-    </a>
+    </button>
 
     <ImportCSVModal :show="isShowingCSVModal" @close="hideCSVModal"/>
   </div>

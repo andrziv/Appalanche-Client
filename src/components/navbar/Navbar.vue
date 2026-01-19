@@ -21,7 +21,7 @@ const pageTitle = computed(() => {
 <template>
   <div class="navbar fixed z-30 top-0 left-0 w-full bg-white dark:bg-zinc-950">
     <nav class="max-w-7xl flex items-center justify-between px-6 py-3 mx-auto">
-      <a href="/">
+      <RouterLink to="/">
         <div class="flex place-items-center items-center space-x-6">
           <ThemedImage :lightSrc="lightLogo"
                        :darkSrc="darkLogo"
@@ -31,18 +31,18 @@ const pageTitle = computed(() => {
             {{ pageTitle }}
           </span>
         </div>
-      </a>
+      </RouterLink>
 
       <div class="flex space-x-4">
         <div v-if="!authStore.isAuthenticated" class="flex space-x-2">
-          <a class="px-3 py-2 text-sm bg-gray-200 dark:bg-zinc-900 rounded-sm hover:bg-gray-300 dark:hover:bg-zinc-800 transition"
-             href="/login">
+          <RouterLink class="px-3 py-2 text-sm bg-gray-200 dark:bg-zinc-900 rounded-sm hover:bg-gray-300 dark:hover:bg-zinc-800 transition"
+             to="/login">
             <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Login</span>
-          </a>
-          <a class="px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm hover:bg-gray-400 dark:hover:bg-zinc-800 transition"
-             href="/signup">
+          </RouterLink>
+          <RouterLink class="px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm hover:bg-gray-400 dark:hover:bg-zinc-800 transition"
+             to="/signup">
             <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">Sign Up</span>
-          </a>
+          </RouterLink>
         </div>
         <ProfileDropdown v-else :label="profileStore.fullName"/>
       </div>

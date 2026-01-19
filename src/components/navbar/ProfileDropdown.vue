@@ -40,13 +40,13 @@ async function logout() {
     <template #dropdown-menu>
       <div class="absolute left-0 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
       bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown">
-        <a class="profile-dropdown-button" href="/settings">
+        <RouterLink class="profile-dropdown-button" to="/settings">
           <IconGear class="theme-icon"/>
           <span class="text-sm font-semibold themed-harsh-text">
             Settings
           </span>
-        </a>
-        <button class="profile-dropdown-button" @click="logout">
+        </RouterLink>
+        <button class="profile-dropdown-button cursor-pointer" @click="logout">
           <IconDoor class="theme-icon"/>
           <span class="text-sm font-semibold themed-harsh-text">
             Log Out

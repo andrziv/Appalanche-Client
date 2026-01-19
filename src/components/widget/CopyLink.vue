@@ -22,9 +22,9 @@ const copyLink = async () => {
 
 <template>
   <div class="inline-flex items-center">
-    <a class="flex items-center justify-center py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition" @click="copyLink">
+    <button class="flex items-center justify-center py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition" @click="copyLink">
       <IconCopy class="px-1 h-4 w-auto border-r border-gray-300 dark:border-zinc-600 theme-icon"/>
-    </a>
+    </button>
     <span v-if="copied" class="absolute -top-6 text-xs text-green-600 font-semibold animate-fade">
       Copied!
     </span>

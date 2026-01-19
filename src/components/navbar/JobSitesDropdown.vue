@@ -37,11 +37,11 @@ const closeDropdown = () => {
 <template>
   <div class="relative flex items-center" @mouseenter="openDropdown"
        @mouseleave="closeDropdown">
-    <a class="flex items-center space-x-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
+    <button class="flex items-center space-x-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-800 transition">
       <IconJobBoard class="h-4 w-auto theme-icon"/>
       <span class="text-gray-600 dark:text-zinc-400 text-xs font-semibold">Job Boards</span>
       <IconDownChevron class="h-4 w-auto theme-icon"/>
-    </a>
+    </button>
 
     <Transition
         enter-active-class="transition ease-out duration-200"

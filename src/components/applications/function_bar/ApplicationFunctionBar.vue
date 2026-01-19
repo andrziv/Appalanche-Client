@@ -174,11 +174,11 @@ function createApplication(draft: JobApplicationForm) {
           </template>
         </FilterContainer>
 
-        <a v-if="!store.areFiltersEmpty" @click="store.clearFilters"
+        <button v-if="!store.areFiltersEmpty" @click="store.clearFilters"
            class="flex items-center space-x-2 px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm cursor-pointer hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
           <IconXMark class="h-4 w-auto invert-80"/>
           <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">Clear All</span>
-        </a>
+        </button>
       </div>
     </div>
   </div>

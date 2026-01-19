@@ -58,25 +58,25 @@ function resetCondition() {
 
     <div>
       <div v-if="!interestCondition" class="flex space-x-2 items-center">
-        <a v-if="!showConditionMenu"
+        <button v-if="!showConditionMenu"
            class="rounded-sm text-center text-sm font-semibold w-full px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
            @click="showConditionMenu = true">
           Add
-        </a>
+        </button>
         <div v-else class="flex flex-col space-y-2">
           <div class="grid grid-cols-3 gap-2">
-            <a v-for="op in OPERATORS" :key="op"
+            <button v-for="op in OPERATORS" :key="op"
                class="rounded-sm text-center text-sm font-semibold px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
                @click="startNewCondition(op as OperatorType)">
               <template v-if="op === 'between'">x ≤ interest ≤ y</template>
               <template v-else>x {{ operatorTypeMapping(op) }} interest</template>
-            </a>
+            </button>
           </div>
 
-          <a class="rounded-sm text-center text-sm font-semibold px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
+          <button class="rounded-sm text-center text-sm font-semibold px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-gray-100 transition"
              @click="showConditionMenu = false">
             Cancel
-          </a>
+          </button>
         </div>
       </div>
       <div v-else class="flex flex-wrap items-center space-x-2">
@@ -108,14 +108,14 @@ function resetCondition() {
         </div>
 
         <div class="flex items-center space-x-2 shrink-0 text-sm font-semibold text-black dark:text-gray-100">
-          <a class="rounded-sm text-center px-2 py-1 bg-green-500 hover:bg-green-600 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
+          <button class="rounded-sm text-center px-2 py-1 bg-green-500 hover:bg-green-600 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
              @click="finalizeCondition">
             Finalize
-          </a>
-          <a class="rounded-sm text-center px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
+          </button>
+          <button class="rounded-sm text-center px-2 py-1 bg-gray-200 hover:bg-gray-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
              @click="resetCondition">
             Cancel
-          </a>
+          </button>
         </div>
       </div>
     </div>

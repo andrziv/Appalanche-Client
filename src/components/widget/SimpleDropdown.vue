@@ -33,10 +33,10 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="dropdownRef" class="relative inline-block text-left">
-    <a @click.stop="toggleDropdown"
+    <button @click.stop="toggleDropdown"
        class="cursor-pointer transition">
       <slot name="dropdown-button" :dropdownOpen="open"/>
-    </a>
+    </button>
 
     <transition enter-active-class="transition ease-out duration-150"
                 enter-from-class="opacity-0 -translate-y-1"
