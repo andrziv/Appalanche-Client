@@ -36,8 +36,8 @@ export const SIMPLE_FE_APPLICATION_STATUSES: ApplicationStatus[] = [
         textColour: ""
     }, {
         id: 5,
-        code: "OFFER",
-        label: "Offer",
+        code: "OFFER_RECEIVED",
+        label: "Offer Received",
         round: 0,
         colour: "",
         textColour: ""
