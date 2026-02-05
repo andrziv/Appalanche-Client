@@ -7,29 +7,29 @@ Modulith](https://github.com/andrziv/Appalanche-Modulith).
 
 ## Small Tour
 The login page (and similarly, the signup page that isn't being shown), used to login to an existing account.
-![Dark-theme Login page screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_login_dark.png "Login page screenshot with empty fields.")
+![Dark-theme Login page screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_login_dark.png "Login page screenshot with empty fields.")
 
 The homepage to allow for quickly browsing your added applications. You can quickly search for applications via the 
 search bar for position name, company name, or the application ID (if you set one). You can also search using the 
 other fields with the drop-downs, or you can mix and combine with any of the aforementioned criteria.
-![Dark-theme Home page screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_home_dark.png "Home page screenshot with example applications.")
+![Dark-theme Home page screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_home_dark.png "Home page screenshot with example applications.")
 
 If you click on an application you can open up the editing panel to change any of the attributes you previously set. 
 You can also add a job description or your notes on the position. You also have access to all of the searching 
 functionality the home page has, if you need to search while in editing mode.
-![Dark-theme Editing panel screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_editing_dark.png "Editing panel screenshot on an example 'Junior Robotics Engineer' application at Stark Industries.")
+![Dark-theme Editing panel screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_editing_dark.png "Editing panel screenshot on an example 'Junior Robotics Engineer' application at Stark Industries.")
 
 The settings panel is where you can set various quality-of-life links that will be placed on the sub-navigation bar. 
 Note how in the previous images there were no LinkedIn/GitHub links, but now they've been added via settings. 
 In addition to personal links, you can add links to job boards that are accessible via the drop-down under the logo.
-![Dark-theme Settings screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_settings_dark.png "Settings page screenshot with fields partially filled in and some example job sites.")
+![Dark-theme Settings screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_settings_dark.png "Settings page screenshot with fields partially filled in and some example job sites.")
 
 Clicking on the "Add Application" button will show the following modal, where you can fill the displayed fields and 
 Pressing "Save" will create a new application that will quickly show up at the top of your home page listings (assuming you're on the first page).
-![Dark-theme Application creation modal screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_addapp_dark.png "Screenshot of modal used for submitting a new application with fields unfilled.")
+![Dark-theme Application creation modal screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_addapp_dark.png "Screenshot of modal used for submitting a new application with fields unfilled.")
 
 The entire website also has a light-mode in case that's preferrable. Here's an example of the home page but in light mode.
-![Light-theme Home page screenshot](https://github.com/andrziv/Appalanche-Client/blob/main/readme_images/appalanche_home_light.png "Light-theme Home page screenshot with example applications.")
+![Light-theme Home page screenshot](https://github.com/andrziv/Appalanche-Client/blob/master/readme_images/appalanche_home_light.png "Light-theme Home page screenshot with example applications.")
 
 ## Connecting to Server
 Given that this project is still WIP, there's no clean artifact that you can use to run the system.
