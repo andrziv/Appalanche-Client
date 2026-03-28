@@ -45,6 +45,27 @@ const classes = computed(() => {
       props.inputClass
   );
 });
+
+const onPaste = (e: ClipboardEvent) => {
+  e.preventDefault();
+
+  const trimmedContent = e.clipboardData?.getData('text/plain').trim() || '';
+  const input = e.target as HTMLInputElement;
+  const start = input.selectionStart ?? 0;
+  const end = input.selectionEnd ?? 0;
+  const currentVal = String(model.value) ?? '';
+
+  const newValueStr = currentVal.substring(0, start) + trimmedContent + currentVal.substring(end);
+
+  const isNumberType = props.type === 'number' || typeof model.value === 'number';
+
+  if (isNumberType && newValueStr !== '') {
+    const parsed = Number(newValueStr);
+    model.value = Number.isNaN(parsed) ? model.value : parsed;
+  } else {
+    model.value = newValueStr;
+  }
+}
 </script>
 
 <template>
@@ -52,7 +73,7 @@ const classes = computed(() => {
                      :mute-error-message="props.muteErrorMessage" :class="attrs.class" :style="attrs.style">
     <input :id="props.id" v-model="model" :type="props.type" :placeholder="props.placeholder"
            :autocomplete="props.autocomplete" :required="required"
-           :class="classes" v-bind="innerInputAttrs"/>
+           :class="classes" v-bind="innerInputAttrs" @paste.prevent="onPaste"/>
   </BaseFormComponent>
 </template>
 
