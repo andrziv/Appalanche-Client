@@ -6,6 +6,7 @@ services:
 
   frontend:
     image: 'andrej-ziv/appalanche-vue-frontend:latest'
+    container_name: app_frontend
     environment:
       - BACKEND_SERVICE_NAME=${BACKEND_SERVICE_NAME}
       - BACKEND_PORT=${BACKEND_PORT}
