@@ -1,0 +1,17 @@
+services:
+#  ${BACKEND_SERVICE_NAME}:
+#    image: myuser/java-app:latest
+#    networks:
+#      - appalanche-net
+
+  frontend:
+    image: 'andrej-ziv/appalanche-vue-frontend:latest'
+    environment:
+      - BACKEND_SERVICE_NAME=${BACKEND_SERVICE_NAME}
+      - BACKEND_PORT=${BACKEND_PORT}
+    ports:
+      - "80:80"
+#    depends_on:
+#      - ${BACKEND_SERVICE_NAME}
+    networks:
+      - appalanche-net
