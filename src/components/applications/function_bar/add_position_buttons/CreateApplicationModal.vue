@@ -41,7 +41,14 @@ const emit = defineEmits(["close", "create:application"]);
 
 function save() {
   const payload = {...formData.value};
-  payload.statusCode = refStore.getMinStatusByCodeFragment(payload.statusCode).code;
+  const result = refStore.getMinStatusByCodeFragment(payload.statusCode);
+
+  if (result) {
+    payload.statusCode = result.code;
+  } else {
+    console.warn(`No status found for code: ${payload.statusCode}`);
+  }
+
   if (payload.requisitionId === null || payload.requisitionId.trim() === '') {
     payload.requisitionId = "n/a";
   }

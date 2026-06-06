@@ -52,7 +52,7 @@ watch(() => props.modelValue, (newVal) => {
 
   const currentMarkdown = editor.value.getHTML();
 
-  if (newVal !== currentMarkdown) {
+  if (newVal != null && newVal !== currentMarkdown) {
     editor.value.commands.setContent(newVal, {
       emitUpdate: false,
       parseOptions: {
