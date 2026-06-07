@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         // TODO: calling three times in the worst-case scenario atm, but if I default to cookie-refreshing as first step
         //  it means that every page refresh requires an extra DB cycle on server (refresh cookie check).
-        async initializeAuth() {
+        async initializeAuth(): Promise<void> {
             if (this.authCheckComplete) {
                 return;
             }
@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async fetchUser() {
+        async fetchUser(): Promise<boolean> {
             this.isLoading = true;
             try {
                 const response = await axios.get('/authenticate');
@@ -60,17 +60,19 @@ export const useAuthStore = defineStore('auth', {
                     return false;
                 } else {
                     this.user = await response.data;
+                    return true;
                 }
             } catch (err: any) {
                 this.user = null;
                 this.error = err.response.data;
+                return false;
             } finally {
                 this.isLoading = false;
                 this.authCheckComplete = true;
             }
         },
 
-        async login(email: string, password: string) {
+        async login(email: string, password: string): Promise<boolean> {
             this.isLoading = true;
             this.error = null;
 
@@ -97,7 +99,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async signup(firstName: string, lastName: string, email: string, password: string) : Promise<Boolean> {
+        async signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean> {
             this.isLoading = true;
             this.error = null;
 
@@ -123,7 +125,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async logout() {
+        async logout(): Promise<void> {
             this.isLoading = true;
             try {
                 await axios.post('/authenticate/logout');
@@ -144,6 +146,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async cookieRefresh() {
+        async cookieRefresh(): Promise<void> {
             try {
                 const response = await axios.post('/authenticate/refresh');
                 this.authCheckComplete = true;
@@ -157,7 +160,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        scheduleRefresh(lifespanMilliseconds: number) {
+        scheduleRefresh(lifespanMilliseconds: number): void {
             if (this.refreshTimer) {
                 clearTimeout(this.refreshTimer);
             }
@@ -175,7 +178,7 @@ export const useAuthStore = defineStore('auth', {
             }, refreshDelayMs);
         },
 
-        realignCookieRefreshSchedule() {
+        realignCookieRefreshSchedule(): void {
             const now = Date.now();
             const targetRefreshTime = this.lastRefreshedAt + (this.lifespanMilliseconds * 2 / 3);
 
