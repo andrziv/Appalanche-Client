@@ -56,7 +56,7 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, _from, next) => {
+router.beforeEach(async (to, _from) => {
     const authStore = useAuthStore();
     const profileStore = useProfileStore();
 
@@ -70,14 +70,12 @@ router.beforeEach(async (to, _from, next) => {
     }
 
     if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
-        return next({name: 'Login'});
+        return { name: 'Login' };
     }
 
     if (to.matched.some(record => record.meta.requiresNoAuth) && authenticated) {
-        return next({name: 'Applications'});
+        return { name: 'Applications' };
     }
-
-    next();
 });
 
 export default router;
