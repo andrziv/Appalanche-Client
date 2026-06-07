@@ -11,7 +11,7 @@ const handleVisibilityChange = () => {
   }
 };
 
-onMounted(async () => {
+onMounted(() => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
   authStore.realignCookieRefreshSchedule();
 });
