@@ -97,7 +97,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async signup(firstName: string, lastName: string, email: string, password: string) {
+        async signup(firstName: string, lastName: string, email: string, password: string) : Promise<Boolean> {
             this.isLoading = true;
             this.error = null;
 
@@ -135,7 +135,7 @@ export const useAuthStore = defineStore('auth', {
                 this.refreshTimer = null;
                 this.lastRefreshedAt = 0;
                 this.lifespanMilliseconds = 0;
-            } catch (err) {
+            } catch (err: any) {
                 this.user = null;
             } finally {
                 this.isLoading = false;
@@ -153,6 +153,7 @@ export const useAuthStore = defineStore('auth', {
                 console.log("Cookies refreshed.");
             } catch (error) {
                 this.logout();
+            } catch (err: any) {
             }
         },
 
