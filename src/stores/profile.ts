@@ -48,14 +48,10 @@ export const useProfileStore = defineStore('profile', {
             try {
                 const response = await axios.get('/profile');
 
-                if (response.status !== 200) {
-                    this.profile = null;
-                    return false;
-                } else {
-                    this.profile = await response.data;
-                }
+                this.profile = await response.data;
             } catch (err) {
                 this.profile = null;
+                return false;
             } finally {
                 this.isLoading = false;
             }
