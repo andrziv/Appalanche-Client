@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
         isLoading: false,
         error: null as Record<string, string> | null,
         authCheckComplete: false,
+        isRefreshing: false,
         refreshTimer: null as ReturnType<typeof setTimeout> | null,
         lastRefreshedAt: 0,
         lifespanMilliseconds: 0,
@@ -145,8 +146,11 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async cookieRefresh() {
         async cookieRefresh(): Promise<void> {
+            if (this.isRefreshing) return;
+
+            this.isRefreshing = true;
+
             try {
                 const response = await axios.post('/authenticate/refresh');
                 this.authCheckComplete = true;
@@ -154,9 +158,21 @@ export const useAuthStore = defineStore('auth', {
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
                 this.lastRefreshedAt = Date.now();
                 console.log("Cookies refreshed.");
-            } catch (error) {
-                this.logout();
             } catch (err: any) {
+                if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+                    this.logout()
+                } else {
+                    // try another refresh in 10s in case network was squirrely
+                    if (this.refreshTimer) {
+                        clearTimeout(this.refreshTimer);
+                    }
+
+                    this.refreshTimer = setTimeout(() => {
+                        this.cookieRefresh();
+                    }, 10000);
+                }
+            } finally {
+                this.isRefreshing = false;
             }
         },
 

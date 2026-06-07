@@ -70,11 +70,11 @@ router.beforeEach(async (to, _from) => {
     }
 
     if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
-        return { name: 'Login' };
+        return {name: 'Login'};
     }
 
     if (to.matched.some(record => record.meta.requiresNoAuth) && authenticated) {
-        return { name: 'Applications' };
+        return {name: 'Applications'};
     }
 });
 
