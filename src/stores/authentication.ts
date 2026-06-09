@@ -141,7 +141,7 @@ export const useAuthStore = defineStore('auth', {
 
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
                 this.lastRefreshedAt = Date.now();
-                console.log("Cookies refreshed.");
+                console.debug("Cookies refreshed.");
                 return true;
             } catch (err: any) {
                 if (err.response && (err.response.status === 401 || err.response.status === 403)) {
@@ -168,7 +168,7 @@ export const useAuthStore = defineStore('auth', {
                 clearTimeout(this.refreshTimer);
             }
 
-            console.log(`Refresh interval: ${lifespanMilliseconds}`);
+            console.debug(`Refresh interval: ${lifespanMilliseconds}`);
             const refreshDelayMs = lifespanMilliseconds * 2 / 3;
             this.lifespanMilliseconds = lifespanMilliseconds;
 
