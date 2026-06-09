@@ -1,6 +1,6 @@
 services:
 #  ${BACKEND_SERVICE_NAME}:
-#    image: myuser/java-app:latest
+#    image: user/backend:latest
 #    networks:
 #      - appalanche-net
 
