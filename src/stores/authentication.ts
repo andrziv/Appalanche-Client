@@ -30,46 +30,28 @@ export const useAuthStore = defineStore('auth', {
                 return;
             }
 
-            try {
+            const success = await this.fetchUser();
+
+            if (!success) {
+                await this.cookieRefresh();
                 await this.fetchUser();
-            } catch (error: any) {
-                this.user = null;
-            } finally {
-                this.authCheckComplete = true;
             }
 
-            if (!this.isAuthenticated) {
-                try {
-                    await this.cookieRefresh();
-                    await this.fetchUser();
-                } catch (err: any) {
-                    this.user = null;
-                    this.error = err.response.data;
-                } finally {
-                    this.authCheckComplete = true;
-                }
-            }
+            this.authCheckComplete = true;
         },
 
         async fetchUser(): Promise<boolean> {
             this.isLoading = true;
             try {
                 const response = await axios.get('/authenticate');
-
-                if (response.status !== 200) {
-                    this.user = null;
-                    return false;
-                } else {
-                    this.user = await response.data;
-                    return true;
-                }
+                this.user = response.data;
+                return true;
             } catch (err: any) {
                 this.user = null;
-                this.error = err.response.data;
+                this.error = err.response?.data || "Failed to fetch user";
                 return false;
             } finally {
                 this.isLoading = false;
-                this.authCheckComplete = true;
             }
         },
 
