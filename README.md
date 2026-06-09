@@ -64,7 +64,7 @@ Follow these steps to get this to work:
 
 There's a `default.conf.template` for an Nginx reverse proxy to serve the same purpose as the Vite proxies when in
 production. There's also a `compose.yaml` and `Dockerfile` (almost) ready for deployment on some server. Here are some
-steps to follow:
+steps to follow. Keep in mind that the expectation here is that the server image is already built.
 
 1) Build the image using the Dockerfile
     1) This kind-of depends on what you're building on and where you intend to deploy. The `--push` flags are optional
