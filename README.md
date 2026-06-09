@@ -46,10 +46,10 @@ Follow these steps to get this to work:
 1) Change the configuration files
     1) In `package.json`, replace the `build` run target to the following: `"build": "vite build"`
     2) In `tsconfig.app.json`:
-        1) remove the configuration line with the following: `"emitDeclarationOnly": true`,
+        1) remove the configuration line with the following: `"noEmit": false,`,
         2) and replace it with `"outDir": "./dist/types"`
     3) In `tsconfig.node.json`:
-        1) remove the configuration line with the following: `"emitDeclarationOnly": true`
+        1) remove the configuration line with the following: `"noEmit": false,`
         2) and replace it with `"outDir": "./dist/types_node"`
     4) In `vite.config.ts`, add `base: '/',` to the top of the config definition (inside `defineConfig({...})`)
 2) Run the new build target
