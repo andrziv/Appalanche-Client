@@ -33,8 +33,10 @@ export const useAuthStore = defineStore('auth', {
             const success = await this.fetchUser();
 
             if (!success) {
-                await this.cookieRefresh();
-                await this.fetchUser();
+                const refreshSuccessful = await this.cookieRefresh();
+                if (refreshSuccessful) {
+                    await this.fetchUser();
+                }
             }
 
             this.authCheckComplete = true;
@@ -128,8 +130,8 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async cookieRefresh(): Promise<void> {
-            if (this.isRefreshing) return;
+        async cookieRefresh(): Promise<boolean> {
+            if (this.isRefreshing) return false;
 
             this.isRefreshing = true;
 
@@ -140,6 +142,7 @@ export const useAuthStore = defineStore('auth', {
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
                 this.lastRefreshedAt = Date.now();
                 console.log("Cookies refreshed.");
+                return true;
             } catch (err: any) {
                 if (err.response && (err.response.status === 401 || err.response.status === 403)) {
                     this.logout()
@@ -153,6 +156,8 @@ export const useAuthStore = defineStore('auth', {
                         this.cookieRefresh();
                     }, 10000);
                 }
+
+                return false;
             } finally {
                 this.isRefreshing = false;
             }
@@ -168,6 +173,7 @@ export const useAuthStore = defineStore('auth', {
             this.lifespanMilliseconds = lifespanMilliseconds;
 
             if (refreshDelayMs < 5000) {
+                this.refreshTimer = null;
                 return;
             }
 
