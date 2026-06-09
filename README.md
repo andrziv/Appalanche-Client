@@ -64,16 +64,21 @@ Follow these steps to get this to work:
 
 There's a `default.conf.template` for an Nginx reverse proxy to serve the same purpose as the Vite proxies when in
 production. There's also a `compose.yaml` and `Dockerfile` (almost) ready for deployment on some server. Here are some
-steps to follow. Keep in mind that the expectation here is that the server image is already built.
+steps to follow. Keep in mind that the expectation here is that the backend image is already built and the host server 
+is set up, running, and accessible via SSH or however you want to work inside of it.
 
 1) Build the image using the Dockerfile
     1) This kind-of depends on what you're building on and where you intend to deploy. The `--push` flags are optional
        (they're for Docker Hub which help with major step #2).
         1) If you're going from ARM to x86, you'll need to use `buildx` (here we're building for a Linux x86 machine,
            ARM would be `linux/arm64`:
-            - `docker buildx build --platform linux/amd64 -t ur-user/project:latest --push .`
+            ```bash
+           docker buildx build --platform linux/amd64 -t ur-user/project:latest --push .
+           ```
         2) If you're building from same arch to run on same arch:
-            - `docker build -t ur-user/project:latest --push .`
+           ```bash
+           docker build -t ur-user/project:latest --push .
+           ```
     2) Make sure to keep the `ur-user/project:latest` bit in mind, it's important.
 2) Push the image to wherever you want to deploy. Whether it's Docker Hub, or somehow serializing it and sending it via
    other methods (`scp`, email, using a USB, etc...)
