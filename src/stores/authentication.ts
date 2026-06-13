@@ -35,6 +35,7 @@ export const useAuthStore = defineStore('auth', {
             if (!success) {
                 const refreshSuccessful = await this.cookieRefresh();
                 if (refreshSuccessful) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
                     await this.fetchUser();
                 }
             }
