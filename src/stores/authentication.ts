@@ -35,7 +35,9 @@ export const useAuthStore = defineStore('auth', {
             if (!success) {
                 const refreshSuccessful = await this.cookieRefresh();
                 if (refreshSuccessful) {
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    // delay because it seems like the cookie saving from the cookieRefresh call is in a race with the
+                    // following line??? weirdo bug
+                    await new Promise(resolve => setTimeout(resolve, 300));
                     await this.fetchUser();
                 }
             }
