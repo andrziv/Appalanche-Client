@@ -42,7 +42,7 @@ const formatDate = (dateString: string) =>
       <th>Last Response</th>
     </tr>
     </thead>
-    <tbody v-if="props.isLoading" class="divide-y divide-gray-100">
+    <tbody v-if="props.isLoading" class="divide-y divide-gray-100 dark:divide-zinc-700">
     <tr v-for="n in 20" :key="n" class="animate-pulse">
       <td class="w-1 px-2 py-2 align-middle">
         <div class="h-13 w-13 bg-gray-200 dark:bg-zinc-800 rounded-xs"/>
