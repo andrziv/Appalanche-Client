@@ -63,7 +63,7 @@ async function updatePage(newPage: number) {
     <ApplicationFunctionBar class="hidden sm:inline"/>
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
-      <div class="-mt-4 sm:-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
+      <div class="-mt-8 sm:-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
         <ApplicationBrowseList v-if="!currentDraft" :applications="items" :page="serverStore.pagination.number"
                                :total-pages="serverStore.pagination.totalPages" :is-loading-list="showLoadingContent"
                                @select:application="selectTarget" @update:page="updatePage" class="rounded-t-sm"/>
