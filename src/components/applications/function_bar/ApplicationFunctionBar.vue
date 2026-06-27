@@ -7,7 +7,6 @@ import InterestFilterMenu from "@/components/applications/function_bar/InterestF
 import IconXMark from "@/components/icons/simple-characters/IconXMark.vue";
 import CreateApplicationButton
   from "@/components/applications/function_bar/add_position_buttons/CreateApplicationButton.vue";
-import ImportCSVButton from "@/components/applications/function_bar/add_position_buttons/ImportCSVButton.vue";
 import useApplicationStore from "@/stores/applications/applications";
 import SimpleSearch from "@/components/widget/SimpleSearch.vue";
 import SimpleCheckboxList from "@/components/widget/SimpleCheckboxList.vue";
@@ -174,7 +173,7 @@ function createApplication(draft: JobApplicationForm) {
         </FilterContainer>
 
         <button v-if="!store.areFiltersEmpty" @click="store.clearFilters"
-           class="flex items-center space-x-2 px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm cursor-pointer hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
+                class="flex items-center space-x-2 px-3 py-2 text-sm bg-gray-600 dark:bg-zinc-900 rounded-sm cursor-pointer hover:bg-gray-500 dark:hover:bg-zinc-800 transition">
           <IconXMark class="h-4 w-auto invert-80"/>
           <span class="text-sm font-semibold text-gray-100 dark:text-gray-300">Clear All</span>
         </button>

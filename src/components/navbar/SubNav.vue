@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import JobSitesDropdown from "@/components/navbar/JobSitesDropdown.vue";
-import CopyableSiteLink from "@/components/navbar/CopyableSiteLink.vue";
-import IconPersonalSite from "@/components/icons/IconPersonalSite.vue";
-import ThemedImage from "@/components/icons/ThemedImage.vue";
 import {useAuthStore} from "@/stores/authentication";
 import type {JobSite} from "@/stores/profile";
 import {useProfileStore} from "@/stores/profile";
 import {storeToRefs} from "pinia";
 import SimpleDropdown from "@/components/widget/SimpleDropdown.vue";
 import IconDownChevron from "@/components/icons/simple-characters/IconDownChevron.vue";
-import IconDoor from "@/components/icons/IconDoor.vue";
-import IconGear from "@/components/icons/IconGear.vue";
 import SubNavSocials from "@/components/navbar/SubNavSocials.vue";
 
 const authStore = useAuthStore();

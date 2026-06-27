@@ -2,7 +2,7 @@
 import ThemedImage from "@/components/icons/ThemedImage.vue";
 import IconPersonalSite from "@/components/icons/IconPersonalSite.vue";
 import CopyableSiteLink from "@/components/navbar/CopyableSiteLink.vue";
-import {AccountProfile} from "@/stores/profile";
+import type {AccountProfile} from "@/stores/profile";
 
 const props = defineProps<{
   profile: AccountProfile | null;
