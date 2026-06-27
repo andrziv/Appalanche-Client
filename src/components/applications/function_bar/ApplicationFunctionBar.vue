@@ -98,7 +98,6 @@ function createApplication(draft: JobApplicationForm) {
 
         <div class="flex space-x-3 text-center text-sm text-gray-200 font-semibold">
           <CreateApplicationButton @create:application="newApp => createApplication(newApp)"/>
-          <ImportCSVButton/>
         </div>
       </div>
 
