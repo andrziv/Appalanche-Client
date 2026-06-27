@@ -103,7 +103,7 @@ function maxRounds(code: string): number {
 </script>
 
 <template>
-  <div class="relative flex flex-col min-h-screen bg-white dark:bg-zinc-900">
+  <div class="relative flex flex-col bg-white dark:bg-zinc-900">
     <div v-if="props.isLoading" class="absolute inset-0 z-20 bg-white/60 dark:bg-zinc-900/60
     backdrop-blur-[1px] flex items-center justify-center transition-opacity duration-200">
       <SimpleSpinner/>
