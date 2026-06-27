@@ -13,7 +13,10 @@ const handleVisibilityChange = () => {
 
 onMounted(() => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
-  authStore.realignCookieRefreshSchedule();
+
+  if (authStore.isAuthenticated) {
+    authStore.realignCookieRefreshSchedule();
+  }
 });
 
 onUnmounted(() => {

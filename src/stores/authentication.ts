@@ -171,6 +171,8 @@ export const useAuthStore = defineStore('auth', {
         },
 
         realignCookieRefreshSchedule(): void {
+            if (!this.isAuthenticated) return;
+
             const now = Date.now();
             const targetRefreshTime = this.lastRefreshedAt + (this.lifespanMilliseconds * 2 / 3);
 
