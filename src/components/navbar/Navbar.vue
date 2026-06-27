@@ -26,8 +26,8 @@ const pageTitle = computed(() => {
           <ThemedImage :lightSrc="lightLogo"
                        :darkSrc="darkLogo"
                        alt="Appalanche logo"
-                       imgClass="h-7 w-auto dark:invert-100"/>
-          <span class="text-xl font-semibold text-gray-800 dark:text-gray-300 leading-none pb-0.5">
+                       imgClass="h-5 sm:h-7 w-auto dark:invert-100"/>
+          <span class="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-300 leading-none pb-0.5">
             {{ pageTitle }}
           </span>
         </div>

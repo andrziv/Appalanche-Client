@@ -9,6 +9,7 @@ import {useProfileStore} from "@/stores/profile";
 import useApplicationStore from "@/stores/applications/applications";
 import router from "@/router";
 import {useDraftStore} from "@/stores/applications/draft-application";
+import IconBurgerMenu from "@/components/icons/IconBurgerMenu.vue";
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore();
@@ -29,16 +30,17 @@ async function logout() {
 </script>
 
 <template>
-  <SimpleDropdown>
+  <SimpleDropdown class="z-50">
     <template #dropdown-button="{dropdownOpen}">
-      <div class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer transition">
-        <span class="text-sm font-semibold themed-harsh-text">{{ props.label }}</span>
-        <IconDownChevron class="h-4 w-auto transition-transform theme-icon" :class="{ 'rotate-180': dropdownOpen }"/>
+      <div class="flex items-center space-x-2 sm:px-3 py-2 text-sm rounded-sm cursor-pointer transition">
+        <span class="hidden sm:inline text-sm font-semibold themed-harsh-text">{{ props.label }}</span>
+        <IconBurgerMenu class="inline sm:hidden h-5 w-auto theme-icon"/>
+        <IconDownChevron class="hidden sm:inline h-4 w-auto transition-transform theme-icon" :class="{ 'rotate-180': dropdownOpen }"/>
       </div>
     </template>
 
     <template #dropdown-menu>
-      <div class="absolute left-0 z-50 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
+      <div class="absolute right-0 z-50 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
       bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown">
         <RouterLink class="profile-dropdown-button" to="/settings">
           <IconGear class="theme-icon"/>
