@@ -33,13 +33,7 @@ export const useAuthStore = defineStore('auth', {
             const success = await this.fetchUser();
 
             if (!success) {
-                const refreshSuccessful = await this.cookieRefresh();
-                if (refreshSuccessful) {
-                    // delay because it seems like the cookie saving from the cookieRefresh call is in a race with the
-                    // following line??? weirdo bug
-                    await new Promise(resolve => setTimeout(resolve, 300));
-                    await this.fetchUser();
-                }
+                await this.cookieRefresh();
             }
 
             this.authCheckComplete = true;
@@ -133,8 +127,8 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async cookieRefresh(): Promise<boolean> {
-            if (this.isRefreshing) return false;
+        async cookieRefresh(): Promise<Account | null> {
+            if (this.isRefreshing) return this.user;
 
             this.isRefreshing = true;
 
@@ -144,8 +138,11 @@ export const useAuthStore = defineStore('auth', {
 
                 this.scheduleRefresh(response.data.accessExpiryMilliseconds);
                 this.lastRefreshedAt = Date.now();
+
+                this.user = await response.data;
+
                 console.debug("Cookies refreshed.");
-                return true;
+                return response.data;
             } catch (err: any) {
                 if (err.response && (err.response.status === 401 || err.response.status === 403)) {
                     this.logout()
@@ -160,7 +157,7 @@ export const useAuthStore = defineStore('auth', {
                     }, 10000);
                 }
 
-                return false;
+                return null;
             } finally {
                 this.isRefreshing = false;
             }
