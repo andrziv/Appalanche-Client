@@ -69,7 +69,7 @@ onBeforeUnmount(() => editor.value?.destroy());
   <div class="border rounded-sm transition-shadow
   bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700">
     <div v-if="editor && editable !== false"
-         class="sticky top-11 z-10 flex flex-wrap gap-1 px-2 py-1 bg-gray-50
+         class="sticky top-0 sm:top-11 z-10 flex flex-wrap gap-1 px-2 py-1 bg-gray-50
          dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700">
       <button type="button" @click="editor.chain().focus().toggleBold().run()"
               :class="{'bg-gray-200 dark:bg-zinc-700': editor.isActive('bold')}"
