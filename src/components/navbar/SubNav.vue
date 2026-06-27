@@ -7,6 +7,11 @@ import {useAuthStore} from "@/stores/authentication";
 import type {JobSite} from "@/stores/profile";
 import {useProfileStore} from "@/stores/profile";
 import {storeToRefs} from "pinia";
+import SimpleDropdown from "@/components/widget/SimpleDropdown.vue";
+import IconDownChevron from "@/components/icons/simple-characters/IconDownChevron.vue";
+import IconDoor from "@/components/icons/IconDoor.vue";
+import IconGear from "@/components/icons/IconGear.vue";
+import SubNavSocials from "@/components/navbar/SubNavSocials.vue";
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore();
@@ -23,27 +28,23 @@ function jobSites(): JobSite[] | undefined {
     <div class="flex max-w-7xl mx-auto items-center justify-start px-6">
       <JobSitesDropdown :job-sites="jobSites()"/>
 
-      <div v-if="authStore.isAuthenticated" class="flex items-center justify-start space-x-3">
-        <CopyableSiteLink v-if="profile?.linkedInProfile" label="LinkedIn Profile" :href="profile?.linkedInProfile">
-          <template #icon>
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="h-3 w-auto" alt="LinkedIn"/>
+      <div v-if="authStore.isAuthenticated">
+        <SimpleDropdown class="inline sm:hidden">
+          <template #dropdown-button="{dropdownOpen}">
+            <div class="flex items-center space-x-2 px-3 py-2 text-sm rounded-sm cursor-pointer transition">
+              <span class="text-gray-600 dark:text-zinc-400 text-xs font-semibold">Social Links</span>
+              <IconDownChevron class="h-4 w-auto transition-transform theme-icon"
+                               :class="{ 'rotate-180': dropdownOpen }"/>
+            </div>
           </template>
-        </CopyableSiteLink>
 
-        <CopyableSiteLink v-if="profile?.gitHubProfile" label="GitHub Page" :href="profile?.gitHubProfile">
-          <template #icon>
-            <ThemedImage lightSrc="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                         darkSrc="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                         alt="GitHub logo"
-                         imgClass="h-3 w-auto dark:invert-100"/>
+          <template #dropdown-menu>
+            <SubNavSocials :profile="profile" class="absolute left-0 z-50 p-2 flex flex-col space-y-2 w-max min-w-full
+            pt-1 bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown"/>
           </template>
-        </CopyableSiteLink>
+        </SimpleDropdown>
 
-        <CopyableSiteLink v-if="profile?.portfolioSite" label="Portfolio Site" :href="profile?.portfolioSite">
-          <template #icon>
-            <IconPersonalSite class="h-3 w-auto theme-icon"/>
-          </template>
-        </CopyableSiteLink>
+        <SubNavSocials :profile="profile" class="hidden sm:flex items-center justify-start space-x-3"/>
       </div>
     </div>
   </div>
