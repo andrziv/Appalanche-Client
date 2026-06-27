@@ -69,12 +69,12 @@ router.beforeEach(async (to, _from) => {
         await profileStore.fetchProfile();
     }
 
-    if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
-        return {name: 'Login'};
+    if (to.meta.requiresAuth && !authenticated) {
+        return { name: 'Login' };
     }
 
-    if (to.matched.some(record => record.meta.requiresNoAuth) && authenticated) {
-        return {name: 'Applications'};
+    if (to.meta.requiresNoAuth && authenticated) {
+        return { name: 'Applications' };
     }
 });
 

@@ -43,12 +43,13 @@ export const useProfileStore = defineStore('profile', {
     },
 
     actions: {
-        async fetchProfile() {
+        async fetchProfile(): Promise<boolean> {
             this.isLoading = true;
             try {
                 const response = await axios.get('/profile');
 
-                this.profile = await response.data;
+                this.profile = response.data;
+                return true
             } catch (err) {
                 this.profile = null;
                 return false;
