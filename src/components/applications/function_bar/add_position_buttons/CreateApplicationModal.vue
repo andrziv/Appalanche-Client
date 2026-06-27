@@ -70,11 +70,11 @@ function close() {
         <div class="space-y-6">
           <div class="flex flex-row justify-center space-x-8">
             <TextFormComponent id="title" v-model="formData.title" label="Job Title"
-                               type="text" placeholder="Job Title (e.g. Software Engineer)" class="w-3/4"
+                               type="text" placeholder="Job Title (e.g. Software Engineer)" class="w-4/5"
                                input-class="bg-neutral-100 dark:bg-zinc-800"/>
-            <TextFormComponent id="interest" v-model="formData.interest" label="Position Interest"
+            <TextFormComponent id="interest" v-model="formData.interest" label="Rating"
                                type="number" placeholder="1 to 10" min="1" max="10"
-                               class="w-1/4" input-class="bg-neutral-100 dark:bg-zinc-800"/>
+                               class="w-1/5" input-class="bg-neutral-100 dark:bg-zinc-800"/>
           </div>
 
           <TextFormComponent id="postingLink" v-model="formData.jobPostingLink" label="Posting Link"
