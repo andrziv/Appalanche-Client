@@ -119,7 +119,8 @@ function maxRounds(code: string): number {
           <button type=submit form="modifyApplicationForm" class="flex flex-row gap-2 items-center transition"
                   :class="isEqual(props.targetApplication, draftApplication) ? 'crud-button' : 'crud-button-inactive'">
             <SimpleSpinner v-if="props.isSaving" colour="fill-black" :size="4"/>
-            <span>Save Changes</span>
+            <span class="hidden sm:inline">Save Changes</span>
+            <span class="inline sm:hidden px-2">Update</span>
           </button>
           <button class="crud-button" @click="deleteTarget">
             Delete Application
