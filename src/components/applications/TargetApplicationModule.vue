@@ -198,14 +198,14 @@ function maxRounds(code: string): number {
               <TextFormComponent id="appliedDate" v-model="appliedDateInput" label="" type="date"
                                  :required="false" class="w-full" :input-class="MODIFIABLE_TEXT_FIELD"/>
               <p class="ml-2 text-sm font-semibold text-neutral-400 dark:text-zinc-600">
-                Date of Application
+                Application Date
               </p>
             </div>
             <div class="flex flex-wrap w-1/2 items-center justify-between">
               <TextFormComponent id="responseDate" v-model="responseDateInput" label="" type="date"
                                  :required="false" class="w-full" :input-class="MODIFIABLE_TEXT_FIELD"/>
               <p class="ml-2 text-sm font-semibold text-neutral-400 dark:text-zinc-600">
-                Date of Last Response
+                Last Response Date
               </p>
             </div>
           </div>

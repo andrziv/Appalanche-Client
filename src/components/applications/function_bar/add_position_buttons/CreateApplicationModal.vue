@@ -90,7 +90,7 @@ function close() {
                              input-class="bg-neutral-100 dark:bg-zinc-800"/>
 
           <div class="flex flex-row justify-center space-x-8">
-            <SelectorFormComponent id="status" v-model="formData.statusCode" label="Application Status"
+            <SelectorFormComponent id="status" v-model="formData.statusCode" label="Status"
                                    :options="SIMPLE_FE_APPLICATION_STATUSES" value-key="code"
                                    class="w-fit" input-class="bg-neutral-100 dark:bg-zinc-800">
               <template #optionLabel="{ item }">
@@ -108,11 +108,11 @@ function close() {
           </div>
 
           <div class="flex flex-row justify-center space-x-8">
-            <TextFormComponent id="appliedDate" v-model="appliedDateInput" label="Date of Application" type="date"
+            <TextFormComponent id="appliedDate" v-model="appliedDateInput" label="Application Date" type="date"
                                :required="false"
                                class="w-full" input-class="bg-neutral-100 dark:bg-zinc-800"/>
 
-            <TextFormComponent id="responseDate" v-model="responseDateInput" label="Date of Last Response" type="date"
+            <TextFormComponent id="responseDate" v-model="responseDateInput" label="Last Response Date" type="date"
                                :required="false"
                                class="w-full" input-class="bg-neutral-100 dark:bg-zinc-800"/>
           </div>
