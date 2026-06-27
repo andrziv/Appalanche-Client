@@ -32,7 +32,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="dropdownRef" class="relative inline-block text-left">
+  <div ref="dropdownRef" class="relative inline-block text-left z-50">
     <button @click.stop="toggleDropdown"
        class="cursor-pointer transition">
       <slot name="dropdown-button" :dropdownOpen="open"/>
@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
                 leave-active-class="transition ease-in duration-100"
                 leave-from-class="opacity-100 translate-y-0"
                 leave-to-class="opacity-0 -translate-y-1">
-      <div v-if="open">
+      <div v-if="open" >
         <slot name="dropdown-menu"/>
       </div>
     </transition>

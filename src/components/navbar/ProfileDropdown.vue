@@ -38,7 +38,7 @@ async function logout() {
     </template>
 
     <template #dropdown-menu>
-      <div class="absolute left-0 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
+      <div class="absolute left-0 z-50 p-2 flex flex-col space-y-2 w-max min-w-full pt-1
       bg-gray-200 dark:bg-zinc-900 rounded-sm theme-shadow-dropdown">
         <RouterLink class="profile-dropdown-button" to="/settings">
           <IconGear class="theme-icon"/>
