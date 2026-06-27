@@ -12,3 +12,16 @@ export function truncateMiddle(text: string | null | undefined, startLen = 6, en
 
     return `${start}…${end}`;
 }
+
+export function truncateEnd(text: string | null | undefined, startLen = 20): string {
+    if (!text) {
+        return '';
+    }
+
+    if (text.length <= startLen) {
+        return text;
+    }
+
+    const start = text.slice(0, startLen);
+    return `${start}…`;
+}

@@ -3,6 +3,7 @@ import type {JobApplication} from "@/models/JobApplication";
 import ApplicationTable from "@/components/applications/application_tables/ApplicationTable.vue";
 import LogoBannerPadding from "@/components/applications/LogoBannerPadding.vue";
 import PaginationControl from "@/components/widget/PaginationControl.vue";
+import ApplicationMobileList from "@/components/applications/application_tables/ApplicationMobileList.vue";
 
 const props = withDefaults(defineProps<{
   applications: JobApplication[],
@@ -23,7 +24,11 @@ const handlePageChange = (newPage: number) => {
 <template>
   <div class="flex flex-col h-full overflow-y-auto">
     <ApplicationTable :applications="props.applications" :is-loading="props.isLoadingList"
-                      @select:application="newTarget => emit('select:application', newTarget)"/>
+                      @select:application="newTarget => emit('select:application', newTarget)"
+                      class="hidden sm:inline-table"/>
+    <ApplicationMobileList :applications="props.applications" :is-loading="props.isLoadingList"
+                           @select:application="newTarget => emit('select:application', newTarget)"
+                           class="inline sm:hidden"/>
     <div class="p-4 bg-gray-100 dark:bg-zinc-800/20 mt-auto">
       <PaginationControl :model-value="props.page" :total-pages="props.totalPages"
                          @update:modelValue="handlePageChange"/>
