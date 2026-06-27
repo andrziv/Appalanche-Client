@@ -40,7 +40,7 @@ const handlePageChange = (newPage: number) => {
 
 <template>
   <div class="flex flex-row w-full h-full overflow-hidden">
-    <div class="flex flex-col h-full overflow-y-auto w-1/3 border-r border-neutral-100 dark:border-zinc-800">
+    <div class="hidden sm:flex flex-col h-full overflow-y-auto w-1/3 border-r border-neutral-100 dark:border-zinc-800">
       <MiniApplicationTable :applications="props.applications" :target-application="props.targetApplication"
                             :is-loading="props.isLoadingList" @select:application="pingSelect"/>
       <div class="p-4 bg-gray-100 dark:bg-zinc-800/20 mt-auto">
@@ -55,7 +55,7 @@ const handlePageChange = (newPage: number) => {
                              @select:application="pingSelect"
                              @update:target-application="pingUpdate"
                              @delete:target-application="pingDelete"
-                             class="w-2/3 bg-gray-50"/>
+                             class="w-full sm:w-2/3 bg-gray-50"/>
   </div>
 </template>
 
