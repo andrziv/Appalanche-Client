@@ -87,9 +87,9 @@ function createApplication(draft: JobApplicationForm) {
 
 <template>
   <div class="w-full z-20 bg-gray-100 dark:bg-neutral-800">
-    <div class="max-w-7xl mx-auto py-4 space-y-4">
-      <div class="flex justify-between items-center px-8">
-        <div class="flex w-1/3 items-center rounded-sm text-sm text-white focus-within:drop-shadow-xl"
+    <div class="max-w-7xl mx-auto px-2 sm:px-8 py-4 space-y-4">
+      <div class="flex justify-between items-center gap-2">
+        <div class="flex max-sm:w-full w-1/3 items-center rounded-sm text-sm text-white focus-within:drop-shadow-xl"
              :class="filters.searchQuery.length > 0 ? 'active-search-background' : 'filter-search-background'">
           <SimpleSearch :model-value="filters.searchQuery"
                         @update:model-value="newSearch => handleSearchChange(newSearch)"
@@ -102,7 +102,7 @@ function createApplication(draft: JobApplicationForm) {
       </div>
 
       <!-- button filters -->
-      <div class="flex items-center space-x-4 px-8 flex-wrap">
+      <div class="hidden sm:flex items-center gap-4 flex-wrap">
         <FilterContainer label="Experience"
                          title="Experience"
                          description="Filter jobs by experience desired for position"

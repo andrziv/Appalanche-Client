@@ -26,7 +26,8 @@ function createApplication(draft: JobApplicationForm) {
   <div class="relative inline-block text-left">
     <button @click="showAddModal"
        class="px-4 py-2 rounded-sm cursor-pointer bg-red-800 dark:bg-red-900 text-white hover:bg-red-700">
-      Add Application
+      <span class="hidden sm:inline">Add Application</span>
+      <span class="sm:hidden">+</span>
     </button>
 
     <CreateApplicationModal @create:application="newApp => createApplication((newApp))"

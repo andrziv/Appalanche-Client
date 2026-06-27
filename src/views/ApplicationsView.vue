@@ -60,7 +60,7 @@ async function updatePage(newPage: number) {
 
 <template>
   <div class="flex flex-col h-full">
-    <ApplicationFunctionBar/>
+    <ApplicationFunctionBar class="hidden sm:inline"/>
     <div class="flex flex-col h-full overflow-hidden">
       <div class="py-10 bg-gray-100 dark:bg-neutral-800 border-b border-gray-300 dark:border-zinc-800"/>
       <div class="-mt-16 min-h-full w-full max-w-7xl mx-auto bg-white dark:bg-zinc-900 rounded-t-sm">
@@ -77,6 +77,8 @@ async function updatePage(newPage: number) {
                                 class="rounded-t-sm"/>
       </div>
     </div>
+
+    <ApplicationFunctionBar class="sm:hidden"/>
   </div>
 </template>
 
