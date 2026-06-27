@@ -23,7 +23,7 @@ onUnmounted(() => {
 
 <template>
   <Navbar/>
-  <main class="pt-23 h-screen overflow-hidden flex flex-col">
+  <main class="pt-23 h-dvh overflow-hidden flex flex-col">
     <router-view/>
   </main>
 </template>
