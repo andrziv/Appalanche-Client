@@ -23,8 +23,6 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
-        // TODO: calling three times in the worst-case scenario atm, but if I default to cookie-refreshing as first step
-        //  it means that every page refresh requires an extra DB cycle on server (refresh cookie check).
         async initializeAuth(): Promise<void> {
             if (this.authCheckComplete) {
                 return;
@@ -64,11 +62,6 @@ export const useAuthStore = defineStore('auth', {
                     password: password
                 });
 
-                if (response.status !== 200) {
-                    this.error = {'message': 'Invalid credentials'};
-                    return false;
-                }
-
                 this.user = await response.data;
                 this.lastRefreshedAt = Date.now();
                 this.scheduleRefresh(response.data.expiresInSeconds);
@@ -86,17 +79,12 @@ export const useAuthStore = defineStore('auth', {
             this.error = null;
 
             try {
-                const response = await axios.post('/authenticate/signup', {
+                await axios.post('/authenticate/signup', {
                     firstname: firstName,
                     surname: lastName,
                     email: email,
                     password: password
                 });
-
-                if (response.status !== 201) {
-                    this.error = response.data;
-                    return false;
-                }
 
                 return this.login(email, password);
             } catch (err: any) {
