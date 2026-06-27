@@ -40,7 +40,7 @@ const handleSignup = async () => {
 
       <form class="space-y-2" @submit.prevent="handleSignup">
         <div class="space-y-6">
-          <div class="flex flex-wrap items-center justify-between">
+          <div class="flex flex-row items-center gap-4 justify-between">
             <TextFormComponent id="firstName" v-model="form.firstName" label="First Name" type="text"
                                autocomplete="first-name" placeholder="First Name"/>
 
