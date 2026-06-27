@@ -109,7 +109,7 @@ function maxRounds(code: string): number {
       <SimpleSpinner/>
     </div>
 
-    <div class="flex flex-col overflow-y-auto pb-4 min-h-0">
+    <div class="flex flex-col overflow-y-auto pb-4">
       <div class="order-last sm:order-first sticky bottom-0 sm:top-0 sm:bottom-auto z-10 flex flex-wrap items-center
       justify-between px-2 py-1.5 border-t sm:border-t-0 sm:border-b border-neutral-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
         <button class="close-button" @click="cancelEditing">
