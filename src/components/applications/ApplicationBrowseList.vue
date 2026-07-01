@@ -29,9 +29,9 @@ const handlePageChange = (newPage: number) => {
     <ApplicationMobileList :applications="props.applications" :is-loading="props.isLoadingList"
                            @select:application="newTarget => emit('select:application', newTarget)"
                            class="inline sm:hidden"/>
-    <div class="p-4 bg-gray-100 dark:bg-zinc-800/20 mt-auto">
+    <div class="mt-auto">
       <PaginationControl :model-value="props.page" :total-pages="props.totalPages"
-                         @update:modelValue="handlePageChange"/>
+                         @update:modelValue="handlePageChange" class="p-4 bg-gray-100 dark:bg-zinc-800/20"/>
     </div>
     <LogoBannerPadding/>
   </div>

@@ -43,9 +43,9 @@ const handlePageChange = (newPage: number) => {
     <div class="hidden sm:flex flex-col h-full overflow-y-auto w-1/3 border-r border-neutral-100 dark:border-zinc-800">
       <MiniApplicationTable :applications="props.applications" :target-application="props.targetApplication"
                             :is-loading="props.isLoadingList" @select:application="pingSelect"/>
-      <div class="p-4 bg-gray-100 dark:bg-zinc-800/20 mt-auto">
+      <div class="mt-auto">
         <PaginationControl :model-value="props.page" :total-pages="props.totalPages"
-                           @update:modelValue="handlePageChange"/>
+                           @update:modelValue="handlePageChange" class="p-4 bg-gray-100 dark:bg-zinc-800/20"/>
       </div>
       <LogoBannerPadding/>
     </div>
