@@ -12,12 +12,33 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits(["select:application"]);
 
-const daysSince = (dateString: string) => {
+function daysSince(dateString: string): number {
   const date = new Date(dateString);
   const today = new Date();
+
+  date.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
   const diffTime = Math.abs(today.getTime() - date.getTime());
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-};
+  return Math.round(diffTime / (1000 * 60 * 60 * 24));
+}
+
+const daysSinceFlavourText = (dateString: string): string => {
+  const since = daysSince(dateString);
+
+  if (since < -1) {
+    const absolute = Math.abs(since);
+    return `${absolute} days in the future`;
+  } else if (since == -1) {
+    return "Tomorrow";
+  } else if (since == 0) {
+    return "Today";
+  } else if (since == 1) {
+    return "Yesterday";
+  } else if (since > 1) {
+    return `${since} days ago`;
+  }
+}
 
 const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString('en-US', {
@@ -109,11 +130,11 @@ const formatDate = (dateString: string) =>
       </td>
       <td>
         <div class="font-semibold">{{ formatDate(jobApp.appliedDate) }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.appliedDate) }} days ago</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSinceFlavourText(jobApp.appliedDate) }}</div>
       </td>
       <td>
         <div class="font-semibold">{{ formatDate(jobApp.responseDate) }}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSince(jobApp.responseDate) }} days ago</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ daysSinceFlavourText(jobApp.responseDate) }}</div>
       </td>
     </tr>
     </tbody>
