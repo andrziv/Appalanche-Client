@@ -35,7 +35,7 @@ const daysSinceFlavourText = (dateString: string): string => {
     return "Today";
   } else if (since == 1) {
     return "Yesterday";
-  } else if (since > 1) {
+  } else {
     return `${since} days ago`;
   }
 }
